@@ -86,7 +86,20 @@
     <string name="title_edit_tasks">Edit Task</string>
     <string name="btn_edit_tasks_picture">Picture</string>
     <string name="btn_edit_tasks_save">Save</string>
-
-
+    <string name="title_activity_student_login_select_teacher">StudentLoginSelectTeacher</string>
+    <string name="title_activity_student_login_select_student">StudentLoginSelectStudent</string>
+    <string name="title_activity_student_login_select_task">StudentLoginSelectTask</string>
+    <string name="title_activity_student_current_task_view">StudentCurrentTaskViewActivity</string>
+    <string name="title_activity_admin_login">AdminLoginActivity</string>
+    <string name="title_activity_admin_menu">AdminMenuActivity</string>
+    <string name="title_activity_admin_student">AdminStudentActivity</string>
+    <string name="title_activity_admin_teachers">AdminTeachersActivity</string>
+    <string name="title_activity_admin_tasks">AdminTasksActivity</string>
+    <string name="title_activity_admin_add_student">AdminAddStudentActivity</string>
+    <string name="title_activity_admin_edit_student">AdminEditStudentActivity</string>
+    <string name="title_activity_admin_add_teacher">AdminAddTeacherActivity</string>
+    <string name="title_activity_admin_edit_teacher">AdminEditTeacherActivity</string>
+    <string name="title_activity_admin_add_task">AdminAddTaskActivity</string>
+    <string name="title_activity_admin_edit_task">AdminEditTaskActivity</string>
 
 </resources>

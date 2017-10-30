@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Black_Stanton_BOCES.iml" filepath="$PROJECT_DIR$/Black_Stanton_BOCES.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BOCES.iml" filepath="$PROJECT_DIR$/BOCES.iml" />
+      <module fileurl="file://C:\Users\Liz\Desktop\BOCES\Black_Stanton_BOCES.iml" filepath="C:\Users\Liz\Desktop\BOCES\Black_Stanton_BOCES.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

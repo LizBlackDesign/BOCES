@@ -94,4 +94,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnBackTeacher" />
 
+        <ImageButton
+            android:id="@+id/imgbtnAddTeacher"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnSaveTeacher"
+            app:layout_constraintStart_toEndOf="@+id/btnBackTeacher"
+            app:layout_constraintTop_toBottomOf="@+id/inputTeacherPhone"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
+
     </android.support.constraint.ConstraintLayout>

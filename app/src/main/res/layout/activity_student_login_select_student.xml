@@ -32,17 +32,36 @@
         tools:layout_editor_absoluteX="11dp" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="350dp"
-        android:layout_height="404dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
+        android:id="@+id/recyclerSelectStudent"
+        android:layout_width="355dp"
+        android:layout_height="374dp"
         android:layout_marginTop="8dp"
         android:clipToPadding="false"
-        app:layout_constraintTop_toBottomOf="@+id/login_select_student_search"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_select_student_search"
         tools:listitem="@layout/item_student" />
+
+    <Button
+        android:id="@+id/btnSelectStudentBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerSelectStudent" />
+
+    <Button
+        android:id="@+id/btnSelectStudentNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Next"
+        app:layout_constraintHorizontal_bias="0.963"
+        app:layout_constraintLeft_toRightOf="@id/btnSelectStudentBack"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerSelectStudent" />
 
 </android.support.constraint.ConstraintLayout>

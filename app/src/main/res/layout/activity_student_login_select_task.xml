@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.boces.black_stanton_boces.StudentLoginSelectTaskActivity">
 
-
     <TextView
         android:id="@+id/student_login_select_task_title"
         android:layout_width="wrap_content"
@@ -33,18 +32,36 @@
         tools:layout_editor_absoluteX="11dp" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="350dp"
-        android:layout_height="404dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
+        android:id="@+id/recyclerSelectTask"
+        android:layout_width="355dp"
+        android:layout_height="374dp"
         android:layout_marginTop="8dp"
         android:clipToPadding="false"
-        app:layout_constraintTop_toBottomOf="@+id/login_select_task_search"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_student" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_select_task_search"
+        tools:listitem="@layout/item_task" />
+
+    <Button
+        android:id="@+id/btnSelectTaskBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerSelectTask" />
+
+    <Button
+        android:id="@+id/btnSelectTaskNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Next"
+        app:layout_constraintHorizontal_bias="0.963"
+        app:layout_constraintLeft_toRightOf="@id/btnSelectTaskBack"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerSelectTask" />
 
 </android.support.constraint.ConstraintLayout>
-

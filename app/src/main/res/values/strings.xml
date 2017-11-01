@@ -88,7 +88,7 @@
     <string name="btn_edit_students_hint_year">Year</string>
 
     <!--activity_admin_teachers-->
-    <string name="title_teachers">Teachers</string>
+    <string name="title_admin_teachers">Teachers</string>
     <string name="search_hint_admin_type_teacher_name">Type Teacher Name</string>
     <string name="btn_admin_teachers_edit">Edit Teacher</string>
     <string name="btn_admin_teachers_add">Add Teacher</string>
@@ -117,8 +117,9 @@
 
 
     <!--activity_admin_tasks-->
-    <string name="title_tasks">Tasks</string>
+    <string name="title_admin_tasks">Tasks</string>
     <string name="search_hint_admin_type_task_name">Type Task Name</string>
+    <string name="btn_admin_tasks_back">Back</string>
     <string name="btn_admin_tasks_edit">Edit Tasks</string>
     <string name="btn_admin_tasks_add">Add Tasks</string>
 

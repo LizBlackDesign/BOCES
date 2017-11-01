@@ -49,7 +49,7 @@
 
 
     <!--activity_admin_menu-->
-    <string name="title_admin_menu"> </string>
+    <string name="title_admin_menu"> Admin Menu </string>
     <string name="btn_admin_students">Students</string>
     <string name="btn_admin_teachers">Teachers</string>
     <string name="btn_admin_tasks">Tasks</string>
@@ -61,6 +61,7 @@
     <string name="search_hint_admin_type_student_name">Type Student Name</string>
     <string name="btn_admin_students_edit">Edit Student</string>
     <string name="btn_admin_students_add">Add Student</string>
+    <string name="btn_admin_students_back">Back</string>
 
 
     <!--activity_admin_add_students-->
@@ -79,7 +80,11 @@
     <string name="btn_edit_students_picture">Picture</string>
     <string name="btn_edit_students_save">Save</string>
     <string name="btn_edit_students_back">Back</string>
-
+    <string name="btn_edit_students_hint_first">First</string>
+    <string name="btn_edit_students_hint_last">Last</string>
+    <string name="btn_edit_students_hint_age">Age</string>
+    <string name="btn_edit_students_hint_teacher">Teacher</string>
+    <string name="btn_edit_students_hint_year">Year</string>
 
     <!--activity_admin_teachers-->
     <string name="title_teachers">Teachers</string>

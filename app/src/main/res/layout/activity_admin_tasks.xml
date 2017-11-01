@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.boces.black_stanton_boces.AdminTaskssActivity"
+    android:background="#E1F4FA"
+    tools:context="com.boces.black_stanton_boces.AdminTasksActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 

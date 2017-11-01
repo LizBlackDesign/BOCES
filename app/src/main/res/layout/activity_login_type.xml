@@ -4,15 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.boces.black_stanton_boces.LoginTypeActivity">
+    tools:context="com.boces.black_stanton_boces.LoginTypeActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
+        android:id="@+id/lblStudents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="44dp"
+        android:text="@string/title_login"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnStudentLogin"
+        android:layout_width="220dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/btn_login_student"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblStudents" />
+
+    <Button
+        android:id="@+id/btnAdminLogin"
+        android:layout_width="220dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/btn_login_admin"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnStudentLogin" />
+
 
 </android.support.constraint.ConstraintLayout>

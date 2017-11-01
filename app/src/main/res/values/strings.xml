@@ -67,11 +67,19 @@
     <string name="title_add_students">Add Student</string>
     <string name="btn_add_students_picture">Picture</string>
     <string name="btn_add_students_save">Save</string>
+    <string name="btn_add_students_back">Back</string>
+    <string name="btn_add_students_hint_first">First</string>
+    <string name="btn_add_students_hint_last">Last</string>
+    <string name="btn_add_students_hint_age">Age</string>
+    <string name="btn_add_students_hint_teacher">Teacher</string>
+    <string name="btn_add_students_hint_year">Year</string>
 
     <!--activity_admin_edit_students-->
     <string name="title_edit_students">Edit Student</string>
     <string name="btn_edit_students_picture">Picture</string>
     <string name="btn_edit_students_save">Save</string>
+    <string name="btn_edit_students_back">Back</string>
+
 
     <!--activity_admin_teachers-->
     <string name="title_teachers">Teachers</string>
@@ -83,11 +91,24 @@
     <string name="title_add_teachers">Add Teachers</string>
     <string name="btn_add_teachers_picture">Picture</string>
     <string name="btn_add_teachers_save">Save</string>
+    <string name="btn_add_teachers_back">Back</string>
+    <string name="btn_add_teachers_hint_first">First</string>
+    <string name="btn_add_teachers_hint_last">Last</string>
+    <string name="btn_add_teachers_hint_email">jsmith@example.com</string>
+    <string name="btn_add_teachers_hint_phone">8141231234</string>
+
+
 
     <!--activity_admin_edit_teachers-->
     <string name="title_edit_teachers">Edit Teachers</string>
     <string name="btn_edit_teachers_picture">Picture</string>
     <string name="btn_edit_teachers_save">Save</string>
+    <string name="btn_edit_teachers_back">Back</string>
+    <string name="btn_edit_teachers_hint_first">First</string>
+    <string name="btn_edit_teachers_hint_last">Last</string>
+    <string name="btn_edit_teachers_hint_email">jsmith@example.com</string>
+    <string name="btn_edit_teachers_hint_phone">8141231234</string>
+
 
     <!--activity_admin_tasks-->
     <string name="title_tasks">Tasks</string>
@@ -99,11 +120,15 @@
     <string name="title_add_tasks">Add Task</string>
     <string name="btn_add_tasks_picture">Picture</string>
     <string name="btn_add_tasks_save">Save</string>
+    <string name="btn_add_tasks_back">Back</string>
+
 
     <!--activity_admin_edit_tasks-->
     <string name="title_edit_tasks">Edit Task</string>
     <string name="btn_edit_tasks_picture">Picture</string>
     <string name="btn_edit_tasks_save">Save</string>
+    <string name="btn_edit_tasks_back">Back</string>
+
 
 
 </resources>

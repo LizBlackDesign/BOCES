@@ -1,33 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.boces.black_stanton_boces.AdminAddStudentActivity">
-
-    <android.support.design.widget.AppBarLayout
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        tools:context="com.boces.black_stanton_boces.AdminAddStudentActivity"
+        tools:layout_editor_absoluteY="81dp"
+        tools:layout_editor_absoluteX="0dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <TextView
+            android:id="@+id/lblStudents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/title_add_students"
+            android:textColor="@android:color/black"
+            android:textSize="36sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.design.widget.AppBarLayout>
+        <EditText
+            android:id="@+id/inputStudentFirstName"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/btn_add_students_hint_first"
+            android:inputType="textPersonName"
+            app:layout_constraintTop_toBottomOf="@+id/lblStudents"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-    <include layout="@layout/content_admin_add_student" />
+        <EditText
+            android:id="@+id/inputStudentLastName"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:hint="@string/btn_add_students_hint_last"
+            android:inputType="textPersonName"
+            app:layout_constraintLeft_toLeftOf="@+id/inputStudentFirstName"
+            app:layout_constraintTop_toBottomOf="@+id/inputStudentFirstName" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        <EditText
+            android:id="@+id/inputStudentAge"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:ems="10"
+            android:hint="@string/btn_add_students_hint_age"
+            android:inputType="number"
+            app:layout_constraintLeft_toLeftOf="@+id/inputStudentLastName"
+            app:layout_constraintTop_toBottomOf="@+id/inputStudentLastName" />
 
-</android.support.design.widget.CoordinatorLayout>
+        <EditText
+            android:id="@+id/inputStudentYear"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:ems="10"
+            android:hint="@string/btn_add_students_hint_year"
+            android:inputType="number"
+            app:layout_constraintLeft_toRightOf="@+id/inputStudentAge"
+            app:layout_constraintTop_toBottomOf="@+id/inputStudentLastName" />
+
+        <Spinner
+            android:id="@+id/spinnerTeacher"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            app:layout_constraintTop_toBottomOf="@+id/inputStudentAge"
+            app:layout_constraintLeft_toLeftOf="@+id/inputStudentAge" />
+
+        <Button
+            android:id="@+id/btnBackStudents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="9dp"
+            android:text="@string/btn_add_students_back"
+            app:layout_constraintLeft_toLeftOf="@+id/spinnerTeacher"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerTeacher" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/studentList"
+            android:layout_width="356dp"
+            android:layout_height="218dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="14dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBackStudents"
+            tools:listitem="@layout/item_student" />
+
+        <Button
+            android:id="@+id/btnSaveStudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/btn_add_students_save"
+            app:layout_constraintRight_toRightOf="@+id/spinnerTeacher"
+            app:layout_constraintTop_toTopOf="@+id/btnBackStudents" />
+    
+    </android.support.constraint.ConstraintLayout>
+

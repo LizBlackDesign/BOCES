@@ -24,7 +24,7 @@ public class AdminLoginActivity extends AppCompatActivity {
     //Open Admin Menu
     public void onClickAdminLoginValidate(View v)
     {
-        startActivity(new Intent(this, LoginTypeActivity.class));
+        startActivity(new Intent(this, AdminMenuActivity.class));
     }
 
 }

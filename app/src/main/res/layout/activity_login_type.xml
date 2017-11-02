@@ -29,6 +29,7 @@
         android:layout_marginTop="52dp"
         android:text="@string/btn_login_student"
         android:textSize="24sp"
+        android:onClick="onClickStudentLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblStudents" />
@@ -40,6 +41,7 @@
         android:layout_marginTop="40dp"
         android:text="@string/btn_login_admin"
         android:textSize="24sp"
+        android:onClick="onClickAdminLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStudentLogin" />

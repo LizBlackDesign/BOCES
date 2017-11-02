@@ -51,6 +51,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="Back"
+        android:onClick="onClickAdminTeacherBack"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerSelectTeacher" />
 
@@ -60,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Next"
+        android:onClick="onClickAdminTeacherNext"
         app:layout_constraintHorizontal_bias="0.963"
         app:layout_constraintLeft_toRightOf="@id/btnSelectTeacherBack"
         app:layout_constraintRight_toRightOf="parent"

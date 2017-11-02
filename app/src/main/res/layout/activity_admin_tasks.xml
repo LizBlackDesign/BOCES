@@ -40,6 +40,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/btn_admin_students_back"
+        android:onClick="onClickAdminBackTasks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchAdminStudent" />
 
@@ -47,8 +48,9 @@
         android:id="@+id/btnAddTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:text="@string/btn_admin_students_add"
+        android:layout_marginLeft="56dp"
+        android:onClick="onClickAdminAddTasks"
+        android:text="@string/btn_admin_tasks_add"
         app:layout_constraintLeft_toRightOf="@+id/btnBackTasks"
         app:layout_constraintTop_toTopOf="@+id/btnBackTasks" />
 
@@ -57,7 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="@string/btn_admin_students_edit"
+        android:text="@string/btn_admin_tasks_edit"
+        android:onClick="onClickAdminEditTasks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/btnAddTasks"
         app:layout_constraintTop_toTopOf="@+id/btnAddTasks" />

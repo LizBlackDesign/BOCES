@@ -16,7 +16,7 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_edit_teacher);
 
     }
-    
+
     //Opens Teacher Manager (back one screen)
     private void onClickAdminTeacherEditBack(View v)
     {

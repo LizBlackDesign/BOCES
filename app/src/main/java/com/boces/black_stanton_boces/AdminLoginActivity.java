@@ -16,6 +16,11 @@ public class AdminLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_login);
 
     }
+    //Open Login Type
+    private void onClickAdminLoginBack(View v)
+    {
+        startActivity(new Intent(this, LoginTypeActivity.class));
+    }
     //Open Admin Menu
     private void onClickAdminLoginValidate(View v)
     {

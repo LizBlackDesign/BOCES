@@ -52,6 +52,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
         android:text="Back"
+        android:onClick="onClickAdminCurrentTaskBack"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCurrentTaskDone" />
 

@@ -18,7 +18,7 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
     }
 
     //Opens Task Selection Screen (back one screen)
-    private void onClickAdminCurtTaskBack(View v)
+    private void onClickAdminCurrentTaskBack(View v)
     {
         startActivity(new Intent(this, StudentLoginSelectTaskActivity.class));
     }

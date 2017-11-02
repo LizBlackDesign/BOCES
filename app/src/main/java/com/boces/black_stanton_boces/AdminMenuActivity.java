@@ -26,6 +26,11 @@ public class AdminMenuActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this, AdminTeachersActivity.class));
     }
+    //Opens Task Manager
+    private void onClickAdminMenuTasks(View v)
+    {
+        startActivity(new Intent(this, AdminTasksActivity.class));
+    }
 
     //There is no time clocked currently
     //There is no reports currently

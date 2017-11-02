@@ -21,4 +21,9 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this, LoginTypeActivity.class));
     }
+    //Opens task select
+    private void onClickAdminStudentNext(View v)
+    {
+        startActivity(new Intent(this, StudentLoginSelectTaskActivity.class));
+    }
 }

@@ -17,17 +17,17 @@ public class AdminMenuActivity extends AppCompatActivity {
 
     }
     //Opens Student Manager
-    private void onClickAdminMenuStudents(View v)
+    public void onClickAdminMenuStudents(View v)
     {
         startActivity(new Intent(this, AdminStudentsActivity.class));
     }
     //Opens Teacher Manager
-    private void onClickAdminMenuTeachers(View v)
+    public void onClickAdminMenuTeachers(View v)
     {
         startActivity(new Intent(this, AdminTeachersActivity.class));
     }
     //Opens Task Manager
-    private void onClickAdminMenuTasks(View v)
+    public void onClickAdminMenuTasks(View v)
     {
         startActivity(new Intent(this, AdminTasksActivity.class));
     }
@@ -36,7 +36,7 @@ public class AdminMenuActivity extends AppCompatActivity {
     //There is no reports currently
 
     //Opens Admin LogIn (back one screen)
-    private void onClickAdminMenuBack(View v)
+    public void onClickAdminMenuBack(View v)
     {
         startActivity(new Intent(this, AdminMenuActivity.class));
     }

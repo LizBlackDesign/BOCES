@@ -16,7 +16,7 @@ public class AdminAddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_task);
     }
     //Opens Task Manager(back one screen)
-    private void onClickAdminTasksAddBack(View v)
+    public void onClickAdminTasksAddBack(View v)
     {
         startActivity(new Intent(this, AdminTasksActivity.class));
     }

@@ -17,7 +17,7 @@ public class AdminEditTaskActivity extends AppCompatActivity {
 
     }
     //Opens  Task Manager(back one screen)
-    private void onClickAdminTaskEditBack(View v)
+    public void onClickAdminTaskEditBack(View v)
     {
         startActivity(new Intent(this, AdminTasksActivity.class));
     }

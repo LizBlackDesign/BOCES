@@ -11,16 +11,16 @@ public class LoginTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_type);
-
     }
-    //Open Student Login Process (Teacher Select)
+
+    //Open Student Login Process (Teacher Select Page)
     public void onClickStudentLogin(View v)
     {
         startActivity(new Intent( this, StudentLoginSelectTeacherActivity.class));
     }
 
-    //Open Admin Login Process (Admin Login)
-    private void onClickAdminLogin(View v)
+    //Open Admin Login Process (Admin Login Page)
+    public void onClickAdminLogin(View v)
     {
         startActivity(new Intent(this, AdminLoginActivity.class));
     }

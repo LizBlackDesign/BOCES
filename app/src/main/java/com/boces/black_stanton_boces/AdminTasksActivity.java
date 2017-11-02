@@ -18,18 +18,18 @@ public class AdminTasksActivity extends AppCompatActivity {
     }
 
     //Opens Admin Task Back (back one screen)
-    private void onClickAdminBackTasks(View v)
+    public void onClickAdminBackTasks(View v)
     {
         startActivity(new Intent(this, AdminMenuActivity.class));
     }
 
     //Opens Admin Task Add (back one screen)
-    private void onClickAdminAddTasks(View v)
+    public void onClickAdminAddTasks(View v)
     {
         startActivity(new Intent(this, AdminAddTaskActivity.class));
     }
     //Opens Admin Task Edit (back one screen)
-    private void onClickAdminEditTasks(View v)
+    public void onClickAdminEditTasks(View v)
     {
         startActivity(new Intent(this, AdminEditTaskActivity.class));
     }

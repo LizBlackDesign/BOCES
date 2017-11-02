@@ -17,12 +17,12 @@ public class AdminLoginActivity extends AppCompatActivity {
 
     }
     //Open Login Type
-    private void onClickAdminLoginBack(View v)
+    public void onClickAdminLoginBack(View v)
     {
         startActivity(new Intent(this, LoginTypeActivity.class));
     }
     //Open Admin Menu
-    private void onClickAdminLoginValidate(View v)
+    public void onClickAdminLoginValidate(View v)
     {
         startActivity(new Intent(this, AdminLoginActivity.class));
     }

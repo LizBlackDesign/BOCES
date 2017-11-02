@@ -17,7 +17,7 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
 
     }
     //Opens Teacher Manager (back one screen)
-    private void onClickAdminTeacherAddBack(View v)
+    public void onClickAdminTeacherAddBack(View v)
     {
         startActivity(new Intent(this, AdminTeachersActivity.class));
     }

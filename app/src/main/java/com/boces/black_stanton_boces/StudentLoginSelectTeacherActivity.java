@@ -17,12 +17,12 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
 
     }
     //Opens Student Selection Screen (back one screen)
-    private void onClickAdminTeacherBack(View v)
+    public void onClickAdminTeacherBack(View v)
     {
         startActivity(new Intent(this, StudentLoginSelectStudentActivity.class));
     }
     //Opens student select
-    private void onClickAdminTeacherNext(View v)
+    public void onClickAdminTeacherNext(View v)
     {
         startActivity(new Intent(this, StudentLoginSelectStudentActivity.class));
     }

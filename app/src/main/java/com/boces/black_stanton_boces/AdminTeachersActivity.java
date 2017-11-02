@@ -1,5 +1,6 @@
 package com.boces.black_stanton_boces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,5 +16,20 @@ public class AdminTeachersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_teachers);
 
     }
+    //Opens Admin Teacher Back (back one screen)
+    private void onClickAdminBackTeacher(View v)
+    {
+        startActivity(new Intent(this, AdminMenuActivity.class));
+    }
 
+    //Opens Admin Teacher Add (back one screen)
+    private void onClickAdminAddTeacher(View v)
+    {
+        startActivity(new Intent(this, AdminAddTeacherActivity.class));
+    }
+    //Opens Admin Teacher Edit (back one screen)
+    private void onClickAdminEditTeacher(View v)
+    {
+        startActivity(new Intent(this, AdminEditTeacherActivity.class));
+    }
 }

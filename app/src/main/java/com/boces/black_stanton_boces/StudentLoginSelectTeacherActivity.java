@@ -1,5 +1,6 @@
 package com.boces.black_stanton_boces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,5 +16,9 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_login_select_teacher);
 
     }
-
+    //Opens Student Selection Screen (back one screen)
+    private void onClickAdminTeacherBack(View v)
+    {
+        startActivity(new Intent(this, StudentLoginSelectStudentActivity.class));
+    }
 }

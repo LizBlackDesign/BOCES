@@ -1,5 +1,6 @@
 package com.boces.black_stanton_boces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,12 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_current_task_view);
 
+    }
+
+    //Opens Task Selection Screen (back one screen)
+    private void onClickAdminCurtTaskBack(View v)
+    {
+        startActivity(new Intent(this, StudentLoginSelectTaskActivity.class));
     }
 
 }

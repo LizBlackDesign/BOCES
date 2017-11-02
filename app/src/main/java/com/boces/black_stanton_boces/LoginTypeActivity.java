@@ -18,9 +18,12 @@ public class LoginTypeActivity extends AppCompatActivity {
     {
         startActivity(new Intent( this, StudentLoginSelectTeacherActivity.class));
     }
+
     //Open Admin Login Process (Admin Login)
     private void onClickAdminLogin(View v)
     {
         startActivity(new Intent(this, AdminLoginActivity.class));
     }
+
+
 }

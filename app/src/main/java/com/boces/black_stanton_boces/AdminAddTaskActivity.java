@@ -1,5 +1,6 @@
 package com.boces.black_stanton_boces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,5 +15,9 @@ public class AdminAddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_task);
     }
-
+    //Opens Task Manager(back one screen)
+    private void onClickAdminTasksAddBack(View v)
+    {
+        startActivity(new Intent(this, AdminTasksActivity.class));
+    }
 }

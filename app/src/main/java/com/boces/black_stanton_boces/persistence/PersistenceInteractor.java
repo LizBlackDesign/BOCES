@@ -258,7 +258,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                 "SELECT " +
                         TASK.ID + " , " +
                         TASK.NAME +
-                        " FROM " + TASK.TABLE 
+                        " FROM " + TASK.TABLE
                         , null);
 
         ArrayList<Task> tasks = new ArrayList<>();

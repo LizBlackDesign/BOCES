@@ -34,8 +34,8 @@ public class AdminStudentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_students);
 
         persistence = new PersistenceInteractor(this);
-
         StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence);
+
         studentList = (RecyclerView) findViewById(R.id.studentList);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
@@ -44,10 +44,6 @@ public class AdminStudentsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if(persistence == null)
-        {
-            persistence = new PersistenceInteractor(this);
-        }
         ((StudentAdapter) studentList.getAdapter()).setStudents(persistence.getAllStudents());
         studentList.getAdapter().notifyDataSetChanged();
     }
@@ -77,24 +73,12 @@ public class AdminStudentsActivity extends AppCompatActivity {
             holder.studentAge.setText(Integer.toString(student.getAge()));
 
             Teacher teacher = persistence.getTeacher(student.getTeacherId());
-
             holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
-
         }
 
         @Override
         public int getItemCount() {
             return students.size();
-        }
-
-        public void addStudent(Student student) {
-            students.add(student);
-            this.notifyItemInserted(students.size() - 1);
-        }
-
-        public void clearAll() {
-            students.clear();
-            this.notifyDataSetChanged();
         }
 
         public List<Student> getStudents() {

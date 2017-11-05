@@ -18,7 +18,6 @@ import com.boces.black_stanton_boces.persistence.model.Teacher;
 
 import java.util.List;
 
-import java.util.List;
 
 public class AdminAddTeacherActivity extends AppCompatActivity {
 
@@ -35,7 +34,7 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_teacher);
 
         // Get Input References
-        inputTeacherFirstName = (EditText) findViewById(R.id.inputTeacherFirstName);
+        inputTeacherFirstName = (EditText) findViewById(R.id.inputTaskName);
         inputTeacherLastName = (EditText) findViewById(R.id.inputTeacherLastName);
         inputTeacherEmail = (EditText) findViewById(R.id.inputTeacherEmail);
         inputTeacherPhone = (EditText) findViewById(R.id.inputTeacherPhone);
@@ -63,7 +62,7 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         teacher.setEmail(inputTeacherEmail.getText().toString());
         teacher.setPhoneNumber(inputTeacherPhone.getText().toString());
 
-        int teacherId = persistence.addTeacher(teacher);
+        int teacherId = persistence.addTask(teacher);
         teacher.setId(teacherId);
         ((TeacherAdapter) teacherList.getAdapter()).addTeacher(teacher);
     }

@@ -104,6 +104,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/btn_add_students_save"
+        android:onClick="onClickAdminStudentAddSave"
         app:layout_constraintRight_toRightOf="@+id/spinnerTeacher"
         app:layout_constraintTop_toTopOf="@+id/btnBackStudents" />
 

@@ -36,7 +36,7 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
         persistence = new PersistenceInteractor(this);
         StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence);
 
-        studentList = (RecyclerView) findViewById(R.id.studentList);
+        studentList = (RecyclerView) findViewById(R.id.recyclerSelectStudent);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
     }

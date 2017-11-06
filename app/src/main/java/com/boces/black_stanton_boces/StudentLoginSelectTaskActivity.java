@@ -35,7 +35,7 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
         persistence = new PersistenceInteractor(this);
         TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks(), persistence);
 
-        taskList = (RecyclerView) findViewById(R.id.taskList);
+        taskList = (RecyclerView) findViewById(R.id.recyclerSelectTask);
         taskList.setAdapter(adapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
     }

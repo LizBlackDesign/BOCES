@@ -1,5 +1,5 @@
 package com.boces.black_stanton_boces;
-//TODO: search bar, save information for current task page
+//TODO: search bar, save information for current task page, filter for teacher selected in this page to display students in next page
 
 import android.content.Context;
 import android.content.Intent;

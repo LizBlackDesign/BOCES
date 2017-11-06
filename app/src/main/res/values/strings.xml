@@ -104,7 +104,6 @@
     <string name="btn_add_teachers_hint_phone">8141231234</string>
 
 
-
     <!--activity_admin_edit_teachers-->
     <string name="title_edit_teachers">Edit Teachers</string>
     <string name="btn_edit_teachers_picture">Picture</string>
@@ -135,7 +134,6 @@
     <string name="btn_edit_tasks_picture">Picture</string>
     <string name="btn_edit_tasks_save">Save</string>
     <string name="btn_edit_tasks_back">Back</string>
-
 
 
 </resources>

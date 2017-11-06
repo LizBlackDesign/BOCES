@@ -17,6 +17,7 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
 
     }
 
+
     //Opens Task Selection Screen (back one screen)
     public void onClickAdminCurrentTaskBack(View v)
     {

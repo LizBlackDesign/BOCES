@@ -30,6 +30,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
     private EditText inputStudentFirstName;
     private EditText inputStudentLastName;
     private EditText inputStudentAge;
+    private EditText inputStudentYear;
     private Spinner teacherSpinner;
 
     @Override
@@ -41,6 +42,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         inputStudentFirstName = (EditText) findViewById(R.id.inputStudentFirstName);
         inputStudentLastName = (EditText) findViewById(R.id.inputStudentLastName);
         inputStudentAge = (EditText) findViewById(R.id.inputStudentAge);
+        inputStudentYear = (EditText) findViewById(R.id.inputStudentYear);
 
         // Get Access To The Database
         persistence = new PersistenceInteractor(this);
@@ -86,6 +88,22 @@ public class AdminAddStudentActivity extends AppCompatActivity {
             new AlertDialog.Builder(this)
                     .setTitle("Age Is Invalid")
                     .setMessage("Error, Please Enter A Valid Number For Age")
+                    .setCancelable(true)
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+            return;
+        }
+
+        try {
+            student.setYear(Integer.parseInt(inputStudentYear.getText().toString()));
+        } catch (NumberFormatException e) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Age Is Invalid")
+                    .setMessage("Error, Please Enter A Valid Number For Year")
                     .setCancelable(true)
                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override

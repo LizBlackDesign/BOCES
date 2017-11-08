@@ -139,7 +139,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         Student student = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
-                "SELECT" +
+                "SELECT " +
                         STUDENT.ID + " , " +
                         STUDENT.FIRST_NAME + " , " +
                         STUDENT.LAST_NAME + " , " +

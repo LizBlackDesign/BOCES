@@ -34,7 +34,10 @@ public class TeacherSpinnerInteractor {
     }
 
     public Teacher getSelectedItem() {
-        return ((TeacherSpinnerItem) spinner.getSelectedItem()).getTeacher();
+        TeacherSpinnerItem item = (TeacherSpinnerItem) spinner.getSelectedItem();
+        if (item == null)
+            return null;
+        return item.getTeacher();
     }
 
     public int setSelectedItem(Teacher teacher) {

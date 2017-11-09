@@ -25,5 +25,9 @@ public class LoginTypeActivity extends AppCompatActivity {
         startActivity(new Intent(this, AdminLoginActivity.class));
     }
 
+    public void onClickDeveloperOptions(View v) {
+        startActivity(new Intent(this, DeveloperOptionsActivity.class));
+    }
+
 
 }

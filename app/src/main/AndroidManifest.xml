@@ -76,7 +76,8 @@
             android:name=".AdminEditTaskActivity"
             android:label="@string/title_activity_admin_edit_task"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".StudentTaskStart"></activity>
+        <activity android:name=".StudentTaskStart" />
+        <activity android:name=".DeveloperOptionsActivity"></activity>
     </application>
 
 </manifest>

@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
+import com.boces.black_stanton_boces.teacher.TeacherSpinnerInteractor;
+import com.boces.black_stanton_boces.teacher.TeacherSpinnerItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
     private EditText inputStudentAge;
     private EditText inputStudentYear;
     private Spinner teacherSpinner;
+    private TeacherSpinnerInteractor teacherSpinnerInteractor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +52,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
 
         // Get Spinner For Input/Setup
         teacherSpinner = (Spinner) findViewById(R.id.spinnerTeacher);
-
-
-
-        ArrayAdapter<TeacherSpinnerItem> spinnerItemArrayAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, this.retrieveTeacherSpinnerItems());
-        teacherSpinner.setAdapter(spinnerItemArrayAdapter);
+        teacherSpinnerInteractor = new TeacherSpinnerInteractor(teacherSpinner, persistence.getAllTeachers(), this);
 
 
         StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence);
@@ -130,50 +128,13 @@ public class AdminAddStudentActivity extends AppCompatActivity {
             return;
         }
 
-        student.setTeacherId(spinnerTeacher.getTeacher().getId());
+        student.setTeacherId(teacherSpinnerInteractor.getSelectedItem().getId());
 
         int studentId = persistence.addStudent(student);
         student.setId(studentId);
         ((StudentAdapter) studentList.getAdapter()).addStudent(student);
     }
 
-
-    /**
-     * Retrieve The Items For The Teacher Spinner
-     * @return List of Teachers Converted For Use In The Spinner
-     */
-    private ArrayList<TeacherSpinnerItem> retrieveTeacherSpinnerItems() {
-        // Grab All Teachers And Convert
-        ArrayList<Teacher> persistedTeachers = persistence.getAllTeachers();
-        ArrayList<TeacherSpinnerItem> spinnerTeachers = new ArrayList<>(persistedTeachers.size());
-
-        for (Teacher teacher : persistedTeachers) {
-            spinnerTeachers.add(new TeacherSpinnerItem(teacher));
-        }
-
-        return spinnerTeachers;
-    }
-
-    private class TeacherSpinnerItem {
-        private Teacher teacher;
-
-        public TeacherSpinnerItem(Teacher teacher) {
-            this.teacher = teacher;
-        }
-
-        @Override
-        public String toString() {
-            return teacher.getFirstName() + " " + teacher.getLastName();
-        }
-
-        public Teacher getTeacher() {
-            return teacher;
-        }
-
-        public void setTeacher(Teacher teacher) {
-            this.teacher = teacher;
-        }
-    }
 
     private class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder>{
         List<Student> students;

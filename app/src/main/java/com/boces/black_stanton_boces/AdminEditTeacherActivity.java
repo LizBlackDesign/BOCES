@@ -1,11 +1,7 @@
 package com.boces.black_stanton_boces;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +11,7 @@ import com.boces.black_stanton_boces.persistence.model.Teacher;
 
 public class AdminEditTeacherActivity extends AppCompatActivity {
 
-    private int teacherId;
+    private int id;
     private EditText firstName;
     private EditText lastName;
     private EditText email;
@@ -37,14 +33,14 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         // Painfully Validate That We Got Something
         if (extras == null)
             throw new IllegalStateException("No Data Passed To Edit");
-        teacherId = extras.getInt(BUNDLE_KEY.TEACHER_ID.name());
-        if (teacherId == 0)
-            throw new IllegalStateException("Student ID Not Passed To Edit");
+        id = extras.getInt(BUNDLE_KEY.TEACHER_ID.name());
+        if (id == 0)
+            throw new IllegalStateException("Teacher ID Not Passed To Edit");
 
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        Teacher teacher = persistence.getTeacher(teacherId);
+        Teacher teacher = persistence.getTeacher(id);
         if (teacher == null)
-            throw new IllegalStateException("Teacher With ID " + teacherId + " Not Found");
+            throw new IllegalStateException("Teacher With ID " + id + " Not Found");
 
         // Get Input References
         firstName = (EditText) findViewById(R.id.inputTeacherFirstName);
@@ -62,9 +58,9 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
 
     public void onSave(View view) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        Teacher teacher = persistence.getTeacher(teacherId);
+        Teacher teacher = persistence.getTeacher(id);
         if (teacher == null) {
-            Toast.makeText(this, "Error Teacher With ID " + teacherId + " Not Found", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error Teacher With ID " + id + " Not Found", Toast.LENGTH_LONG).show();
             return;
         }
 

@@ -29,7 +29,7 @@ public class AdminAddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_task);
 
         // Get Input References
-        inputTaskName = (EditText) findViewById(R.id.inputTaskName);
+        inputTaskName = (EditText) findViewById(R.id.inputTeacherFirstName);
 
         persistence = new PersistenceInteractor(this);
         TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks());

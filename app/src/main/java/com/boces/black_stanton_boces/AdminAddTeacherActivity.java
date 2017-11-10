@@ -34,7 +34,7 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_teacher);
 
         // Get Input References
-        inputTeacherFirstName = (EditText) findViewById(R.id.inputTaskName);
+        inputTeacherFirstName = (EditText) findViewById(R.id.inputTeacherFirstName);
         inputTeacherLastName = (EditText) findViewById(R.id.inputTeacherLastName);
         inputTeacherEmail = (EditText) findViewById(R.id.inputTeacherEmail);
         inputTeacherPhone = (EditText) findViewById(R.id.inputTeacherPhone);

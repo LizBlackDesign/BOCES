@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/inputTaskName"
+            android:id="@+id/inputTeacherFirstName"
             android:layout_width="368dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -39,8 +39,8 @@
             android:ems="10"
             android:hint="@string/btn_add_teachers_hint_last"
             android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/inputTaskName"
-            app:layout_constraintLeft_toLeftOf="@+id/inputTaskName" />
+            app:layout_constraintTop_toBottomOf="@+id/inputTeacherFirstName"
+            app:layout_constraintLeft_toLeftOf="@+id/inputTeacherFirstName" />
 
         <EditText
             android:id="@+id/inputTeacherEmail"

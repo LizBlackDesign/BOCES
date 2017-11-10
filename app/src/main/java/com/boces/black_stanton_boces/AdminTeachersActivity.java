@@ -64,6 +64,7 @@ public class AdminTeachersActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             Teacher teacher = teachers.get(position);
 
+            holder.teacherId = teacher.getId();
             holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
             holder.teacherEmail.setText(teacher.getEmail());
             holder.teacherPhone.setText(teacher.getPhoneNumber());
@@ -98,12 +99,25 @@ public class AdminTeachersActivity extends AppCompatActivity {
             public TextView teacherName;
             public TextView teacherEmail;
             public TextView teacherPhone;
+            public int teacherId;
 
             public ViewHolder(View v) {
                 super(v);
                 teacherName = v.findViewById(R.id.teacherName);
                 teacherEmail = v.findViewById(R.id.teacherEmail);
                 teacherPhone = v.findViewById(R.id.teacherPhone);
+
+
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (teacherId < 1)
+                            throw new IllegalStateException("Teacher Id Not Defined");
+                        Intent editTeacher = new Intent(getApplicationContext(), AdminEditTeacherActivity.class);
+                        editTeacher.putExtra(AdminEditTeacherActivity.BUNDLE_KEY.TEACHER_ID.name(), teacherId);
+                        startActivity(editTeacher);
+                    }
+                });
             }
         }
 

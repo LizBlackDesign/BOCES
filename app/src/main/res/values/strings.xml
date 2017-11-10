@@ -137,8 +137,7 @@
     <string name="title_admin_tasks">Tasks</string>
     <string name="search_hint_admin_type_task_name">Type Task Name</string>
     <string name="btn_admin_tasks_back">Back</string>
-    <string name="btn_admin_tasks_edit">Edit Tasks</string>
-    <string name="btn_admin_tasks_add">Add Tasks</string>
+    <string name="btn_admin_tasks_add">Add Task</string>
 
     <!--activity_admin_add_tasks-->
     <string name="title_add_tasks">Add Task</string>

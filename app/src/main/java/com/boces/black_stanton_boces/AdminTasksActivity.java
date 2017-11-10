@@ -68,6 +68,7 @@ public class AdminTasksActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             Task task = tasks.get(position);
 
+            holder.taskId = task.getId();
             holder.taskName.setText(task.getName());
         }
 
@@ -86,11 +87,23 @@ public class AdminTasksActivity extends AppCompatActivity {
 
         @SuppressWarnings("WeakerAccess")
         public class ViewHolder extends RecyclerView.ViewHolder {
+            public int taskId;
             public TextView taskName;
 
             public ViewHolder(View v) {
                 super(v);
                 taskName = v.findViewById(R.id.taskName);
+
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (taskId < 1)
+                            throw new IllegalStateException("Task Id Not Defined");
+                        Intent editTask = new Intent(getApplicationContext(), AdminEditTaskActivity.class);
+                        editTask.putExtra(AdminEditTaskActivity.BUNDLE_KEY.TASK_ID.name(), taskId);
+                        startActivity(editTask);
+                    }
+                });
             }
         }
     }

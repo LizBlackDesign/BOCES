@@ -9,9 +9,11 @@ import android.util.Log;
 
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
+import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PersistenceInteractor extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -31,6 +33,15 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String TABLE = "Task";
         private static final String ID = "TaskId";
         private static final String NAME = "TaskName";
+    }
+
+    private static class TASK_PUNCH {
+        private static final String TABLE = "TaskPunch";
+        private static final String ID = "TaskPunchID";
+        private static final String STUDENT_ID = "StudentID";
+        private static final String TASK_ID = "TaskID";
+        private static final String TIME_START = "TimeStart";
+        private static final String TIME_STOP = "TimeStop";
     }
 
     private static class STUDENT {
@@ -61,6 +72,19 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TASK.NAME + " TEXT" +
                     ")";
 
+    private static final String TASK_PUNCH_DDL =
+            "CREATE TABLE " + TASK_PUNCH.TABLE + "( " +
+                    TASK_PUNCH.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TASK_PUNCH.STUDENT_ID + " INTEGER NOT NULL, " +
+                    TASK_PUNCH.TASK_ID + " INTEGER NOT NULL, " +
+                    TASK_PUNCH.TIME_START + " DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
+                    TASK_PUNCH.TIME_STOP + " DATETIME DEFAULT NULL, " +
+                    "FOREIGN KEY(" + TASK_PUNCH.STUDENT_ID + ") " +
+                        "REFERENCES " + STUDENT.TABLE + "(" + STUDENT.ID + "), " +
+                    "FOREIGN KEY(" + TASK_PUNCH.TASK_ID + ") " +
+                        "REFERENCES " + TASK.TABLE + "(" + TASK.ID + ") " +
+                    ")";
+
     private static final String TEACHER_DDL =
             "CREATE TABLE " + TEACHER.TABLE + "( " +
                     TEACHER.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -79,6 +103,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(TEACHER_DDL);
         sqLiteDatabase.execSQL(TASK_DDL);
         sqLiteDatabase.execSQL(STUDENT_DDL);
+        sqLiteDatabase.execSQL(TASK_PUNCH_DDL);
     }
 
     @Override
@@ -117,6 +142,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
     public void dropAndRecreate() {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        db.execSQL("DROP TABLE IF EXISTS " + TASK_PUNCH.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + STUDENT.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TASK.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TEACHER.TABLE);
@@ -314,6 +340,62 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             Log.w(TAG, "Update Affected No Rows");
     }
     //END OF TASK
+
+    private TaskPunch taskPunchFromRow(Cursor cursor) {
+        TaskPunch taskPunch = new TaskPunch();
+        taskPunch.setId(cursor.getInt(0));
+        taskPunch.setStudentId(cursor.getInt(1));
+        taskPunch.setTaskId(cursor.getInt(2));
+        taskPunch.setTimeStart(new Date(cursor.getLong(3) * 1000L));
+        if (!cursor.isNull(4))
+            taskPunch.setTimeEnd(new Date(cursor.getLong(4) * 1000L));
+        return taskPunch;
+    }
+
+    public TaskPunch getTaskPunch(int id) {
+        TaskPunch taskPunch = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT " +
+                        TASK_PUNCH.ID + ", " +
+                        TASK_PUNCH.STUDENT_ID + ", " +
+                        TASK_PUNCH.TASK_ID + ", " +
+                        "strftime('%s', " + TASK_PUNCH.TIME_START + " ), " +
+                        "strftime('%s', " + TASK_PUNCH.TIME_STOP + " ), " +
+                        " FROM " + TASK_PUNCH.TABLE +
+                        " WHERE " + TASK_PUNCH.ID + "=" + id, null);
+
+        if (cursor.moveToFirst())
+            taskPunch = taskPunchFromRow(cursor);
+
+        cursor.close();
+
+        return taskPunch;
+    }
+
+    public ArrayList<TaskPunch> getAllTaskPunches() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT " +
+                    TASK_PUNCH.ID + ", " +
+                    TASK_PUNCH.STUDENT_ID + ", " +
+                    TASK_PUNCH.TASK_ID + ", " +
+                    "strftime('%s', " + TASK_PUNCH.TIME_START + " ), " +
+                    "strftime('%s', " + TASK_PUNCH.TIME_STOP + " ), " +
+                    " FROM " + TASK_PUNCH.TABLE, null);
+
+        ArrayList<TaskPunch> taskPunches = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                taskPunches.add(taskPunchFromRow(cursor));
+            }while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return taskPunches;
+    }
 
     private Teacher teacherFromRow(Cursor cursor) {
         Teacher teacher = new Teacher();

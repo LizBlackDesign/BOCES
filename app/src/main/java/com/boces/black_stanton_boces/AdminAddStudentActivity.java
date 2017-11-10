@@ -33,7 +33,6 @@ public class AdminAddStudentActivity extends AppCompatActivity {
     private EditText inputStudentLastName;
     private EditText inputStudentAge;
     private EditText inputStudentYear;
-    private Spinner teacherSpinner;
     private TeacherSpinnerInteractor teacherSpinnerInteractor;
 
     @Override
@@ -51,7 +50,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         persistence = new PersistenceInteractor(this);
 
         // Get Spinner For Input/Setup
-        teacherSpinner = (Spinner) findViewById(R.id.spinnerTeacher);
+        Spinner teacherSpinner = (Spinner) findViewById(R.id.spinnerTeacher);
         teacherSpinnerInteractor = new TeacherSpinnerInteractor(teacherSpinner, persistence.getAllTeachers(), this);
 
 
@@ -113,7 +112,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         }
 
 
-        TeacherSpinnerItem spinnerTeacher = (TeacherSpinnerItem) teacherSpinner.getSelectedItem();
+        Teacher spinnerTeacher = teacherSpinnerInteractor.getSelectedItem();
         if (spinnerTeacher == null) {
             new AlertDialog.Builder(this)
                     .setTitle("A Teacher Is Required")
@@ -128,7 +127,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
             return;
         }
 
-        student.setTeacherId(teacherSpinnerInteractor.getSelectedItem().getId());
+        student.setTeacherId(spinnerTeacher.getId());
 
         int studentId = persistence.addStudent(student);
         student.setId(studentId);

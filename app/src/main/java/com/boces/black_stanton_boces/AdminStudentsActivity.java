@@ -68,6 +68,7 @@ public class AdminStudentsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Student student = students.get(position);
+            holder.studentId = student.getId();
 
             holder.studentName.setText(student.getFirstName() + " " + student.getLastName());
             holder.studentAge.setText(Integer.toString(student.getAge()));
@@ -94,12 +95,29 @@ public class AdminStudentsActivity extends AppCompatActivity {
             public TextView studentName;
             public TextView studentAge;
             public TextView teacherName;
+            /**
+             * Id of The Current Student
+             * Should Probably Not Be Displayed
+             */
+            public int studentId;
 
             public ViewHolder(View v) {
                 super(v);
                 studentName = v.findViewById(R.id.studentListName);
                 studentAge = v.findViewById(R.id.studentListAge);
                 teacherName = v.findViewById(R.id.studentListTeacherName);
+
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (studentId < 1) {
+                            throw new IllegalStateException("Student Id Not Defined");
+                        }
+                        Intent editStudent  = new Intent(getApplicationContext(), AdminEditStudentActivity.class);
+                        editStudent.putExtra(AdminEditStudentActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+                        startActivity(editStudent);
+                    }
+                });
             }
         }
     }

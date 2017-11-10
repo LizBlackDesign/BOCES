@@ -218,6 +218,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(STUDENT.LAST_NAME, student.getLastName());
         values.put(STUDENT.AGE, student.getAge());
         values.put(STUDENT.YEAR, student.getYear());
+        values.put(STUDENT.TEACHER_ID, student.getTeacherId());
 
         int affectedRows = db.update(STUDENT.TABLE, values,
                 STUDENT.ID + " = ?",

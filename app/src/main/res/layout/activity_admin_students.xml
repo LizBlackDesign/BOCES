@@ -49,22 +49,11 @@
         android:id="@+id/btnAddStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:text="@string/btn_admin_students_add"
+        android:layout_marginLeft="152dp"
         android:onClick="onClickAdminAddStudent"
+        android:text="@string/btn_admin_students_add"
         app:layout_constraintLeft_toRightOf="@+id/btnBackStudent"
         app:layout_constraintTop_toTopOf="@+id/btnBackStudent" />
-
-    <Button
-        android:id="@+id/btnEditStudent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickAdminEditStudent"
-        android:text="@string/btn_admin_students_edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btnAddStudent"
-        app:layout_constraintTop_toTopOf="@+id/btnAddStudent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/studentList"

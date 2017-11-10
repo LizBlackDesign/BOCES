@@ -240,7 +240,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         Task task = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
-                "SELECT" +
+                "SELECT " +
                         TASK.ID + " , " +
                         TASK.NAME +
                         " FROM " + TASK.TABLE +

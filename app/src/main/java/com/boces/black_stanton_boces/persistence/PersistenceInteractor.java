@@ -360,8 +360,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                         TASK_PUNCH.ID + ", " +
                         TASK_PUNCH.STUDENT_ID + ", " +
                         TASK_PUNCH.TASK_ID + ", " +
-                        "strftime('%s', " + TASK_PUNCH.TIME_START + " ), " +
-                        "strftime('%s', " + TASK_PUNCH.TIME_STOP + " ), " +
+                        TASK_PUNCH.TIME_START + ", " +
+                        TASK_PUNCH.TIME_STOP + " " +
                         " FROM " + TASK_PUNCH.TABLE +
                         " WHERE " + TASK_PUNCH.ID + "=" + id, null);
 
@@ -373,6 +373,35 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskPunch;
     }
 
+    public int addTaskPunch(TaskPunch taskPunch) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(TASK_PUNCH.STUDENT_ID, taskPunch.getStudentId());
+        values.put(TASK_PUNCH.TASK_ID, taskPunch.getTaskId());
+        values.put(TASK_PUNCH.TIME_START, taskPunch.getTimeStart().getTime() / 1000L);
+        if (taskPunch.getTimeEnd() != null)
+            values.put(TASK_PUNCH.TIME_STOP, taskPunch.getTimeEnd().getTime() / 1000L);
+
+        long rowId = db.insertOrThrow(TASK_PUNCH.TABLE, null, values);
+
+        // Abort on failed insert
+        if (rowId == -1)
+            return -1;
+
+        // Get The New Punch And Return Its ID
+        Cursor cursor = db.rawQuery(
+                "SELECT " + TASK_PUNCH.ID + " FROM " + TASK_PUNCH.TABLE +
+                        " WHERE ROWID = " + rowId , null);
+
+        int punchId = -1;
+        if (cursor.moveToFirst())
+            punchId = cursor.getInt(0);
+        cursor.close();
+
+        return punchId;
+    }
+
     public ArrayList<TaskPunch> getAllTaskPunches() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
@@ -380,8 +409,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TASK_PUNCH.ID + ", " +
                     TASK_PUNCH.STUDENT_ID + ", " +
                     TASK_PUNCH.TASK_ID + ", " +
-                    "strftime('%s', " + TASK_PUNCH.TIME_START + " ), " +
-                    "strftime('%s', " + TASK_PUNCH.TIME_STOP + " ), " +
+                    TASK_PUNCH.TIME_START + ", " +
+                    TASK_PUNCH.TIME_STOP +
                     " FROM " + TASK_PUNCH.TABLE, null);
 
         ArrayList<TaskPunch> taskPunches = new ArrayList<>();

@@ -73,6 +73,12 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         finish();
     }
 
+    public void onDeleteTeacher(View v) {
+        PersistenceInteractor persistence = new PersistenceInteractor(this);
+        persistence.deleteTeacher(id);
+        finish();
+    }
+
     //Opens Teacher Manager (back one screen)
     public void onClickAdminTeacherEditBack(View v) {
         finish();

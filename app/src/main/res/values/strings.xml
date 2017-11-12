@@ -152,5 +152,6 @@
     <string name="btn_edit_tasks_save">Save</string>
     <string name="btn_edit_tasks_back">Back</string>
 
+    <string name="btnDelete">Delete</string>
 
 </resources>

@@ -139,6 +139,12 @@ public class AdminEditStudentActivity extends AppCompatActivity {
         finish();
     }
 
+    public void onDeleteStudent(View v) {
+        PersistenceInteractor persistence = new PersistenceInteractor(this);
+        persistence.deleteStudent(studentId);
+        finish();
+    }
+
     //Opens Student Manager (back one screen)
     public void onClickAdminStudentsEditBack(View v) {
         startActivity(new Intent(this, AdminStudentsActivity.class));

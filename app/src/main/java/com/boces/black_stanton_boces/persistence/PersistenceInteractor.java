@@ -279,6 +279,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             Log.w(TAG, "Update Affected No Rows");
     }
 
+    public void deleteStudent(int studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(STUDENT.TABLE, STUDENT.ID + " = ?", new String[]{Integer.toString(studentId)});
+    }
+
     //START OF TASK
     private Task taskFromRow(Cursor cursor) {
         Task task = new Task();
@@ -364,6 +369,12 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         if (affectedRows < 1)
             Log.w(TAG, "Update Affected No Rows");
     }
+
+    public void deleteTask(int taskId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TASK.TABLE, TASK.ID + " = ?", new String[]{Integer.toString(taskId)});
+    }
+
     //END OF TASK
 
     private TaskPunch taskPunchFromRow(Cursor cursor) {
@@ -442,6 +453,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
         if (affectedRows < 1)
             Log.w(TAG, "Update Affected No Rows");
+    }
+
+    public void deleteTaskPunch(int taskPunchId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TASK_PUNCH.TABLE, TASK_PUNCH.ID + " = ?", new String[]{Integer.toString(taskPunchId)});
     }
 
     public ArrayList<TaskPunch> getAllTaskPunches() {
@@ -569,5 +585,10 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
         if (affectedRows < 1)
             Log.w(TAG, "Update Affected No Rows");
+    }
+
+    public void deleteTeacher(int teacherId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TEACHER.TABLE, TEACHER.ID + " = ?", new String[]{Integer.toString(teacherId)});
     }
 }

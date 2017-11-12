@@ -25,16 +25,38 @@ import java.util.List;
 
 public class StudentLoginSelectStudentActivity extends AppCompatActivity {
 
+    private int teacherId;
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
+
+    /**
+     * Recognised Values That May Be Passed Through Bundles
+     */
+    public enum BUNDLE_KEY {
+        TEACHER_ID
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_login_select_student);
+        Bundle extras = getIntent().getExtras();
+
+        // Painfully Validate That We Got Something
+        if (extras == null)
+            throw new IllegalArgumentException("No Data Passed To Edit");
+        teacherId = extras.getInt(BUNDLE_KEY.TEACHER_ID.name());
+        if (teacherId == 0)
+            throw new IllegalArgumentException("Teacher ID Not Passed To Edit");
 
         persistence = new PersistenceInteractor(this);
-        StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence);
+
+        Teacher teacher = persistence.getTeacher(teacherId);
+        if (teacher == null)
+            throw new IllegalArgumentException("Teacher With ID " + teacherId + " Not Found");
+
+
+        StudentAdapter adapter = new StudentAdapter(persistence.getStudentsForTeacher(teacherId), persistence);
 
         studentList = (RecyclerView) findViewById(R.id.recyclerSelectStudent);
         studentList.setAdapter(adapter);
@@ -44,7 +66,7 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        ((StudentAdapter) studentList.getAdapter()).setStudents(persistence.getAllStudents());
+        ((StudentAdapter) studentList.getAdapter()).setStudents(persistence.getStudentsForTeacher(teacherId));
         studentList.getAdapter().notifyDataSetChanged();
     }
 
@@ -69,6 +91,7 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             Student student = students.get(position);
 
+            holder.studentId = student.getId();
             holder.studentName.setText(student.getFirstName() + " " + student.getLastName());
             holder.studentAge.setText(Integer.toString(student.getAge()));
 
@@ -91,6 +114,7 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
 
         @SuppressWarnings("WeakerAccess")
         public class ViewHolder extends RecyclerView.ViewHolder {
+            public int studentId;
             public TextView studentName;
             public TextView studentAge;
             public TextView teacherName;
@@ -100,6 +124,17 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
                 studentName = v.findViewById(R.id.studentListName);
                 studentAge = v.findViewById(R.id.studentListAge);
                 teacherName = v.findViewById(R.id.studentListTeacherName);
+
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (studentId < 1)
+                            throw new IllegalStateException("Student ID Not Defined");
+                        Intent selectTask = new Intent(getApplicationContext(), StudentLoginSelectTaskActivity.class);
+                        selectTask.putExtra(StudentLoginSelectTaskActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+                        startActivity(selectTask);
+                    }
+                });
             }
         }
     }

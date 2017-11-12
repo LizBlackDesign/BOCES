@@ -206,6 +206,31 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return students;
     }
 
+    public ArrayList<Student> getStudentsForTeacher(int teacherID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT " +
+                        STUDENT.ID + " , " +
+                        STUDENT.FIRST_NAME + " , " +
+                        STUDENT.LAST_NAME + " , " +
+                        STUDENT.AGE + " , " +
+                        STUDENT.YEAR + " , " +
+                        STUDENT.TEACHER_ID +
+                        " FROM " + STUDENT.TABLE +
+                        " WHERE " + STUDENT.TEACHER_ID + "=" + teacherID, null);
+
+        ArrayList<Student> students = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                students.add(studentFromRow(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return students;
+    }
+
     public int addStudent(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -400,6 +425,23 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         cursor.close();
 
         return punchId;
+    }
+
+    public void update(TaskPunch taskPunch) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(TASK_PUNCH.STUDENT_ID, taskPunch.getStudentId());
+        values.put(TASK_PUNCH.TASK_ID, taskPunch.getTaskId());
+        values.put(TASK_PUNCH.TIME_START, taskPunch.getTimeStart().getTime()/1000L);
+        if (taskPunch.getTimeEnd() != null)
+            values.put(TASK_PUNCH.TIME_STOP, taskPunch.getTimeEnd().getTime()/1000L);
+
+        int affectedRows = db.update(TASK_PUNCH.TABLE, values,
+                TASK_PUNCH.ID + "= ?", new String[]{taskPunch.getId().toString()});
+
+        if (affectedRows < 1)
+            Log.w(TAG, "Update Affected No Rows");
     }
 
     public ArrayList<TaskPunch> getAllTaskPunches() {

@@ -65,6 +65,7 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             Teacher teacher = teachers.get(position);
 
+            holder.teacherId = teacher.getId();
             holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
             holder.teacherEmail.setText(teacher.getEmail());
             holder.teacherPhone.setText(teacher.getPhoneNumber());
@@ -96,6 +97,7 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
 
         @SuppressWarnings("WeakerAccess")
         public class ViewHolder extends RecyclerView.ViewHolder {
+            public int teacherId;
             public TextView teacherName;
             public TextView teacherEmail;
             public TextView teacherPhone;
@@ -105,6 +107,17 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
                 teacherName = v.findViewById(R.id.teacherName);
                 teacherEmail = v.findViewById(R.id.teacherEmail);
                 teacherPhone = v.findViewById(R.id.teacherPhone);
+
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (teacherId < 1)
+                            throw new IllegalStateException("Teacher ID Not Defined");
+                        Intent selectStudent = new Intent(getApplicationContext(), StudentLoginSelectStudentActivity.class);
+                        selectStudent.putExtra(StudentLoginSelectStudentActivity.BUNDLE_KEY.TEACHER_ID.name(), teacherId);
+                        startActivity(selectStudent);
+                    }
+                });
             }
         }
 

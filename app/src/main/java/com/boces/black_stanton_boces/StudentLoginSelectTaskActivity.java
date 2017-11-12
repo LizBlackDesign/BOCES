@@ -17,24 +17,44 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
+import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
+import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StudentLoginSelectTaskActivity extends AppCompatActivity {
 
-
+    private int studentId;
     private PersistenceInteractor persistence;
     private RecyclerView taskList;
+
+    /**
+     * Recognised Values That May Be Passed Through Bundles
+     */
+    public enum BUNDLE_KEY {
+        STUDENT_ID
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_login_select_task);
-        persistence = new PersistenceInteractor(this);
-        TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks(), persistence);
+        Bundle extras = getIntent().getExtras();
 
+        // Painfully Validate That We Got Something
+        if (extras == null)
+            throw new IllegalStateException("No Data Passed To Edit");
+        studentId = extras.getInt(BUNDLE_KEY.STUDENT_ID.name());
+
+        persistence = new PersistenceInteractor(this);
+        Student currentStudent = persistence.getStudent(studentId);
+        if (currentStudent == null)
+            throw new IllegalStateException("Student With ID " + studentId + " Not Found");
+
+        TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks(), persistence);
         taskList = (RecyclerView) findViewById(R.id.recyclerSelectTask);
         taskList.setAdapter(adapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
@@ -68,6 +88,7 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             Task task = tasks.get(position);
 
+            holder.taskId = task.getId();
             holder.taskName.setText(task.getName());
         }
 
@@ -86,11 +107,32 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
 
         @SuppressWarnings("WeakerAccess")
         public class ViewHolder extends RecyclerView.ViewHolder {
+            int taskId;
             public TextView taskName;
 
             public ViewHolder(View v) {
                 super(v);
                 taskName = v.findViewById(R.id.taskName);
+
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (taskId < 1)
+                            throw new IllegalStateException("Task Id Not Defined");
+
+                        TaskPunch taskPunch = new TaskPunch();
+                        taskPunch.setStudentId(studentId);
+                        taskPunch.setTaskId(taskId);
+                        taskPunch.setTimeStart(new Date());
+                        int punchId = persistence.addTaskPunch(taskPunch);
+
+                        Intent startTask = new Intent(getApplicationContext(), StudentCurrentTaskViewActivity.class);
+                        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.TASK_ID.name(), taskId);
+                        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+                        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.PUNCH_ID.name(), punchId);
+                        startActivity(startTask);
+                    }
+                });
             }
         }
     }

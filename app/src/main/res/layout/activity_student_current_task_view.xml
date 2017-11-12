@@ -94,6 +94,7 @@
         android:layout_height="81dp"
         android:layout_marginTop="16dp"
         android:background="#82ED5F"
+        android:onClick="onTaskComplete"
         android:text="@string/btn_done"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -74,7 +74,8 @@ public class AdminStudentsActivity extends AppCompatActivity {
             holder.studentAge.setText(Integer.toString(student.getAge()));
 
             Teacher teacher = persistence.getTeacher(student.getTeacherId());
-            holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
+            if (teacher != null)
+                holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
         }
 
         @Override

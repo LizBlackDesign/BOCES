@@ -1,12 +1,14 @@
 package com.boces.black_stanton_boces.persistence.model;
 
+import android.graphics.Bitmap;
+
 public class Teacher {
     private Integer id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
-    //TODO: Add picture
+    private Bitmap image;
 
     public Integer getId() {
         return id;
@@ -46,5 +48,13 @@ public class Teacher {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

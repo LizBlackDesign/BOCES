@@ -1,13 +1,21 @@
 package com.boces.black_stanton_boces;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 public class AdminEditTeacherActivity extends AppCompatActivity {
 
@@ -16,6 +24,8 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
     private EditText lastName;
     private EditText email;
     private EditText phone;
+    private ImageView imageView;
+    private Bitmap image;
 
     /**
      * Recognised Values That May Be Passed Through Bundles
@@ -47,13 +57,15 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         lastName = (EditText) findViewById(R.id.inputTeacherLastName);
         email = (EditText) findViewById(R.id.inputTeacherEmail);
         phone = (EditText) findViewById(R.id.inputTeacherPhone);
+        imageView = (ImageView) findViewById(R.id.imgEditTeacher);
 
         // Set Current Values
         firstName.setText(teacher.getFirstName());
         lastName.setText(teacher.getLastName());
         email.setText(teacher.getEmail());
         phone.setText(teacher.getPhoneNumber());
-
+        if (teacher.getImage() != null)
+            imageView.setImageBitmap(teacher.getImage());
     }
 
     public void onSave(View view) {
@@ -69,8 +81,38 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         teacher.setEmail(email.getText().toString());
         teacher.setPhoneNumber(phone.getText().toString());
 
+        if (image != null)
+            teacher.setImage(image);
+
         persistence.update(teacher);
         finish();
+    }
+
+    public void onCamera(View v) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, 1);
+        cameraIntent.setType("image/*");
+        cameraIntent.putExtra("crop", "true");
+        cameraIntent.putExtra("aspectX", 0);
+        cameraIntent.putExtra("aspectY", 0);
+        cameraIntent.putExtra("outputX", 250);
+        cameraIntent.putExtra("outputY", 200);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bundle extras = data.getExtras();
+
+        if (extras == null) {
+            Toast.makeText(this, "No Image Passed Back", Toast.LENGTH_LONG).show();
+            return;
+        }
+        image = extras.getParcelable("data");
+        if (image == null) {
+            Toast.makeText(this, "No Image Passed Back", Toast.LENGTH_LONG).show();
+            return;
+        }
+        imageView.setImageBitmap(image);
     }
 
     public void onDeleteTeacher(View v) {

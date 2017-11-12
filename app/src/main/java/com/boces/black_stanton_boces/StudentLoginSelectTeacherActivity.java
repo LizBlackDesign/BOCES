@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
@@ -69,6 +70,8 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
             holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
             holder.teacherEmail.setText(teacher.getEmail());
             holder.teacherPhone.setText(teacher.getPhoneNumber());
+            if (teacher.getImage() != null)
+                holder.teacherImage.setImageBitmap(teacher.getImage());
         }
 
         @Override
@@ -101,12 +104,14 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
             public TextView teacherName;
             public TextView teacherEmail;
             public TextView teacherPhone;
+            public ImageView teacherImage;
 
             public ViewHolder(View v) {
                 super(v);
                 teacherName = v.findViewById(R.id.teacherName);
                 teacherEmail = v.findViewById(R.id.teacherEmail);
                 teacherPhone = v.findViewById(R.id.teacherPhone);
+                teacherImage = v.findViewById(R.id.teacherImage);
 
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.boces.black_stanton_boces.persistence.model.Student;
@@ -12,6 +14,8 @@ import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,6 +31,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String LAST_NAME = "LastName";
         private static final String EMAIL = "Email";
         private static final String PHONE_NUMBER = "PhoneNumber";
+        private static final String IMAGE = "TeacherImage";
     }
 
     private static class TASK {
@@ -91,7 +96,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TEACHER.FIRST_NAME + " TEXT, " +
                     TEACHER.LAST_NAME + " TEXT, " +
                     TEACHER.EMAIL + " TEXT, " +
-                    TEACHER.PHONE_NUMBER + " TEXT" +
+                    TEACHER.PHONE_NUMBER + " TEXT, " +
+                    TEACHER.IMAGE + " BLOB DEFAULT NULL " +
                     ")";
 
     public PersistenceInteractor(Context context) {
@@ -492,6 +498,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         teacher.setLastName(cursor.getString(2));
         teacher.setEmail(cursor.getString(3));
         teacher.setPhoneNumber(cursor.getString(4));
+        if (!cursor.isNull(5)) {
+            ByteArrayInputStream istream = new ByteArrayInputStream(cursor.getBlob(5));
+            Bitmap teacherImage = BitmapFactory.decodeStream(istream);
+            teacher.setImage(teacherImage);
+        }
 
         return teacher;
     }
@@ -504,7 +515,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                         TEACHER.FIRST_NAME + " , " +
                         TEACHER.LAST_NAME + " , " +
                         TEACHER.EMAIL + " , " +
-                        TEACHER.PHONE_NUMBER +
+                        TEACHER.PHONE_NUMBER + " , " +
+                        TEACHER.IMAGE +
                         " FROM " + TEACHER.TABLE +
                         " WHERE " + TEACHER.ID + "=" + id
                 , null);
@@ -527,7 +539,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                         TEACHER.FIRST_NAME + " , " +
                         TEACHER.LAST_NAME + " , " +
                         TEACHER.EMAIL + " , " +
-                        TEACHER.PHONE_NUMBER +
+                        TEACHER.PHONE_NUMBER + " , " +
+                        TEACHER.IMAGE +
                         " FROM " + TEACHER.TABLE
                 , null);
 
@@ -551,7 +564,14 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(TEACHER.EMAIL, teacher.getEmail());
         values.put(TEACHER.PHONE_NUMBER, teacher.getPhoneNumber());
 
-        long rowId = db.insert(TEACHER.TABLE, null, values);
+        // Convert Image To Byte Array For Persistence
+        if (teacher.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            teacher.getImage().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            values.put(TEACHER.IMAGE, stream.toByteArray());
+        }
+
+        long rowId = db.insertOrThrow(TEACHER.TABLE, null, values);
 
         // Abort on failed insert
         if (rowId == -1)
@@ -579,6 +599,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(TEACHER.LAST_NAME, teacher.getLastName());
         values.put(TEACHER.EMAIL, teacher.getEmail());
         values.put(TEACHER.PHONE_NUMBER, teacher.getPhoneNumber());
+        if (teacher.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            teacher.getImage().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            values.put(TEACHER.IMAGE, stream.toByteArray());
+        }
 
         int affectedRows = db.update(TEACHER.TABLE, values,
                 TEACHER.ID + " = ?", new String[]{teacher.getId().toString()});

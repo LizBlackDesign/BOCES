@@ -63,6 +63,12 @@ public class AdminEditTaskActivity extends AppCompatActivity {
         finish();
     }
 
+    public void onDelete(View view) {
+        PersistenceInteractor persistence = new PersistenceInteractor(this);
+        persistence.deleteTask(id);
+        finish();
+    }
+
     // Opens Task Manager(back one screen)
     public void onClickAdminTaskEditBack(View v) {
         finish();

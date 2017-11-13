@@ -15,7 +15,12 @@ import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StudentCurrentTaskViewActivity extends AppCompatActivity {
 
@@ -24,6 +29,9 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
     private int punchId;
     private TextView lblCurrentTaskStudentName;
     private TextView lblCurrentTaskTaskName;
+    private TextView lblTaskTime;
+    private Timer timer;
+    private TimerTask timerTask;
 
     /**
      * Recognised Values That May Be Passed Through Bundles
@@ -34,7 +42,7 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_current_task_view);
 
@@ -69,6 +77,40 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
 
         lblCurrentTaskTaskName = (TextView) findViewById(R.id.lblCurrentTaskTaskName);
         lblCurrentTaskTaskName.setText(task.getName());
+        lblTaskTime = (TextView) findViewById(R.id.timeCurrent);
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            long seconds = 0L;
+            @Override
+            public void run() {
+                seconds++;
+                StringBuilder stringBuilder = new StringBuilder();
+                if (seconds > 60L * 60L) {
+                    stringBuilder.append("Hours: ");
+                    stringBuilder.append(seconds / (60L * 60L));
+                    stringBuilder.append(' ');
+                }
+                if (seconds > 60L) {
+                    stringBuilder.append("Minutes: ");
+                    stringBuilder.append(seconds / 60L);
+                    stringBuilder.append(' ');
+                }
+                stringBuilder.append("Seconds: ");
+                stringBuilder.append(seconds);
+
+                final String timeString = stringBuilder.toString();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lblTaskTime.setText(timeString);
+                    }
+                });
+
+            }
+
+        };
+        timer.schedule(timerTask, 1000L);
     }
 
     public void onTaskComplete(View view) {
@@ -77,6 +119,8 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         if (taskPunch != null) {
             taskPunch.setTimeEnd(new Date());
             persistence.update(taskPunch);
+            timer.cancel();
+            finish();
         } else {
             Toast.makeText(this, "Task Not Found", Toast.LENGTH_LONG).show();
         }

@@ -74,20 +74,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCurrentTaskDone" />
 
-    <!--TODO: Code timer-->
-    <EditText
+    <TextView
         android:id="@+id/timeCurrent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageCurrentTask" />
 
-    <!--TODO: Code to stop timer-->
     <Button
         android:id="@+id/btnCurrentTaskDone"
         android:layout_width="183dp"

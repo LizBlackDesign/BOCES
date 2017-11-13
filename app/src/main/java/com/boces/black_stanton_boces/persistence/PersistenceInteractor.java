@@ -596,7 +596,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return teachers;
     }
 
-    public int addTask(Teacher teacher) {
+    public int addTeacher(Teacher teacher) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 

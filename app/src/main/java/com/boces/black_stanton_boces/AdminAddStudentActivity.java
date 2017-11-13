@@ -3,6 +3,8 @@ package com.boces.black_stanton_boces;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
@@ -28,11 +32,12 @@ import java.util.List;
 public class AdminAddStudentActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
-    private RecyclerView studentList;
     private EditText inputStudentFirstName;
     private EditText inputStudentLastName;
     private EditText inputStudentAge;
     private EditText inputStudentYear;
+    private ImageView imageView;
+    private Bitmap image;
     private TeacherSpinnerInteractor teacherSpinnerInteractor;
 
     @Override
@@ -45,6 +50,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         inputStudentLastName = (EditText) findViewById(R.id.inputStudentLastName);
         inputStudentAge = (EditText) findViewById(R.id.inputStudentAge);
         inputStudentYear = (EditText) findViewById(R.id.inputStudentYear);
+        imageView = (ImageView) findViewById(R.id.imgAddStudent);
 
         // Get Access To The Database
         persistence = new PersistenceInteractor(this);
@@ -52,19 +58,6 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         // Get Spinner For Input/Setup
         Spinner teacherSpinner = (Spinner) findViewById(R.id.spinnerTeacher);
         teacherSpinnerInteractor = new TeacherSpinnerInteractor(teacherSpinner, persistence.getAllTeachers(), this);
-
-
-        StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence);
-        studentList = (RecyclerView) findViewById(R.id.studentList);
-        studentList.setAdapter(adapter);
-        studentList.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((StudentAdapter) studentList.getAdapter()).setStudents(persistence.getAllStudents());
-        studentList.getAdapter().notifyDataSetChanged();
     }
 
     /**
@@ -128,83 +121,42 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         }
 
         student.setTeacherId(spinnerTeacher.getId());
+        if (image != null)
+            student.setImage(image);
 
-        int studentId = persistence.addStudent(student);
-        student.setId(studentId);
-        ((StudentAdapter) studentList.getAdapter()).addStudent(student);
+        persistence.addStudent(student);
+        finish();
     }
 
-
-    private class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder>{
-        List<Student> students;
-        PersistenceInteractor persistence;
-
-        public StudentAdapter(List<Student> students, PersistenceInteractor persistence) {
-            this.students = students;
-            this.persistence = persistence;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View studentView = inflater.inflate(R.layout.item_student, parent, false);
-            return new ViewHolder(studentView);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Student student = students.get(position);
-
-            holder.studentName.setText(student.getFirstName() + " " + student.getLastName());
-            holder.studentAge.setText(Integer.toString(student.getAge()));
-            holder.studentYear.setText(Integer.toString(student.getYear()));
-
-            Teacher teacher = persistence.getTeacher(student.getTeacherId());
-            holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
-        }
-
-        @Override
-        public int getItemCount() {
-            return students.size();
-        }
-
-        public void addStudent(Student student)
-        {
-            students.add(student);
-            this.notifyItemInserted(students.size() - 1);
-        }
-
-        public List<Student> getStudents() {
-            return students;
-        }
-
-        public void setStudents(List<Student> students) {
-            this.students = students;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public class ViewHolder extends RecyclerView.ViewHolder
-        {
-            public TextView studentName;
-            public TextView studentAge;
-            public TextView studentYear;
-            public TextView teacherName;
-
-            public ViewHolder(View v) {
-                super(v);
-                studentName = v.findViewById(R.id.studentListName);
-                studentAge = v.findViewById(R.id.studentListAge);
-                studentYear = v.findViewById(R.id.studentListYear);
-                teacherName = v.findViewById(R.id.studentListTeacherName);
-            }
-        }
+    public void onCamera(View v) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, 1);
+        cameraIntent.setType("image/*");
+        cameraIntent.putExtra("crop", "true");
+        cameraIntent.putExtra("aspectX", 0);
+        cameraIntent.putExtra("aspectY", 0);
+        cameraIntent.putExtra("outputX", 250);
+        cameraIntent.putExtra("outputY", 200);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bundle extras = data.getExtras();
+
+        if (extras == null) {
+            Toast.makeText(this, "No Image Passed Back", Toast.LENGTH_LONG).show();
+            return;
+        }
+        image = extras.getParcelable("data");
+        if (image == null) {
+            Toast.makeText(this, "No Image Passed Back", Toast.LENGTH_LONG).show();
+            return;
+        }
+        imageView.setImageBitmap(image);
+    }
 
     //Opens Student Manager (back one screen)
-    public void onClickAdminStudentsAddBack(View v)
-    {
-        startActivity(new Intent(this, AdminStudentsActivity.class));
+    public void onClickAdminStudentsAddBack(View v) {
+        finish();
     }
 }

@@ -78,48 +78,47 @@
         android:id="@+id/btnBackStudents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="9dp"
-        android:text="@string/btn_add_students_back"
         android:onClick="onClickAdminStudentsAddBack"
-        app:layout_constraintLeft_toLeftOf="@+id/spinnerTeacher"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTeacher" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/studentList"
-        android:layout_width="356dp"
-        android:layout_height="218dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="14dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBackStudents"
-        tools:listitem="@layout/item_student" />
+        android:text="@string/btn_add_students_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="8dp" />
 
     <Button
         android:id="@+id/btnSaveStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/btn_add_students_save"
         android:onClick="onClickAdminStudentAddSave"
-        app:layout_constraintRight_toRightOf="@+id/spinnerTeacher"
-        app:layout_constraintTop_toTopOf="@+id/btnBackStudents" />
+        android:text="@string/btn_add_students_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnBackStudents"
+        android:layout_marginRight="8dp" />
 
     <ImageButton
         android:id="@+id/imgbtnAddStudent"
         android:layout_width="55dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnSaveStudent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toEndOf="@+id/btnBackStudents"
+        android:onClick="onCamera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTeacher"
         app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <ImageView
+        android:id="@+id/imgAddStudent"
+        android:layout_width="170dp"
+        android:layout_height="158dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnAddStudent"
+        app:srcCompat="@mipmap/ic_launcher" />
 
 </android.support.constraint.ConstraintLayout>
 

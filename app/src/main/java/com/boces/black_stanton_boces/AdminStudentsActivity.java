@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -76,6 +77,9 @@ public class AdminStudentsActivity extends AppCompatActivity {
             Teacher teacher = persistence.getTeacher(student.getTeacherId());
             if (teacher != null)
                 holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
+
+            if (student.getImage() != null)
+                holder.studentImage.setImageBitmap(student.getImage());
         }
 
         @Override
@@ -96,6 +100,7 @@ public class AdminStudentsActivity extends AppCompatActivity {
             public TextView studentName;
             public TextView studentAge;
             public TextView teacherName;
+            public ImageView studentImage;
             /**
              * Id of The Current Student
              * Should Probably Not Be Displayed
@@ -107,6 +112,7 @@ public class AdminStudentsActivity extends AppCompatActivity {
                 studentName = v.findViewById(R.id.studentListName);
                 studentAge = v.findViewById(R.id.studentListAge);
                 teacherName = v.findViewById(R.id.studentListTeacherName);
+                studentImage = v.findViewById(R.id.studentListImage);
 
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override

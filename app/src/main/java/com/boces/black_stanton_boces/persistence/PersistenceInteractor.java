@@ -57,6 +57,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String AGE = "Age";
         private static final String YEAR = "Year";
         private static final String TEACHER_ID = "TeacherId";
+        private static final String IMAGE = "StudentImage";
     }
 
     private static final String STUDENT_DDL =
@@ -67,6 +68,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     STUDENT.LAST_NAME + " TEXT, " +
                     STUDENT.AGE + " INTEGER, " +
                     STUDENT.YEAR + " INTEGER, " +
+                    STUDENT.IMAGE + " BLOB DEFAULT NULL, " +
                     "FOREIGN KEY(" + STUDENT.TEACHER_ID +") " +
                         "REFERENCES " + TEACHER.TABLE + "(" + TEACHER.ID + ")" +
                     ")";
@@ -164,6 +166,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         student.setAge(cursor.getInt(3));
         student.setYear(cursor.getInt(4));
         student.setTeacherId(cursor.getInt(5));
+        if (!cursor.isNull(6)) {
+            ByteArrayInputStream istream = new ByteArrayInputStream(cursor.getBlob(6));
+            Bitmap teacherImage = BitmapFactory.decodeStream(istream);
+            student.setImage(teacherImage);
+        }
         return student;
     }
 
@@ -177,7 +184,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                         STUDENT.LAST_NAME + " , " +
                         STUDENT.AGE + " , " +
                         STUDENT.YEAR + " , " +
-                        STUDENT.TEACHER_ID +
+                        STUDENT.TEACHER_ID + ", " +
+                        STUDENT.IMAGE +
                         " FROM " + STUDENT.TABLE +
                         " WHERE " + STUDENT.ID + "=" +id, null);
 
@@ -197,7 +205,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                         STUDENT.LAST_NAME + " , " +
                         STUDENT.AGE + " , " +
                         STUDENT.YEAR + " , " +
-                        STUDENT.TEACHER_ID +
+                        STUDENT.TEACHER_ID + ", " +
+                        STUDENT.IMAGE +
                         " FROM " + STUDENT.TABLE, null);
 
         ArrayList<Student> students = new ArrayList<>();
@@ -247,6 +256,12 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(STUDENT.YEAR, student.getYear());
         values.put(STUDENT.TEACHER_ID, student.getTeacherId());
 
+        if (student.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            student.getImage().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            values.put(STUDENT.IMAGE, stream.toByteArray());
+        }
+
         long rowId = db.insert(STUDENT.TABLE, null, values);
 
         // Abort on failed insert
@@ -276,6 +291,12 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(STUDENT.AGE, student.getAge());
         values.put(STUDENT.YEAR, student.getYear());
         values.put(STUDENT.TEACHER_ID, student.getTeacherId());
+
+        if (student.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            student.getImage().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            values.put(STUDENT.IMAGE, stream.toByteArray());
+        }
 
         int affectedRows = db.update(STUDENT.TABLE, values,
                 STUDENT.ID + " = ?",

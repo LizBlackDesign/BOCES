@@ -1,9 +1,11 @@
 package com.boces.black_stanton_boces.persistence.model;
 
+import android.graphics.Bitmap;
+
 public class Task {
     private Integer id;
     private String name;
-    //TODO: Add picture
+    private Bitmap image;
 
 
     public Integer getId() {
@@ -20,5 +22,13 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

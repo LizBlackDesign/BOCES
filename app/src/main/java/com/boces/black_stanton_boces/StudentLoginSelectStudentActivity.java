@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -97,6 +98,8 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
 
             Teacher teacher = persistence.getTeacher(student.getTeacherId());
             holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
+            if (student.getImage() != null)
+                holder.studentImage.setImageBitmap(student.getImage());
         }
 
         @Override
@@ -115,12 +118,14 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
         @SuppressWarnings("WeakerAccess")
         public class ViewHolder extends RecyclerView.ViewHolder {
             public int studentId;
+            public ImageView studentImage;
             public TextView studentName;
             public TextView studentAge;
             public TextView teacherName;
 
             public ViewHolder(View v) {
                 super(v);
+                studentImage = v.findViewById(R.id.studentListImage);
                 studentName = v.findViewById(R.id.studentListName);
                 studentAge = v.findViewById(R.id.studentListAge);
                 teacherName = v.findViewById(R.id.studentListTeacherName);

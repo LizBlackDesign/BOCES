@@ -38,6 +38,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String TABLE = "Task";
         private static final String ID = "TaskId";
         private static final String NAME = "TaskName";
+        private static final String IMAGE = "TaskImage";
     }
 
     private static class TASK_PUNCH {
@@ -76,7 +77,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
     private static final String TASK_DDL =
             "CREATE TABLE " + TASK.TABLE + "( " +
                     TASK.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    TASK.NAME + " TEXT" +
+                    TASK.NAME + " TEXT, " +
+                    TASK.IMAGE + " BLOB DEFAULT NULL " +
                     ")";
 
     private static final String TASK_PUNCH_DDL =
@@ -230,7 +232,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                         STUDENT.LAST_NAME + " , " +
                         STUDENT.AGE + " , " +
                         STUDENT.YEAR + " , " +
-                        STUDENT.TEACHER_ID +
+                        STUDENT.TEACHER_ID + ", " +
+                        STUDENT.IMAGE +
                         " FROM " + STUDENT.TABLE +
                         " WHERE " + STUDENT.TEACHER_ID + "=" + teacherID, null);
 
@@ -316,6 +319,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         Task task = new Task();
         task.setId(cursor.getInt(0));
         task.setName(cursor.getString(1));
+        if (!cursor.isNull(2)) {
+            ByteArrayInputStream istream = new ByteArrayInputStream(cursor.getBlob(2));
+            Bitmap taskImage = BitmapFactory.decodeStream(istream);
+            task.setImage(taskImage);
+        }
         return task;
     }
 
@@ -324,8 +332,9 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
                 "SELECT " +
-                        TASK.ID + " , " +
-                        TASK.NAME +
+                        TASK.ID + ", " +
+                        TASK.NAME + ", " +
+                        TASK.IMAGE +
                         " FROM " + TASK.TABLE +
                         " WHERE " + TASK.ID + "=" +id, null);
 
@@ -340,8 +349,9 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
                 "SELECT " +
-                        TASK.ID + " , " +
-                        TASK.NAME +
+                        TASK.ID + ", " +
+                        TASK.NAME + ", " +
+                        TASK.IMAGE +
                         " FROM " + TASK.TABLE
                         , null);
 
@@ -362,6 +372,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(TASK.NAME, task.getName());
+        if (task.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            task.getImage().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            values.put(TASK.IMAGE, stream.toByteArray());
+        }
 
         long rowId = db.insert(TASK.TABLE, null, values);
 
@@ -388,6 +403,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(TASK.NAME, task.getName());
+        if (task.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            task.getImage().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            values.put(TASK.IMAGE, stream.toByteArray());
+        }
 
         int affectedRows = db.update(TASK.TABLE, values,
                 TASK.ID + " = ?",

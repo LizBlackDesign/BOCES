@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -90,6 +91,8 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
 
             holder.taskId = task.getId();
             holder.taskName.setText(task.getName());
+            if (task.getImage() != null)
+                holder.taskImage.setImageBitmap(task.getImage());
         }
 
         @Override
@@ -109,10 +112,12 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
         public class ViewHolder extends RecyclerView.ViewHolder {
             int taskId;
             public TextView taskName;
+            public ImageView taskImage;
 
             public ViewHolder(View v) {
                 super(v);
                 taskName = v.findViewById(R.id.taskName);
+                taskImage = v.findViewById(R.id.taskImage);
 
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override

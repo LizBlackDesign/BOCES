@@ -2,6 +2,8 @@ package com.boces.black_stanton_boces;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Task;
@@ -19,8 +23,9 @@ import java.util.List;
 
 public class AdminAddTaskActivity extends AppCompatActivity {
 
-    private RecyclerView taskList;
     private EditText inputTaskName;
+    private ImageView imageView;
+    private Bitmap image;
     private PersistenceInteractor persistence;
 
     @Override
@@ -30,90 +35,49 @@ public class AdminAddTaskActivity extends AppCompatActivity {
 
         // Get Input References
         inputTaskName = (EditText) findViewById(R.id.inputTask);
+        imageView = (ImageView) findViewById(R.id.imgTask);
 
         persistence = new PersistenceInteractor(this);
-        TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks());
-
-        taskList = (RecyclerView) findViewById(R.id.tasksList);
-        taskList.setAdapter(adapter);
-
-        taskList.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((TaskAdapter) taskList.getAdapter()).setTasks(persistence.getAllTasks());
-        taskList.getAdapter().notifyDataSetChanged();
     }
 
     public void onClickAdminTaskAddSave(View v) {
         Task task = new Task();
         task.setName(inputTaskName.getText().toString());
+        if (image != null)
+            task.setImage(image);
 
-        int taskId = persistence.addTask(task);
-        task.setId(taskId);
-        ((TaskAdapter) taskList.getAdapter()).addTask(task);
+        persistence.addTask(task);
     }
 
+    public void onCamera(View v) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, 1);
+        cameraIntent.setType("image/*");
+        cameraIntent.putExtra("crop", "true");
+        cameraIntent.putExtra("aspectX", 0);
+        cameraIntent.putExtra("aspectY", 0);
+        cameraIntent.putExtra("outputX", 250);
+        cameraIntent.putExtra("outputY", 200);
+    }
 
-    @SuppressWarnings("WeakerAccess")
-    private class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
-        private List<Task> tasks;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bundle extras = data.getExtras();
 
-        public TaskAdapter(List<Task> tasks) {
-            this.tasks = tasks;
+        if (extras == null) {
+            Toast.makeText(this, "No Image Passed Back", Toast.LENGTH_LONG).show();
+            return;
         }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View taskView = inflater.inflate(R.layout.item_task, parent, false);
-
-            return new ViewHolder(taskView);
+        image = extras.getParcelable("data");
+        if (image == null) {
+            Toast.makeText(this, "No Image Passed Back", Toast.LENGTH_LONG).show();
+            return;
         }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Task task = tasks.get(position);
-            holder.taskName.setText(task.getName());
-        }
-
-        @Override
-        public int getItemCount() {
-            return tasks.size();
-        }
-
-        public void addTask(Task task) {
-            tasks.add(task);
-            this.notifyItemInserted(tasks.size() - 1);
-        }
-
-
-        public List<Task> getTasks() {
-            return tasks;
-        }
-
-        public void setTasks(List<Task> tasks) {
-            this.tasks = tasks;
-        }
-
-
-        @SuppressWarnings("WeakerAccess")
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView taskName;
-
-            public ViewHolder(View v) {
-                super(v);
-                taskName = v.findViewById(R.id.taskName);
-            }
-        }
+        imageView.setImageBitmap(image);
     }
 
     //Opens Task Manager(back one screen)
-    public void onClickAdminTasksAddBack(View v)
-    {
-        startActivity(new Intent(this, AdminTasksActivity.class));
+    public void onClickAdminTasksAddBack(View v) {
+        finish();
     }
 }

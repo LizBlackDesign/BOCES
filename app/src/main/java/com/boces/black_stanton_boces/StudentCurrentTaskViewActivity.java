@@ -116,7 +116,7 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
             }
 
         };
-        timer.schedule(timerTask, 1000L);
+        timer.schedule(timerTask, 1000L, 1000L);
     }
 
     public void onTaskComplete(View view) {

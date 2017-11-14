@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
     private TextView lblCurrentTaskStudentName;
     private TextView lblCurrentTaskTaskName;
     private TextView lblTaskTime;
+    private ImageView imageCurrentTask;
     private Timer timer;
     private TimerTask timerTask;
 
@@ -78,6 +80,10 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         lblCurrentTaskTaskName = (TextView) findViewById(R.id.lblCurrentTaskTaskName);
         lblCurrentTaskTaskName.setText(task.getName());
         lblTaskTime = (TextView) findViewById(R.id.timeCurrent);
+        imageCurrentTask = (ImageView) findViewById(R.id.imageCurrentTask);
+        if (task.getImage() != null) {
+            imageCurrentTask.setImageBitmap(task.getImage());
+        }
 
         timer = new Timer();
         timerTask = new TimerTask() {

@@ -131,10 +131,4 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
             Toast.makeText(this, "Task Not Found", Toast.LENGTH_LONG).show();
         }
     }
-
-    //Opens Task Selection Screen (back one screen)
-    public void onClickAdminCurrentTaskBack(View v) {
-        startActivity(new Intent(this, StudentLoginSelectTaskActivity.class));
-    }
-
 }

@@ -143,13 +143,7 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
     }
 
     //Opens teacher Selection Screen (back one screen)
-    public void onClickAdminTaskBack(View v)
-    {
-        startActivity(new Intent(this, StudentLoginSelectTeacherActivity.class));
-    }
-    //Opens task screen
-    public void onClickAdminTaskNext(View v)
-    {
-        startActivity(new Intent(this, StudentCurrentTaskViewActivity.class));
+    public void onClickAdminTaskBack(View v) {
+        finish();
     }
 }

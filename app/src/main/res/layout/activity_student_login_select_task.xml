@@ -56,16 +56,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerSelectTask" />
 
-    <Button
-        android:id="@+id/btnSelectTaskNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/btn_select_task_next"
-        android:onClick="onClickAdminTaskNext"
-        app:layout_constraintHorizontal_bias="0.963"
-        app:layout_constraintLeft_toRightOf="@id/btnSelectTaskBack"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerSelectTask" />
-
 </android.support.constraint.ConstraintLayout>

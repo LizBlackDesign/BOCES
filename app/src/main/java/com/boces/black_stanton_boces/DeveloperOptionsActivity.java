@@ -44,8 +44,5 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
 
         int id = persistence.addTaskPunch(taskPunch);
         TaskPunch inserted = persistence.getTaskPunch(id);
-
-        // noop
-        int i = 1+1;
     }
 }

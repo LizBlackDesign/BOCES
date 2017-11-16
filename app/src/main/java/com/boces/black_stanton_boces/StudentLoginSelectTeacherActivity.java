@@ -128,15 +128,8 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
 
     }
 
-
     //Opens Student Selection Screen (back one screen)
-    public void onClickAdminTeacherBack(View v)
-    {
-        startActivity(new Intent(this, StudentLoginSelectStudentActivity.class));
-    }
-    //Opens student select
-    public void onClickAdminTeacherNext(View v)
-    {
-        startActivity(new Intent(this, StudentLoginSelectStudentActivity.class));
+    public void onClickAdminTeacherBack(View v) {
+        finish();
     }
 }

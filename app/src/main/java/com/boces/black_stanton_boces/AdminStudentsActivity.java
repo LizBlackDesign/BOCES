@@ -130,19 +130,12 @@ public class AdminStudentsActivity extends AppCompatActivity {
     }
 
     //Opens Admin Student Back (back one screen)
-    public void onClickAdminBackStudent(View v)
-    {
-        startActivity(new Intent(this, AdminMenuActivity.class));
+    public void onClickAdminBackStudent(View v) {
+        finish();
     }
 
     //Opens Admin Student Add (back one screen)
-    public void onClickAdminAddStudent(View v)
-    {
+    public void onClickAdminAddStudent(View v) {
         startActivity(new Intent(this, AdminAddStudentActivity.class));
-    }
-    //Opens Admin Student Edit (back one screen)
-    public void onClickAdminEditStudent(View v)
-    {
-        startActivity(new Intent(this, AdminEditStudentActivity.class));
     }
 }

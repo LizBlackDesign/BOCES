@@ -50,6 +50,7 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
             teacher.setImage(image);
 
         persistence.addTeacher(teacher);
+        finish();
     }
 
     public void onCamera(View v) {
@@ -79,9 +80,7 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         imageView.setImageBitmap(image);
     }
 
-    //Opens Teacher Manager (back one screen)
-    public void onClickAdminTeacherAddBack(View v)
-    {
-        startActivity(new Intent(this, AdminTeachersActivity.class));
+    public void onClickAdminTeacherAddBack(View v) {
+        finish();
     }
 }

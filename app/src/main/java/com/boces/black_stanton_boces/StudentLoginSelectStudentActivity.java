@@ -146,13 +146,12 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
 
 
     //Opens Log in type Screen (back one screen)
-    public void onClickAdminStudentBack(View v)
-    {
-        startActivity(new Intent(this, LoginTypeActivity.class));
+    public void onClickAdminStudentBack(View v) {
+        finish();
     }
+
     //Opens task select
-    public void onClickAdminStudentNext(View v)
-    {
+    public void onClickAdminStudentNext(View v) {
         startActivity(new Intent(this, StudentLoginSelectTaskActivity.class));
     }
 }

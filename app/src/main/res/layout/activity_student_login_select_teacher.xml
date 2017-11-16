@@ -56,16 +56,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerSelectTeacher" />
 
-    <Button
-        android:id="@+id/btnSelectTeacherNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/btn_select_teacher_next"
-        android:onClick="onClickAdminTeacherNext"
-        app:layout_constraintHorizontal_bias="0.963"
-        app:layout_constraintLeft_toRightOf="@id/btnSelectTeacherBack"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerSelectTeacher" />
-
 </android.support.constraint.ConstraintLayout>

@@ -185,9 +185,8 @@ public class AdminEditStudentActivity extends AppCompatActivity {
         finish();
     }
 
-    //Opens Student Manager (back one screen)
     public void onClickAdminStudentsEditBack(View v) {
-        startActivity(new Intent(this, AdminStudentsActivity.class));
+        finish();
     }
 
 }

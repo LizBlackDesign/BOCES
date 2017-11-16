@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--TODO: Code to start time when this page starts-->
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +9,6 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
-    <!--TODO: Connect to Student Name, other: add picture of student? Fix hard coded text-->
     <TextView
         android:id="@+id/lblCurrentTaskStudentName"
         android:layout_width="wrap_content"
@@ -38,7 +36,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblCurrentTaskStudentName" />
 
-    <!--TODO: Connect to chosen task-->
     <TextView
         android:id="@+id/lblCurrentTaskTaskName"
         android:layout_width="wrap_content"
@@ -52,7 +49,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblCurrentTask" />
 
-    <!--TODO: Connect to chosen task picture-->
     <ImageView
         android:id="@+id/imageCurrentTask"
         android:layout_width="164dp"

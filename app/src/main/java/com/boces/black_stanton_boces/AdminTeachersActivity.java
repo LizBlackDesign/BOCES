@@ -128,19 +128,12 @@ public class AdminTeachersActivity extends AppCompatActivity {
     }
 
     //Opens Admin Teacher Back (back one screen)
-    public void onClickAdminBackTeacher(View v)
-    {
-        startActivity(new Intent(this, AdminMenuActivity.class));
+    public void onClickAdminBackTeacher(View v) {
+        finish();
     }
 
     //Opens Admin Teacher Add (back one screen)
-    public void onClickAdminAddTeacher(View v)
-    {
+    public void onClickAdminAddTeacher(View v) {
         startActivity(new Intent(this, AdminAddTeacherActivity.class));
-    }
-    //Opens Admin Teacher Edit (back one screen)
-    public void onClickAdminEditTeacher(View v)
-    {
-        startActivity(new Intent(this, AdminEditTeacherActivity.class));
     }
 }

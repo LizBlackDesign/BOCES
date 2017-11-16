@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
+import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 
 import java.util.ArrayList;
@@ -135,9 +136,19 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if (studentId < 1)
                             throw new IllegalStateException("Student ID Not Defined");
-                        Intent selectTask = new Intent(getApplicationContext(), StudentLoginSelectTaskActivity.class);
-                        selectTask.putExtra(StudentLoginSelectTaskActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
-                        startActivity(selectTask);
+                        TaskPunch openPunch = persistence.getOpenPunch(studentId);
+                        if (openPunch != null) {
+                            Intent currentTask = new Intent(getApplicationContext(), StudentCurrentTaskViewActivity.class);
+                            currentTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.TASK_ID.name(), openPunch.getTaskId());
+                            currentTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+                            currentTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.PUNCH_ID.name(), openPunch.getId());
+                            startActivity(currentTask);
+                        } else {
+                            Intent selectTask = new Intent(getApplicationContext(), StudentLoginSelectTaskActivity.class);
+                            selectTask.putExtra(StudentLoginSelectTaskActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+                            startActivity(selectTask);
+                        }
+
                     }
                 });
             }

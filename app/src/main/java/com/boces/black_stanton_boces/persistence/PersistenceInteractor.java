@@ -531,6 +531,32 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskPunches;
     }
 
+    /**
+     * Finds An Open Punch For A Given Student
+     * @param studentId
+     * Id of The Student To Search Punches For
+     * @return
+     * TaskPunch Model if An Open Punch Was Found, null Otherwise
+     */
+    public TaskPunch getOpenPunch(int studentId) {
+        TaskPunch taskPunch = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT " +
+                        TASK_PUNCH.ID + ", " +
+                        TASK_PUNCH.STUDENT_ID + ", " +
+                        TASK_PUNCH.TASK_ID + ", " +
+                        TASK_PUNCH.TIME_START + ", " +
+                        TASK_PUNCH.TIME_STOP + " " +
+                        " FROM " + TASK_PUNCH.TABLE +
+                        " WHERE " + TASK_PUNCH.STUDENT_ID + "=" + studentId +
+                        " AND " + TASK_PUNCH.TIME_STOP + " IS NULL" , null);
+        if (cursor.moveToFirst())
+            taskPunch = taskPunchFromRow(cursor);
+        cursor.close();
+        return taskPunch;
+    }
+
     private Teacher teacherFromRow(Cursor cursor) {
         Teacher teacher = new Teacher();
 

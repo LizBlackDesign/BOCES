@@ -73,6 +73,10 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         if (student == null)
             throw new IllegalStateException("Student With ID " + studentId + " Not Found");
 
+        final TaskPunch taskPunch = persistence.getTaskPunch(punchId);
+        if (taskPunch == null)
+            throw new IllegalStateException("Punch With ID "+ punchId + " Not Found");
+
         lblCurrentTaskStudentName = (TextView) findViewById(R.id.lblCurrentTaskStudentName);
         String studentName = student.getFirstName() + " " + student.getLastName();
         lblCurrentTaskStudentName.setText(studentName);
@@ -87,7 +91,7 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
 
         timer = new Timer();
         timerTask = new TimerTask() {
-            long seconds = 0L;
+            long seconds = new Date().getTime()/1000L - taskPunch.getTimeStart().getTime()/1000L;
             @Override
             public void run() {
                 seconds++;
@@ -120,12 +124,12 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
     }
 
     public void onTaskComplete(View view) {
+        timer.cancel();
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         TaskPunch taskPunch = persistence.getTaskPunch(punchId);
         if (taskPunch != null) {
             taskPunch.setTimeEnd(new Date());
             persistence.update(taskPunch);
-            timer.cancel();
             finish();
         } else {
             Toast.makeText(this, "Task Not Found", Toast.LENGTH_LONG).show();

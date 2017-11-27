@@ -154,4 +154,11 @@
 
     <string name="btnDelete">Delete</string>
 
+    activity_admin_student_punchesches-->
+    <string name="title_punches">Punches</string>
+    <string name="search_hint_admin_punches_student">Type Student Name</string>
+    <string name="btn_admin_punch_back">Back</string>
+    <string name="btn_admin_punch_add">Add Task</string>
+
+
 </resources>

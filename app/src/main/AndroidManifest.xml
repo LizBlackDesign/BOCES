@@ -78,11 +78,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StudentTaskStart" />
         <activity android:name=".DeveloperOptionsActivity" />
-        <activity android:name=".ReportsActivity" />
+        <activity android:name=".AdminReportsActivity" />
         <activity android:name=".TimeClockedActivity" />
-        <activity android:name=".StudentPunchesActivity" />
-        <activity android:name=".PunchAddActivity" />
-        <activity android:name=".PunchEditActivity"></activity>
+        <activity android:name=".AdminStudentPunchesActivity" />
+        <activity android:name=".AdminPunchAddActivity" />
+        <activity android:name=".AdminPunchEditActivity"></activity>
     </application>
 
 </manifest>

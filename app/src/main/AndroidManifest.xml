@@ -77,7 +77,12 @@
             android:label="@string/title_activity_admin_edit_task"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StudentTaskStart" />
-        <activity android:name=".DeveloperOptionsActivity"></activity>
+        <activity android:name=".DeveloperOptionsActivity" />
+        <activity android:name=".ReportsActivity" />
+        <activity android:name=".TimeClockedActivity" />
+        <activity android:name=".StudentPunchesActivity" />
+        <activity android:name=".PunchAddActivity" />
+        <activity android:name=".PunchEditActivity"></activity>
     </application>
 
 </manifest>

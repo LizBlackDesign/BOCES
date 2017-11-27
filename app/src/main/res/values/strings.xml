@@ -154,11 +154,18 @@
 
     <string name="btnDelete">Delete</string>
 
-    activity_admin_student_punchesches-->
+    <!--activity_admin_student_punches-->
     <string name="title_punches">Punches</string>
     <string name="search_hint_admin_punches_student">Type Student Name</string>
     <string name="btn_admin_punch_back">Back</string>
     <string name="btn_admin_punch_add">Add Task</string>
 
-
+    <!--activity_admin_student_punches_add-->
+    <string name="title_punches_add">Add Punch</string>
+    <string name="lbl_student">Student</string>
+    <string name="lbl_task">Task</string>
+    <string name="lbl_date">Date</string>
+    <string name="lbl_start">Start</string>
+    <string name="lbl_end">End</string>
+    <string name="lbl_duration">Duration</string>
 </resources>

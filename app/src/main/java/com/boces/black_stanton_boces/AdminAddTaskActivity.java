@@ -39,6 +39,7 @@ public class AdminAddTaskActivity extends AppCompatActivity {
             task.setImage(image);
 
         persistence.addTask(task);
+        finish();
     }
 
     public void onCamera(View v) {

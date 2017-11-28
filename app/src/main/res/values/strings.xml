@@ -171,4 +171,10 @@
     <string name="lbl_duration">Duration</string>
     <string name="btn_add_time_Save">Save</string>
 
+    <!--activity_admin_student_reports-->
+    <string name="title_report">Report</string>
+    <string name="lbl_start_date">Start Date</string>
+    <string name="lbl_end_date">End Date</string>
+    <string name="btn_report">Export</string>
+
 </resources>

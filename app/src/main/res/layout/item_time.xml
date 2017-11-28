@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--TODO: check if this fills with name on top and information on one line under it-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/studentListName"
@@ -13,7 +14,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="0dp"
-        app:layout_constraintLeft_toRightOf="@+id/parent"
+        app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -45,4 +46,4 @@
         android:layout_marginTop="0dp"
         app:layout_constraintLeft_toRightOf="@+id/timeListDate"
         app:layout_constraintTop_toTopOf="@+id/timeListDate" />
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

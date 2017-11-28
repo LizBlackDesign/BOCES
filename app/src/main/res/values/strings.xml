@@ -168,4 +168,6 @@
     <string name="lbl_start">Start</string>
     <string name="lbl_end">End</string>
     <string name="lbl_duration">Duration</string>
+    <string name="btn_add_time_Save">Save</string>
+
 </resources>

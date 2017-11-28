@@ -160,8 +160,9 @@
     <string name="btn_admin_punch_back">Back</string>
     <string name="btn_admin_punch_add">Add Task</string>
 
-    <!--activity_admin_student_punches_add-->
+    <!--activity_admin_student_punches_add/edit-->
     <string name="title_punches_add">Add Punch</string>
+    <string name="title_punches_edit">Edit Punch</string>
     <string name="lbl_student">Student</string>
     <string name="lbl_task">Task</string>
     <string name="lbl_date">Date</string>

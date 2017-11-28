@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/title_add_students"
+        android:text="@string/title_punches_add"
         android:textColor="@android:color/black"
         android:textSize="36sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -66,6 +66,7 @@
         android:layout_marginEnd="84dp"
         android:layout_marginRight="84dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/lblTaskName"
         app:layout_constraintTop_toTopOf="@+id/lblTaskName" />

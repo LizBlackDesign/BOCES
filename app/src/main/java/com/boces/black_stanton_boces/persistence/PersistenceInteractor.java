@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.boces.black_stanton_boces.persistence.model.AdminAccount;
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
@@ -16,6 +17,9 @@ import com.boces.black_stanton_boces.persistence.model.Teacher;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -61,6 +65,14 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String IMAGE = "StudentImage";
     }
 
+    private static class ADMIN_ACCOUNT {
+        private static final String TABLE = "adminAccount";
+        private static final String ID = "accountId";
+        private static final String USERNAME = "username";
+        private static final String PASSWORD = "password";
+        private static final String SALT = "salt";
+    }
+
     private static final String STUDENT_DDL =
             "CREATE TABLE " + STUDENT.TABLE + "( " +
                     STUDENT.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -104,6 +116,14 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TEACHER.IMAGE + " BLOB DEFAULT NULL " +
                     ")";
 
+    private static final String ADMIN_ACCOUNT_DDL =
+            "CREATE TABLE " + ADMIN_ACCOUNT.TABLE + "( " +
+                    ADMIN_ACCOUNT.ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    ADMIN_ACCOUNT.USERNAME + " UNIQUE TEXT NOT NULL, " +
+                    ADMIN_ACCOUNT.PASSWORD + " TEXT NOT NULL, " +
+                    ADMIN_ACCOUNT.SALT + " TEXT NOT NULL " +
+                    ")";
+
     public PersistenceInteractor(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -114,6 +134,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(TASK_DDL);
         sqLiteDatabase.execSQL(STUDENT_DDL);
         sqLiteDatabase.execSQL(TASK_PUNCH_DDL);
+        sqLiteDatabase.execSQL(ADMIN_ACCOUNT_DDL);
     }
 
     @Override
@@ -682,5 +703,79 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
     public void deleteTeacher(int teacherId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TEACHER.TABLE, TEACHER.ID + " = ?", new String[]{Integer.toString(teacherId)});
+    }
+
+    private AdminAccount adminAccountFromRow(Cursor cursor) {
+        AdminAccount adminAccount = new AdminAccount();
+
+        adminAccount.setId(cursor.getInt(0));
+        adminAccount.setUsername(cursor.getString(1));
+        try {
+            adminAccount.setPassword(new String(cursor.getBlob(2), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            adminAccount.setPassword("");
+        }
+        adminAccount.setSalt(cursor.getString(3));
+
+        return adminAccount;
+    }
+
+    private static final String ADMIN_ACCOUNT_QUERY = "SELECT " +
+            ADMIN_ACCOUNT.ID + " , " +
+            ADMIN_ACCOUNT.USERNAME + " , " +
+            ADMIN_ACCOUNT.PASSWORD + " , " +
+            ADMIN_ACCOUNT.SALT + " " +
+            " FROM " + ADMIN_ACCOUNT.TABLE + " ";
+
+
+    public AdminAccount getAdminAccount(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                ADMIN_ACCOUNT_QUERY + " WHERE " + ADMIN_ACCOUNT.ID + "=" + id, null);
+
+        AdminAccount adminAccount = null;
+        if (cursor.moveToFirst()) {
+            adminAccount = adminAccountFromRow(cursor);
+        }
+        cursor.close();
+
+        return adminAccount;
+    }
+
+    public AdminAccount getAdminAccount(String username) {
+        if (username == null)
+            throw new IllegalArgumentException("Username May Not Be null");
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                ADMIN_ACCOUNT_QUERY + " WHERE " + ADMIN_ACCOUNT.USERNAME + "=" + username, null);
+
+        AdminAccount adminAccount = null;
+        if (cursor.moveToFirst()) {
+            adminAccount = adminAccountFromRow(cursor);
+        }
+
+        cursor.close();
+        return adminAccount;
+    }
+
+    public ArrayList<AdminAccount> getAllAdminAccounts() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(ADMIN_ACCOUNT_QUERY, null);
+
+        ArrayList<AdminAccount> adminAccounts = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                adminAccounts.add(adminAccountFromRow(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return adminAccounts;
+    }
+
+    public int createAdminAccount(AdminAccount adminAccount) {
+        // TODO EPB: Implement
+        return -1;
     }
 }

@@ -78,6 +78,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StudentTaskStart" />
         <activity android:name=".DeveloperOptionsActivity" />
+        <activity android:name=".AdminReportsActivity" />
+        <activity android:name=".TimeClockedActivity" />
+        <activity android:name=".AdminStudentPunchesActivity" />
+        <activity android:name=".AdminPunchAddActivity" />
+        <activity android:name=".AdminPunchEditActivity"></activity>
         <activity
             android:name=".AdminManageAccounts"
             android:label="@string/title_activity_admin_manage_accounts"

@@ -32,8 +32,7 @@ public class AdminMenuActivity extends AppCompatActivity {
     //There is no time clocked currently
     //There is no reports currently
 
-    //Opens Admin LogIn (back one screen)
-    public void onClickAdminMenuBack(View v) {
-        finish();
+    public void onClickAdminMenuAccounts(View v) {
+        startActivity(new Intent(this, AdminManageAccounts.class));
     }
 }

@@ -9,15 +9,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.boces.black_stanton_boces.persistence.model.AdminAccount;
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PersistenceInteractor extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -59,6 +66,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String YEAR = "Year";
         private static final String TEACHER_ID = "TeacherId";
         private static final String IMAGE = "StudentImage";
+    }
+
+    private static class ADMIN_ACCOUNT {
+        private static final String TABLE = "adminAccount";
+        private static final String ID = "accountId";
+        private static final String USERNAME = "username";
+        private static final String PASSWORD = "password";
     }
 
     private static final String STUDENT_DDL =
@@ -104,6 +118,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TEACHER.IMAGE + " BLOB DEFAULT NULL " +
                     ")";
 
+    private static final String ADMIN_ACCOUNT_DDL =
+            "CREATE TABLE " + ADMIN_ACCOUNT.TABLE + "( " +
+                    ADMIN_ACCOUNT.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    ADMIN_ACCOUNT.USERNAME + " TEXT UNIQUE NOT NULL, " +
+                    ADMIN_ACCOUNT.PASSWORD + " TEXT NOT NULL " +
+                    ")";
+
     public PersistenceInteractor(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -114,14 +135,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(TASK_DDL);
         sqLiteDatabase.execSQL(STUDENT_DDL);
         sqLiteDatabase.execSQL(TASK_PUNCH_DDL);
+        sqLiteDatabase.execSQL(ADMIN_ACCOUNT_DDL);
+        createAdminAccount("admin", "a");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + STUDENT.TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TASK.TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TEACHER.TABLE);
-        this.onCreate(sqLiteDatabase);
+        dropAndRecreate();
     }
 
     public void empty() {
@@ -156,6 +176,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + STUDENT.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TASK.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TEACHER.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ADMIN_ACCOUNT.TABLE);
 
         this.onCreate(db);
     }
@@ -682,5 +703,140 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
     public void deleteTeacher(int teacherId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TEACHER.TABLE, TEACHER.ID + " = ?", new String[]{Integer.toString(teacherId)});
+    }
+
+    private AdminAccount adminAccountFromRow(Cursor cursor) {
+        AdminAccount adminAccount = new AdminAccount();
+
+        adminAccount.setId(cursor.getInt(0));
+        adminAccount.setUsername(cursor.getString(1));
+        adminAccount.setPassword(cursor.getString(2));
+
+        return adminAccount;
+    }
+
+    private static final String ADMIN_ACCOUNT_QUERY = "SELECT " +
+            ADMIN_ACCOUNT.ID + " , " +
+            ADMIN_ACCOUNT.USERNAME + " , " +
+            ADMIN_ACCOUNT.PASSWORD + " " +
+            " FROM " + ADMIN_ACCOUNT.TABLE + " ";
+
+
+    public AdminAccount getAdminAccount(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                ADMIN_ACCOUNT_QUERY + " WHERE " + ADMIN_ACCOUNT.ID + "=" + id, null);
+
+        AdminAccount adminAccount = null;
+        if (cursor.moveToFirst()) {
+            adminAccount = adminAccountFromRow(cursor);
+        }
+        cursor.close();
+
+        return adminAccount;
+    }
+
+    public AdminAccount getAdminAccount(String username) {
+        if (username == null)
+            throw new IllegalArgumentException("Username May Not Be null");
+        if (username.isEmpty())
+            return null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                ADMIN_ACCOUNT_QUERY + " WHERE " + ADMIN_ACCOUNT.USERNAME + "= ?", new String[]{username});
+
+        AdminAccount adminAccount = null;
+        if (cursor.moveToFirst()) {
+            adminAccount = adminAccountFromRow(cursor);
+        }
+
+        cursor.close();
+        return adminAccount;
+    }
+
+    public ArrayList<AdminAccount> getAllAdminAccounts() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(ADMIN_ACCOUNT_QUERY, null);
+
+        ArrayList<AdminAccount> adminAccounts = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                adminAccounts.add(adminAccountFromRow(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return adminAccounts;
+    }
+
+    public int createAdminAccount(String username, String plaintextPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        final String hashedPassword = BCrypt.hashpw(plaintextPassword, BCrypt.gensalt());
+
+        values.put(ADMIN_ACCOUNT.USERNAME, username);
+        values.put(ADMIN_ACCOUNT.PASSWORD, hashedPassword);
+
+        long rowId = db.insertOrThrow(ADMIN_ACCOUNT.TABLE, null, values);
+
+        // Abort on failed insert
+        if (rowId == -1)
+            return -1;
+
+        Cursor cursor = db.rawQuery(
+                "SELECT " + ADMIN_ACCOUNT.ID + " FROM " + ADMIN_ACCOUNT.TABLE + " WHERE ROWID=" + rowId, null
+        );
+
+        int id = -1;
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(0);
+        }
+        cursor.close();
+
+        return id;
+    }
+
+    public void updateUsername(AdminAccount adminAccount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if (adminAccount.getUsername() != null)
+            values.put(ADMIN_ACCOUNT.USERNAME, adminAccount.getUsername());
+        else
+            throw new IllegalArgumentException("Username Must Not Be Null");
+
+
+        int affectedRows = db.update(ADMIN_ACCOUNT.TABLE, values,
+                ADMIN_ACCOUNT.ID + " = ?", new String[]{adminAccount.getId().toString()});
+
+
+        if (affectedRows < 1)
+            Log.w(TAG, "Update Affected No Rows");
+
+    }
+
+    public void updateAdminPassword(int id, String newPlaintextPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        final String hashedPassword = BCrypt.hashpw(newPlaintextPassword, BCrypt.gensalt());
+
+        values.put(ADMIN_ACCOUNT.PASSWORD, hashedPassword);
+        int affectedRows = db.update(ADMIN_ACCOUNT.TABLE, values,
+                ADMIN_ACCOUNT.ID + " = ?", new String[]{Integer.toString(id)});
+
+        if (affectedRows < 1)
+            Log.w(TAG, "Update Affected No Rows");
+    }
+
+    public boolean checkPassword(String plaintext, String hashed) {
+        return BCrypt.checkpw(plaintext, hashed);
+    }
+
+    public void deleteAdminAccount(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ADMIN_ACCOUNT.TABLE, ADMIN_ACCOUNT.ID + " = ?", new String[]{Integer.toString(id)});
     }
 }

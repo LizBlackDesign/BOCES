@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
+import com.boces.black_stanton_boces.student.StudentAdapter;
+import com.boces.black_stanton_boces.student.StudentAdapterOnclick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +35,17 @@ public class AdminStudentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_students);
+        StudentAdapterOnclick onclick = new StudentAdapterOnclick() {
+            @Override
+            public void onClick(int studentId) {
+                Intent editStudent = new Intent(getApplicationContext(), AdminEditStudentActivity.class);
+                editStudent.putExtra(AdminEditStudentActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+                startActivity(editStudent);
+            }
+        };
 
         persistence = new PersistenceInteractor(this);
-        StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence);
+        StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence, onclick);
 
         studentList = (RecyclerView) findViewById(R.id.studentList);
         studentList.setAdapter(adapter);
@@ -47,86 +57,6 @@ public class AdminStudentsActivity extends AppCompatActivity {
         super.onResume();
         ((StudentAdapter) studentList.getAdapter()).setStudents(persistence.getAllStudents());
         studentList.getAdapter().notifyDataSetChanged();
-    }
-
-    private class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder>{
-        List<Student> students;
-        PersistenceInteractor persistence;
-
-        public StudentAdapter(List<Student> students, PersistenceInteractor persistence) {
-            this.students = students;
-            this.persistence = persistence;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View studentView = inflater.inflate(R.layout.item_student, parent, false);
-            return new ViewHolder(studentView);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Student student = students.get(position);
-            holder.studentId = student.getId();
-
-            holder.studentName.setText(student.getFirstName() + " " + student.getLastName());
-            holder.studentAge.setText(Integer.toString(student.getAge()));
-
-            Teacher teacher = persistence.getTeacher(student.getTeacherId());
-            if (teacher != null)
-                holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
-
-            if (student.getImage() != null)
-                holder.studentImage.setImageBitmap(student.getImage());
-        }
-
-        @Override
-        public int getItemCount() {
-            return students.size();
-        }
-
-        public List<Student> getStudents() {
-            return students;
-        }
-
-        public void setStudents(List<Student> students) {
-            this.students = students;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView studentName;
-            public TextView studentAge;
-            public TextView teacherName;
-            public ImageView studentImage;
-            /**
-             * Id of The Current Student
-             * Should Probably Not Be Displayed
-             */
-            public int studentId;
-
-            public ViewHolder(View v) {
-                super(v);
-                studentName = v.findViewById(R.id.studentListName);
-                studentAge = v.findViewById(R.id.studentListAge);
-                teacherName = v.findViewById(R.id.studentListTeacherName);
-                studentImage = v.findViewById(R.id.studentListImage);
-
-                v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (studentId < 1) {
-                            throw new IllegalStateException("Student Id Not Defined");
-                        }
-                        Intent editStudent  = new Intent(getApplicationContext(), AdminEditStudentActivity.class);
-                        editStudent.putExtra(AdminEditStudentActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
-                        startActivity(editStudent);
-                    }
-                });
-            }
-        }
     }
 
     //Opens Admin Student Back (back one screen)

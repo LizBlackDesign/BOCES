@@ -16,6 +16,7 @@
     <string name="title_activity_admin_edit_teacher">AdminEditTeacherActivity</string>
     <string name="title_activity_admin_add_task">AdminAddTaskActivity</string>
     <string name="title_activity_admin_edit_task">AdminEditTaskActivity</string>
+    <string name="title_activity_admin_manage_accounts">AdminManageAccounts</string>
 
     <!--activity_login_type-->
     <string name="title_login">Welcome to BOCES</string>
@@ -73,7 +74,7 @@
     <string name="btn_admin_tasks">Tasks</string>
     <string name="btn_admin_time_clocked">Time Clocked</string>
     <string name="btn_admin_reports">Reports</string>
-    <string name="btn_admin_back">Back</string>
+    <string name="btn_admin_accounts">Admin Accounts</string>
 
     <!--activity_admin_students-->
     <string name="title_admin_students">Students</string>
@@ -153,5 +154,11 @@
     <string name="btn_edit_tasks_back">Back</string>
 
     <string name="btnDelete">Delete</string>
+
+    <string name="lblAddAccount">Add Account</string>
+    <string name="lblEditAccount">Edit Account</string>
+    <string name="lblUsername">Username</string>
+    <string name="lblPassword">Password</string>
+    <string name="lblConfirmPassword">Confirm Password</string>
 
 </resources>

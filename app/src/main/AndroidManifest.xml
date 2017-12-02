@@ -88,6 +88,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AdminAddAccountActivity" />
         <activity android:name=".AdminEditAccountActivity" />
+        <activity android:name=".AdminPunchSelectStudentActivity"></activity>
     </application>
 
 </manifest>

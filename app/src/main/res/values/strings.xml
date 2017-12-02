@@ -184,4 +184,9 @@
     <string name="lbl_end_date">End Date</string>
     <string name="btn_report">Export</string>
 
+    <!--activity_admin_punch_select-student-->
+    <string name="title_admin_select_student">Select Student</string>
+    <string name="search_hint_type_admin_student_name">Type Student Name</string>
+    <string name="btn_select_admin_student_back">Back</string>
+
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,97 +7,114 @@
     android:background="#E1F4FA"
     tools:context="com.boces.black_stanton_boces.AdminMenuActivity"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="81dp"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/lblAdminMenu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/title_admin_menu"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="36sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="25"
+        android:orientation="vertical"
+        android:weightSum="32">
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+        <Button
+            android:id="@+id/btnAdminStudents"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAdminMenuStudents"
+            android:text="@string/btn_admin_students"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+        <Button
+            android:id="@+id/btnAdminTeachers"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAdminMenuTeachers"
+            android:text="@string/btn_admin_teachers"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+        <Button
+            android:id="@+id/btnAdminTasks"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAdminMenuTasks"
+            android:text="@string/btn_admin_tasks"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+        <Button
+            android:id="@+id/btnAdminTimeClocked"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_admin_time_clocked"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+        <Button
+            android:id="@+id/btnAdminReports"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_admin_reports"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+        <Button
+            android:id="@+id/btnAccounts"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_admin_accounts"
+            android:onClick="onClickAdminMenuAccounts"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"/>
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnAdminStudents"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="14dp"
-        android:onClick="onClickAdminMenuStudents"
-        android:text="@string/btn_admin_students"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblAdminMenu" />
-
-    <Button
-        android:id="@+id/btnAdminTeachers"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="10dp"
-        android:onClick="onClickAdminMenuTeachers"
-        android:text="@string/btn_admin_teachers"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdminStudents" />
-
-    <Button
-        android:id="@+id/btnAdminTasks"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="10dp"
-        android:onClick="onClickAdminMenuTasks"
-        android:text="@string/btn_admin_tasks"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdminTeachers" />
-
-    <Button
-        android:id="@+id/btnAdminTimeClocked"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/btn_admin_time_clocked"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdminTasks" />
-
-    <Button
-        android:id="@+id/btnAdminReports"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/btn_admin_reports"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdminTimeClocked" />
-
-    <Button
-        android:id="@+id/btnAccounts"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/btn_admin_accounts"
-        android:onClick="onClickAdminMenuAccounts"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdminReports" />
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

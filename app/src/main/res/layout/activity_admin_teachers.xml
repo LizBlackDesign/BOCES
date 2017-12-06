@@ -36,17 +36,5 @@
         android:clipToPadding="false"
         tools:listitem="@layout/item_teacher" />
 
-    <Button
-        android:id="@+id/btnAddTeacher"
-        android:onClick="onClickAdminAddTeacher"
-        android:text="@string/btn_admin_teachers_add"
-        android:background="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:layout_gravity="bottom"/>
-
 
 </LinearLayout>

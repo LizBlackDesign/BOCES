@@ -7,14 +7,15 @@
         android:background="#E1F4FA"
         tools:context="com.boces.black_stanton_boces.AdminLoginActivity"
         android:orientation="vertical"
-    android:baselineAligned="false">
+        android:baselineAligned="false">
 
         <TextView
             android:id="@+id/lblAdminLogin"
+            android:text="@string/title_admin_login"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/title_admin_login"
+            android:padding="8dp"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="36sp"
@@ -50,8 +51,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:onClick="onClickAdminLoginValidate"
-            android:padding="15dp"
             android:text="@string/btn_admin_login"
+            android:padding="15dp"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:layout_gravity="bottom"/>

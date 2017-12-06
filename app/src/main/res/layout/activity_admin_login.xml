@@ -1,62 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="#E1F4FA"
-        tools:context="com.boces.black_stanton_boces.AdminLoginActivity"
-        android:orientation="vertical"
-        android:baselineAligned="false">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#E1F4FA"
+    tools:context="com.boces.black_stanton_boces.AdminLoginActivity"
+    android:orientation="vertical"
+    android:baselineAligned="false">
 
-        <TextView
-            android:id="@+id/lblAdminLogin"
-            android:text="@string/title_admin_login"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/lblAdminLogin"
+        android:text="@string/title_admin_login"
+        android:layout_weight="1"        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        android:textStyle="bold" />
 
-        <EditText
-            android:layout_weight="1"
-            android:id="@+id/inputAdminUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="@string/hint_username"
-            android:inputType="textEmailAddress"
-            android:textSize="24sp" />
+    <EditText
+        android:layout_weight="1"
+        android:id="@+id/inputAdminUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/hint_username"
+        android:inputType="textEmailAddress"
+        android:textSize="24sp" />
 
-        <EditText
-            android:layout_weight="1"
-            android:id="@+id/inputAdminPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:textSize="24sp" />
-        <Space
-            android:layout_weight="50"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"/>
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/btnLogIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:onClick="onClickAdminLoginValidate"
-            android:text="@string/btn_admin_login"
-            android:padding="15dp"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:layout_gravity="bottom"/>
+    <EditText
+        android:layout_weight="1"
+        android:id="@+id/inputAdminPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:textSize="24sp" />
+    <Space
+        android:layout_weight="50"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/btnLogIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:onClick="onClickAdminLoginValidate"
+        android:text="@string/btn_admin_login"
+        android:padding="15dp"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_gravity="bottom"/>
 
 
-    </LinearLayout>
+</LinearLayout>
 

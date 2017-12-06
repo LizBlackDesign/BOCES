@@ -11,7 +11,6 @@
     <TextView
         android:id="@+id/lblAddTask"
         android:text="@string/lblAddAccount"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -27,9 +26,9 @@
 
     <EditText
         android:id="@+id/inputUsername"
+        android:hint="@string/lblUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/lblUsername"
         android:inputType="text"
         android:textSize="24sp"/>
 
@@ -60,7 +59,7 @@
         android:textSize="24sp"/>
 
     <Space
-        android:layout_weight="50"
+        android:layout_weight="60"
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
 

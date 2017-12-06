@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E1F4FA"
+    android:orientation="vertical"
     tools:context="com.boces.black_stanton_boces.AdminEditStudentActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
@@ -12,7 +13,6 @@
     <TextView
         android:id="@+id/lblStudents"
         android:text="@string/title_edit_students"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -20,118 +20,97 @@
         android:textColor="@android:color/black"
         android:textSize="36sp"
         android:textStyle="bold" />
-
+    <Space
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentFirstName"
-        android:layout_width="344dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
         android:hint="@string/btn_edit_students_hint_first"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblStudents" />
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+    <Space
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentLastName"
-        android:layout_width="344dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ems="10"
         android:hint="@string/btn_edit_students_hint_last"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="@+id/inputStudentFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/inputStudentFirstName" />
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"  />
+    <Space
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentAge"
-        android:layout_width="172dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:ems="10"
         android:hint="@string/btn_edit_students_hint_age"
         android:inputType="number"
-        app:layout_constraintLeft_toLeftOf="@+id/inputStudentLastName"
-        app:layout_constraintTop_toBottomOf="@+id/inputStudentLastName" />
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+    <Space
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentYear"
-        android:layout_width="172dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:ems="10"
         android:hint="@string/btn_edit_students_hint_year"
         android:inputType="number"
-        app:layout_constraintLeft_toRightOf="@+id/inputStudentAge"
-        app:layout_constraintTop_toBottomOf="@+id/inputStudentLastName" />
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+    <Space
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
     <Spinner
         android:id="@+id/spinnerTeacher"
-        android:layout_width="344dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        app:layout_constraintLeft_toLeftOf="@+id/inputStudentAge"
-        app:layout_constraintTop_toBottomOf="@+id/inputStudentAge" />
+        android:textSize="24sp"  />
+    <Space
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
+    <ImageView
+        android:id="@+id/imgEditStudent"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:onClick="onCamera"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <Space
+        android:layout_weight="60"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
 
     <Button
-        android:id="@+id/btnBackStudents"
-        android:layout_width="wrap_content"
+        android:background="@null"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:onClick="onClickAdminStudentsEditBack"
-        android:text="@string/btn_edit_students_back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:onClick="onDeleteStudent"
+        android:text="@string/btnDelete"/>
 
     <Button
         android:id="@+id/btnSaveStudent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:onClick="onSave"
         android:text="@string/btn_edit_students_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnBackStudents" />
-
-    <ImageButton
-        android:id="@+id/imgbtnAddStudent"
-        android:layout_width="55dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:onClick="onCamera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTeacher"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
-
-    <Button
-        android:id="@+id/btnDeleteStudent"
-        android:layout_width="wrap_content"
-        android:layout_height="47dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:onClick="onDeleteStudent"
-        android:text="@string/btnDelete"
-        app:layout_constraintEnd_toStartOf="@+id/btnSaveStudent"
-        app:layout_constraintStart_toEndOf="@+id/btnBackStudents"
-        app:layout_constraintTop_toTopOf="@+id/btnBackStudents" />
-
-    <ImageView
-        android:id="@+id/imgEditStudent"
-        android:layout_width="129dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgbtnAddStudent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:padding="15dp"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_gravity="bottom"/>
 
 
-</android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>
 

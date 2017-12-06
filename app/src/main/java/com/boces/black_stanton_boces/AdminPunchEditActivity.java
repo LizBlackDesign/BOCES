@@ -1,7 +1,11 @@
 package com.boces.black_stanton_boces;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -12,9 +16,11 @@ import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.student.StudentSpinnerInteractor;
 import com.boces.black_stanton_boces.task.TaskSpinnerInteractor;
+import com.boces.black_stanton_boces.util.DatePickerDialogueFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -70,6 +76,26 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         txtStart = findViewById(R.id.txtStart);
         txtEnd = findViewById(R.id.txtEnd);
         lblDurationValue = findViewById(R.id.lblDurationValue);
+
+
+        final Context context = this;
+
+        txtDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialogueFactory.make(context, new DatePickerDialogueFactory.DatePickerDialogueListener() {
+                    @Override
+                    public void onPositive(Date date, Dialog dialog) {
+                        int i = 1; //noop
+                    }
+
+                    @Override
+                    public void onNegative(Dialog dialog) {
+                        int i = 1; //noop
+                    }
+                }).show();
+            }
+        });
 
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);

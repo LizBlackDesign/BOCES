@@ -1,5 +1,10 @@
 package com.boces.black_stanton_boces;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +14,13 @@ import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
+import com.boces.black_stanton_boces.report.ReportGenerator;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class DeveloperOptionsActivity extends AppCompatActivity {
+    private static final int EXTERNAL_STORAGE_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,5 +51,25 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
 
         int id = persistence.addTaskPunch(taskPunch);
         TaskPunch inserted = persistence.getTaskPunch(id);
+    }
+
+    public void onGenerateReport(View v) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST);
+            return;
+        }
+
+        ReportGenerator.taskReport(new PersistenceInteractor(this), new Date(), new Date());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case EXTERNAL_STORAGE_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ReportGenerator.taskReport(new PersistenceInteractor(this), new Date(), new Date());
+                }
+                break;
+        }
     }
 }

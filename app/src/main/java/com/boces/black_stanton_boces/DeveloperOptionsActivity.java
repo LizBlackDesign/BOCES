@@ -15,8 +15,10 @@ import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.report.ReportGenerator;
+import com.boces.black_stanton_boces.report.StudentPunches;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DeveloperOptionsActivity extends AppCompatActivity {
@@ -59,7 +61,16 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
             return;
         }
 
-        ReportGenerator.taskReport(new PersistenceInteractor(this), new Date(), new Date());
+        PersistenceInteractor persistence = new PersistenceInteractor(this);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -100);
+        Date start = cal.getTime();
+        Date end = new Date();
+
+        ArrayList<StudentPunches> studentPunches = persistence.getStudentPunches(start, end);
+        ReportGenerator.exportTaskReport(studentPunches, "", persistence.getAllTasks());
     }
 
     @Override
@@ -67,7 +78,7 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
         switch (requestCode) {
             case EXTERNAL_STORAGE_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ReportGenerator.taskReport(new PersistenceInteractor(this), new Date(), new Date());
+                    onGenerateReport(null);
                 }
                 break;
         }

@@ -14,6 +14,7 @@ import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
+import com.boces.black_stanton_boces.report.StudentPunches;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -445,6 +446,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
     //END OF TASK
 
+    private static final String TASK_PUNCH_QUERY = "SELECT " +
+            TASK_PUNCH.ID + ", " +
+            TASK_PUNCH.STUDENT_ID + ", " +
+            TASK_PUNCH.TASK_ID + ", " +
+            TASK_PUNCH.TIME_START + ", " +
+            TASK_PUNCH.TIME_STOP + " " +
+            " FROM " + TASK_PUNCH.TABLE;
     private TaskPunch taskPunchFromRow(Cursor cursor) {
         TaskPunch taskPunch = new TaskPunch();
         taskPunch.setId(cursor.getInt(0));
@@ -459,15 +467,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
     public TaskPunch getTaskPunch(int id) {
         TaskPunch taskPunch = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        TASK_PUNCH.ID + ", " +
-                        TASK_PUNCH.STUDENT_ID + ", " +
-                        TASK_PUNCH.TASK_ID + ", " +
-                        TASK_PUNCH.TIME_START + ", " +
-                        TASK_PUNCH.TIME_STOP + " " +
-                        " FROM " + TASK_PUNCH.TABLE +
-                        " WHERE " + TASK_PUNCH.ID + "=" + id, null);
+        Cursor cursor = db.rawQuery(TASK_PUNCH_QUERY + " WHERE " + TASK_PUNCH.ID + "=" + id, null);
 
         if (cursor.moveToFirst())
             taskPunch = taskPunchFromRow(cursor);
@@ -530,14 +530,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
     public ArrayList<TaskPunch> getAllTaskPunches() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                    TASK_PUNCH.ID + ", " +
-                    TASK_PUNCH.STUDENT_ID + ", " +
-                    TASK_PUNCH.TASK_ID + ", " +
-                    TASK_PUNCH.TIME_START + ", " +
-                    TASK_PUNCH.TIME_STOP +
-                    " FROM " + TASK_PUNCH.TABLE, null);
+        Cursor cursor = db.rawQuery(TASK_PUNCH_QUERY, null);
 
         ArrayList<TaskPunch> taskPunches = new ArrayList<>();
 
@@ -576,6 +569,41 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             taskPunch = taskPunchFromRow(cursor);
         cursor.close();
         return taskPunch;
+    }
+
+
+    public ArrayList<StudentPunches> getStudentPunches(Date startDate, Date endDate) {
+        long startSeconds = startDate.getTime()/1000L;
+        long endSeconds = endDate.getTime()/1000L;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(TASK_PUNCH_QUERY +
+                " WHERE " + TASK_PUNCH.TIME_START + ">" + Long.toString(startSeconds) +
+                    " AND (" + TASK_PUNCH.TIME_STOP + " IS NULL OR " + TASK_PUNCH.TIME_STOP +"<" + Long.toString(endSeconds) +")" +
+                " ORDER BY " + TASK_PUNCH.STUDENT_ID + ", " + TASK_PUNCH.TIME_START, null);
+
+        ArrayList<StudentPunches> studentPunches = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            StudentPunches currentStudentPunches = new StudentPunches();
+            currentStudentPunches.setStudent(getStudent(cursor.getInt(1)));
+
+            do {
+                if (currentStudentPunches.getStudent().getId() != cursor.getInt(1)) {
+                    // Add Previous Student Punches And Start The Next Set
+                    studentPunches.add(currentStudentPunches);
+                    currentStudentPunches = new StudentPunches();
+                    currentStudentPunches.setStudent(getStudent(cursor.getInt(1)));
+                }
+
+                currentStudentPunches.getPunches().add(taskPunchFromRow(cursor));
+
+            } while (cursor.moveToNext());
+
+            // Add Last StudentPunches
+            studentPunches.add(currentStudentPunches);
+        }
+        cursor.close();
+        return studentPunches;
     }
 
     private Teacher teacherFromRow(Cursor cursor) {

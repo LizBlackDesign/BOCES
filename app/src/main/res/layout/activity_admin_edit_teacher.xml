@@ -24,7 +24,7 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputTeacherFirstName"
-        android:hint="@string/btn_teachers_hint_first"
+        android:hint="@string/teachers_hint_first"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputTeacherLastName"
-        android:hint="@string/btn_teachers_hint_last"
+        android:hint="@string/teachers_hint_last"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputTeacherEmail"
-        android:hint="@string/btn_teachers_hint_email"
+        android:hint="@string/teachers_hint_email"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputTeacherPhone"
-        android:hint="@string/btn_teachers_hint_phone"
+        android:hint="@string/teachers_hint_phone"
         android:inputType="phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,12 +95,12 @@
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
         android:onClick="onDeleteTeacher"
-        android:text="@string/btnDelete" />
+        android:text="@string/btn_Delete" />
 
     <Button
         android:id="@+id/btnSaveTeacher"
         android:onClick="onSave"
-        android:text="@string/btn_teachers_save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

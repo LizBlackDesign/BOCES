@@ -71,7 +71,7 @@
 
     <Button
         android:layout_weight="2"
-        android:text="@string/lblAddAccount"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

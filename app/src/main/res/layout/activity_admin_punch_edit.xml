@@ -221,9 +221,21 @@
         android:layout_weight="60"
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
+
+    <!--TODO onClick Delete for edit punch-->
+    <Button
+        android:id="@+id/btnDeleteTeacher"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:text="@string/btn_Delete" />
+
+
     <Button
         android:id="@+id/btnSaveTime"
-        android:text="@string/btn_add_time_Save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

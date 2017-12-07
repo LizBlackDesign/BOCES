@@ -84,7 +84,7 @@
     </LinearLayout>
     <Button
         android:id="@+id/btnSaveTime"
-        android:text="@string/btn_add_time_Save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

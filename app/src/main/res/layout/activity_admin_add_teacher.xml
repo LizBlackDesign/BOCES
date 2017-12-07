@@ -92,7 +92,7 @@
     <Button
         android:id="@+id/btnSaveTeacher"
         android:onClick="onClickAdminTeacherAddSave"
-        android:text="@string/btn_teachers_save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

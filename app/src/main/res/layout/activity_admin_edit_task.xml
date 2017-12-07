@@ -56,12 +56,12 @@
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
         android:onClick="onDelete"
-        android:text="@string/btnDelete" />
+        android:text="@string/btn_Delete" />
 
     <Button
         android:id="@+id/btnSaveTask"
         android:onClick="onSave"
-        android:text="@string/btn_edit_tasks_save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

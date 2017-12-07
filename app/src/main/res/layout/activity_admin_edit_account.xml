@@ -73,10 +73,10 @@
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
 
-        android:text="@string/btnDelete"/>
+        android:text="@string/btn_Delete"/>
     <Button
         android:id="@+id/btnAddAccount"
-        android:text="@string/lblEditAccount"
+        android:text="@string/btn_save"
         android:layout_weight="1"
         android:onClick="onSave"
         android:background="@color/colorPrimary"

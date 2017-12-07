@@ -78,7 +78,9 @@ public class AdminStudentPunchesActivity extends AppCompatActivity {
     }
 
     public void onCreatePunch(View v) {
-        // TODO: 12/3/17 Implement
+        Intent createPunch = new Intent(this, AdminPunchAddActivity.class);
+        createPunch.putExtra(AdminPunchAddActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+        startActivity(createPunch);
     }
 
     private HashMap<Integer, Task> getTaskCache() {

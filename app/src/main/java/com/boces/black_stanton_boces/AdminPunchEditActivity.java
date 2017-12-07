@@ -21,6 +21,7 @@ import com.boces.black_stanton_boces.util.TimePickerDialogueFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -107,6 +108,11 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
                         txtStart.setText(timeFormat.format(date));
+                        try {
+                            Date endDate = timeFormat.parse(txtEnd.getText().toString());
+                            lblDurationValue.setText(calculateDifference(date, endDate));
+                        } catch (ParseException ignored) {
+                        }
                     }
 
                     @Override
@@ -124,6 +130,11 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
                         txtEnd.setText(timeFormat.format(date));
+                        try {
+                            Date startDate = timeFormat.parse(txtStart.getText().toString());
+                            lblDurationValue.setText(calculateDifference(startDate, date));
+                        } catch (ParseException ignored) {
+                        }
                     }
 
                     @Override
@@ -176,5 +187,24 @@ public class AdminPunchEditActivity extends AppCompatActivity {
 
         persistence.update(punch);
         finish();
+    }
+
+    private String calculateDifference(Date start, Date end) {
+        Date startNoDate = removeDateSeconds(start);
+        Date endNoDate = removeDateSeconds(end);
+        final long diff = endNoDate.getTime() - startNoDate.getTime();
+        final long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+        return Long.toString(minutes) + "Min";
+    }
+
+    private Date removeDateSeconds(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.YEAR, 0);
+        cal.set(Calendar.MONTH, 0);
+        cal.set(Calendar.DAY_OF_MONTH, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 }

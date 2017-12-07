@@ -29,7 +29,7 @@ public class TimePickerDialogueFactory {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.HOUR, timePicker.getCurrentHour());
+                cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                 cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
 
                 listener.onPositive(cal.getTime(), dialog);

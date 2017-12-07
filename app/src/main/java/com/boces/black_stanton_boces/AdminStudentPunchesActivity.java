@@ -1,6 +1,7 @@
 package com.boces.black_stanton_boces;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +11,13 @@ import android.view.View;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
+import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.taskpunch.PunchAdapter;
 import com.boces.black_stanton_boces.taskpunch.PunchAdapterOnclick;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class AdminStudentPunchesActivity extends AppCompatActivity {
 
@@ -55,7 +58,9 @@ public class AdminStudentPunchesActivity extends AppCompatActivity {
                 startActivity(editPunch);
             }
         };
-        PunchAdapter adapter = new PunchAdapter(persistence.getTaskPunchesForStudent(studentId), Collections.singletonList(student), onclick);
+        PunchAdapter adapter = new PunchAdapter(persistence.getTaskPunchesForStudent(studentId),
+                Collections.singletonMap(studentId, student),
+                getTaskCache() ,onclick);
 
         punchesList = findViewById(R.id.punchList);
         punchesList.setAdapter(adapter);
@@ -67,11 +72,22 @@ public class AdminStudentPunchesActivity extends AppCompatActivity {
         super.onResume();
         PunchAdapter adapter = (PunchAdapter) punchesList.getAdapter();
         adapter.setPunches(persistence.getTaskPunchesForStudent(studentId));
-        adapter.setStudents(Collections.singletonList(persistence.getStudent(studentId)));
+        adapter.setStudents(Collections.singletonMap(studentId, persistence.getStudent(studentId)));
+        adapter.setTasks(getTaskCache());
         adapter.notifyDataSetChanged();
     }
 
     public void onCreatePunch(View v) {
         // TODO: 12/3/17 Implement
+    }
+
+    private HashMap<Integer, Task> getTaskCache() {
+        @SuppressLint("UseSparseArrays")
+        HashMap<Integer, Task> tasks = new HashMap<>();
+        ArrayList<Task> dbTasks = persistence.getAllTasks();
+        for (Task task : dbTasks) {
+            tasks.put(task.getId(), task);
+        }
+        return tasks;
     }
 }

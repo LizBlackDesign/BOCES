@@ -74,8 +74,6 @@
     <!--activity_admin_students-->
     <string name="title_admin_students">Students</string>
     <string name="search_hint_admin_type_student_name">Type Student Name</string>
-    <string name="btn_admin_students_edit">Edit Student</string>
-    <string name="btn_admin_students_add">Add Student</string>
 
 
     <!--activity_admin_add/edit_students-->
@@ -118,7 +116,7 @@
     <!--activity_admin_student_punches-->
     <string name="title_punches">Punches</string>
     <string name="search_hint_admin_punches_student">Type Student Name</string>
-    <string name="btn_admin_punch_add">Add Task</string>
+
 
     <!--activity_admin_student_punches_add/edit-->
     <string name="title_punches_add">Add Punch</string>

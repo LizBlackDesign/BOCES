@@ -62,7 +62,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         punchId = extras.getInt(BUNDLE_KEY.PUNCH_ID.name());
         if (punchId == 0)
             throw new IllegalStateException("Punch ID Not Passed");
-        TaskPunch punch = persistence.getTaskPunch(punchId);
+        final TaskPunch punch = persistence.getTaskPunch(punchId);
         if (punch == null)
             throw new IllegalStateException("Punch Not Found");
 
@@ -108,10 +108,9 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
                         txtStart.setText(timeFormat.format(date));
-                        try {
-                            Date endDate = timeFormat.parse(txtEnd.getText().toString());
-                            lblDurationValue.setText(calculateDifference(date, endDate));
-                        } catch (ParseException ignored) {
+                        punch.setTimeStart(date);
+                        if (!txtEnd.getText().toString().isEmpty()) {
+                            lblDurationValue.setText(calculateDifference(punch.getTimeStart(), punch.getTimeEnd()));
                         }
                     }
 
@@ -119,7 +118,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                     public void onNegative(Dialog dialog) {
                         //ignored
                     }
-                }).show();
+                }, punch.getTimeStart()).show();
             }
         });
 
@@ -130,10 +129,9 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
                         txtEnd.setText(timeFormat.format(date));
-                        try {
-                            Date startDate = timeFormat.parse(txtStart.getText().toString());
-                            lblDurationValue.setText(calculateDifference(startDate, date));
-                        } catch (ParseException ignored) {
+                        punch.setTimeEnd(date);
+                        if (!txtStart.getText().toString().isEmpty()) {
+                            lblDurationValue.setText(calculateDifference(punch.getTimeStart(), punch.getTimeEnd()));
                         }
                     }
 
@@ -141,7 +139,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                     public void onNegative(Dialog dialog) {
                         // Ignored
                     }
-                }).show();
+                }, punch.getTimeEnd()).show();
             }
         });
 
@@ -150,11 +148,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         txtStart.setText(timeFormat.format(punch.getTimeStart()));
         if (punch.getTimeEnd() != null) {
             txtEnd.setText(timeFormat.format(punch.getTimeEnd()));
-            final long diff = punch.getTimeEnd().getTime() - punch.getTimeStart().getTime();
-            final long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
-            final long seconds = TimeUnit.MILLISECONDS.toSeconds(diff) % 60L;
-            String difference = Long.toString(minutes) + ":" + seconds;
-            lblDurationValue.setText(difference);
+            lblDurationValue.setText(calculateDifference(punch.getTimeStart(), punch.getTimeEnd()));
         }
     }
 

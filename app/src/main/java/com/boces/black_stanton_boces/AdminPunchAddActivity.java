@@ -40,6 +40,7 @@ public class AdminPunchAddActivity extends AppCompatActivity {
     private EditText txtStart;
     private EditText txtEnd;
     private TextView lblDurationValue;
+    private DateCache dateCache = new DateCache();
 
     /**
      * Recognised Values That May Be Passed Through Bundles
@@ -105,10 +106,9 @@ public class AdminPunchAddActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
                         txtStart.setText(timeFormat.format(date));
-                        try {
-                            Date endDate = timeFormat.parse(txtEnd.getText().toString());
-                            lblDurationValue.setText(calculateDifference(date, endDate));
-                        } catch (ParseException ignored) {
+                        dateCache.startDate = date;
+                        if (!txtEnd.getText().toString().isEmpty()) {
+                            lblDurationValue.setText(calculateDifference(dateCache.startDate, dateCache.endDate));
                         }
                     }
 
@@ -116,7 +116,7 @@ public class AdminPunchAddActivity extends AppCompatActivity {
                     public void onNegative(Dialog dialog) {
                         //ignored
                     }
-                }).show();
+                }, dateCache.startDate).show();
             }
         });
 
@@ -127,10 +127,9 @@ public class AdminPunchAddActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
                         txtEnd.setText(timeFormat.format(date));
-                        try {
-                            Date startDate = timeFormat.parse(txtStart.getText().toString());
-                            lblDurationValue.setText(calculateDifference(startDate, date));
-                        } catch (ParseException ignored) {
+                        dateCache.endDate = date;
+                        if (!txtStart.getText().toString().isEmpty()) {
+                            lblDurationValue.setText(calculateDifference(dateCache.startDate, dateCache.endDate));
                         }
                     }
 
@@ -138,7 +137,7 @@ public class AdminPunchAddActivity extends AppCompatActivity {
                     public void onNegative(Dialog dialog) {
                         // Ignored
                     }
-                }).show();
+                }, dateCache.endDate).show();
             }
         });
 
@@ -186,5 +185,15 @@ public class AdminPunchAddActivity extends AppCompatActivity {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
+    }
+
+
+    /**
+     * Cache Start/End Dates So They May
+     * Be Modified By The Dialogue Listener
+     */
+    private class DateCache {
+        public Date startDate = new Date();
+        public Date endDate = new Date();
     }
 }

@@ -17,10 +17,15 @@ public class TimePickerDialogueFactory {
         void onNegative(Dialog dialog);
     }
 
-    public static Dialog make(Context context, final TimePickerDialogueListener listener) {
+    public static Dialog make(Context context, final TimePickerDialogueListener listener, Date initialValue) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialogue_time_picker);
         final TimePicker timePicker = dialog.findViewById(R.id.timePicker);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(initialValue);
+        timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+        timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
 
         dialog.setTitle("Pick A Time");
 

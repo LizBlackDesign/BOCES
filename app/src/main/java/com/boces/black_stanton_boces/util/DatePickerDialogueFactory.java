@@ -8,6 +8,7 @@ import android.widget.DatePicker;
 
 import com.boces.black_stanton_boces.R;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class DatePickerDialogueFactory {
@@ -19,8 +20,7 @@ public class DatePickerDialogueFactory {
     public static Dialog make(Context context, final DatePickerDialogueListener listener) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialogue_date_picker);
-        DatePicker datePicker = dialog.findViewById(R.id.datePicker);
-
+        final DatePicker datePicker = dialog.findViewById(R.id.datePicker);
 
 
         dialog.setTitle("Pick A Date");
@@ -29,7 +29,12 @@ public class DatePickerDialogueFactory {
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onPositive(new Date(), dialog);
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, datePicker.getYear());
+                cal.set(Calendar.MONTH, datePicker.getMonth());
+                cal.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+
+                listener.onPositive(cal.getTime(), dialog);
                 dialog.dismiss();
             }
         });

@@ -78,6 +78,8 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         lblDurationValue = findViewById(R.id.lblDurationValue);
 
 
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
         final Context context = this;
 
         txtDate.setOnClickListener(new View.OnClickListener() {
@@ -86,20 +88,17 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                 DatePickerDialogueFactory.make(context, new DatePickerDialogueFactory.DatePickerDialogueListener() {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
-                        int i = 1; //noop
+                        txtDate.setText(dateFormat.format(date));
                     }
 
                     @Override
                     public void onNegative(Dialog dialog) {
-                        int i = 1; //noop
+                        // Ignored
                     }
                 }).show();
             }
         });
 
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
 
         txtDate.setText(dateFormat.format(punch.getTimeStart()));
         txtStart.setText(timeFormat.format(punch.getTimeStart()));

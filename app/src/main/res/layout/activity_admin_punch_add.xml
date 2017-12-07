@@ -37,36 +37,45 @@
             android:text="@string/lbl_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
         <Spinner
             android:id="@+id/spinnerStudent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
-    <Space
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:layout_width="match_parent"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_weight="4"
-        android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
-        <TextView
-            android:id="@+id/lblTaskName"
-            android:text="@string/lbl_task"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
-        <Spinner
-            android:id="@+id/spinnerTask"
+        <Space
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"/>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"  />
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+            <TextView
+                android:id="@+id/lblTaskName"
+                android:text="@string/lbl_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="24sp" />
+            <Spinner
+                android:id="@+id/spinnerTask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                />
     </LinearLayout>
     <Space
         android:layout_weight="1"
@@ -95,8 +104,12 @@
 
         <EditText
             android:id="@+id/txtDate"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:textAlignment="center"
             android:inputType="date"/>
     </LinearLayout>
     <Space
@@ -137,8 +150,12 @@
             <EditText
                 android:id="@+id/txtStart"
                 android:inputType="time"
+                android:focusable="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -165,8 +182,12 @@
             <EditText
                 android:id="@+id/txtEnd"
                 android:inputType="time"
+                android:focusable="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -192,6 +213,7 @@
         <TextView
             android:id="@+id/lblDurationValue"
             android:text=""
+            android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

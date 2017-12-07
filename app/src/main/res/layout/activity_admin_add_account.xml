@@ -30,6 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp"/>
 
     <Space
@@ -43,6 +45,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp"/>
 
     <Space
@@ -56,6 +60,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/lblConfirmPassword"
         android:inputType="textPassword"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp"/>
 
     <Space

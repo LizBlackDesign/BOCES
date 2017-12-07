@@ -98,22 +98,14 @@
     <string name="btn_admin_teachers_edit">Edit Teacher</string>
     <string name="btn_admin_teachers_add">Add Teacher</string>
 
-    <!--activity_admin_add_teachers-->
-    <string name="title_add_teachers">Add Teachers</string>
-    <string name="btn_add_teachers_save">Save</string>
-    <string name="btn_add_teachers_hint_first">First</string>
-    <string name="btn_add_teachers_hint_last">Last</string>
-    <string name="btn_add_teachers_hint_email">jsmith@example.com</string>
-    <string name="btn_add_teachers_hint_phone">8141231234</string>
-
-
-    <!--activity_admin_edit_teachers-->
+    <!--activity_admin_add/edit_teachers-->
     <string name="title_edit_teachers">Edit Teachers</string>
-    <string name="btn_edit_teachers_save">Save</string>
-    <string name="btn_edit_teachers_hint_first">First</string>
-    <string name="btn_edit_teachers_hint_last">Last</string>
-    <string name="btn_edit_teachers_hint_email">jsmith@example.com</string>
-    <string name="btn_edit_teachers_hint_phone">8141231234</string>
+    <string name="title_add_teachers">Add Teachers</string>
+    <string name="btn_teachers_save">Save</string>
+    <string name="btn_teachers_hint_first">First</string>
+    <string name="btn_teachers_hint_last">Last</string>
+    <string name="btn_teachers_hint_email">jsmith@example.com</string>
+    <string name="btn_teachers_hint_phone">8141231234</string>
 
 
     <!--activity_admin_tasks-->
@@ -167,4 +159,7 @@
     <!--dialogue_date_picker-->
     <string name="dialogue_okay">Okay</string>
     <string name="dialogue_cancel">Cancel</string>
+
+    <!--activity_manage_admin_accounts-->
+    <string name="title_manage_admin_accounts">Manage Accounts</string>
 </resources>

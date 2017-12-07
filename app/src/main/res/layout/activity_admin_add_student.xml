@@ -32,6 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp" />
     <Space
         android:layout_weight="1"
@@ -44,6 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp" />
     <Space
         android:layout_weight="1"
@@ -62,6 +66,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/btn_add_students_hint_age"
             android:inputType="number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textSize="24sp" />
 
         <EditText
@@ -71,6 +77,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/btn_add_students_hint_year"
             android:inputType="number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textSize="24sp" />
     </LinearLayout>
     <Space
@@ -82,13 +90,15 @@
         android:layout_weight="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="9dp"/>
     <Space
         android:layout_weight="1"
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/imgAddStudent"
         android:layout_width="150dp"
         android:layout_height="150dp"

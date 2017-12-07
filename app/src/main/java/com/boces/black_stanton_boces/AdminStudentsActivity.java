@@ -47,7 +47,7 @@ public class AdminStudentsActivity extends AppCompatActivity {
         persistence = new PersistenceInteractor(this);
         StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence, onclick);
 
-        studentList = (RecyclerView) findViewById(R.id.studentList);
+        studentList = (RecyclerView) findViewById(R.id.recyclerSelectStudent);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
     }

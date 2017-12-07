@@ -9,30 +9,29 @@
     tools:context="com.boces.black_stanton_boces.AdminPunchSelectStudentActivity">
 
     <TextView
-        android:id="@+id/admin_punch_select_student_title"
+        android:id="@+id/student_login_select_student_title"
+        android:text="@string/title_select_student"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/title_select_student"
+        android:padding="8dp"
         android:textAlignment="center"
-        android:textSize="30sp" />
-
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        android:textStyle="bold" />
     <SearchView
-        android:id="@+id/admin_punch_select_student_search"
+        android:id="@+id/login_select_student_search"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="visible"
-        android:queryHint="@string/search_hint_admin_type_student_name"
-        tools:queryHint="@string/search_hint_type_admin_student_name"
-        android:layout_marginTop="8dp"
-        />
+        android:queryHint="@string/search_hint_type_student_name"
+        tools:queryHint="@string/search_hint_type_student_name" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSelectStudent"
+        android:layout_weight="4"
         android:layout_width="match_parent"
-        android:layout_height="374dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
         android:clipToPadding="false"
         tools:listitem="@layout/item_student" />
 

@@ -137,7 +137,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(STUDENT_DDL);
         sqLiteDatabase.execSQL(TASK_PUNCH_DDL);
         sqLiteDatabase.execSQL(ADMIN_ACCOUNT_DDL);
-        createAdminAccount("admin", "a");
+        //createAdminAccount("admin", "a");
     }
 
     @Override

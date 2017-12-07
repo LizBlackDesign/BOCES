@@ -9,87 +9,38 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".LoginTypeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".StudentLoginSelectTeacherActivity"
-            android:label="@string/title_activity_student_login_select_teacher"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".StudentLoginSelectStudentActivity"
-            android:label="@string/title_activity_student_login_select_student"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".StudentLoginSelectTaskActivity"
-            android:label="@string/title_activity_student_login_select_task"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".StudentCurrentTaskViewActivity"
-            android:label="@string/title_activity_student_current_task_view"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminLoginActivity"
-            android:label="@string/title_activity_admin_login"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminMenuActivity"
-            android:label="@string/title_activity_admin_menu"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminStudentsActivity"
-            android:label="@string/title_activity_admin_student"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminTeachersActivity"
-            android:label="@string/title_activity_admin_teachers"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminTasksActivity"
-            android:label="@string/title_activity_admin_tasks"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminAddStudentActivity"
-            android:label="@string/title_activity_admin_add_student"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminEditStudentActivity"
-            android:label="@string/title_activity_admin_edit_student"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminAddTeacherActivity"
-            android:label="@string/title_activity_admin_add_teacher"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminEditTeacherActivity"
-            android:label="@string/title_activity_admin_edit_teacher"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminAddTaskActivity"
-            android:label="@string/title_activity_admin_add_task"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AdminEditTaskActivity"
-            android:label="@string/title_activity_admin_edit_task"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".StudentLoginSelectTeacherActivity" />
+        <activity android:name=".StudentLoginSelectStudentActivity" />
+        <activity android:name=".StudentLoginSelectTaskActivity" />
+        <activity android:name=".StudentCurrentTaskViewActivity" />
+        <activity android:name=".AdminLoginActivity"/>
+        <activity android:name=".AdminMenuActivity"/>
+        <activity android:name=".AdminStudentsActivity"/>
+        <activity android:name=".AdminTeachersActivity" />
+        <activity android:name=".AdminTasksActivity"/>
+        <activity android:name=".AdminAddStudentActivity"/>
+        <activity android:name=".AdminEditStudentActivity" />
+        <activity android:name=".AdminAddTeacherActivity" />
+        <activity android:name=".AdminEditTeacherActivity" />
+        <activity android:name=".AdminAddTaskActivity"/>
+        <activity android:name=".AdminEditTaskActivity" />
         <activity android:name=".StudentTaskStart" />
         <activity android:name=".DeveloperOptionsActivity" />
         <activity android:name=".AdminReportsActivity" />
         <activity android:name=".AdminStudentPunchesActivity" />
         <activity android:name=".AdminPunchAddActivity" />
         <activity android:name=".AdminPunchEditActivity" />
-        <activity
-            android:name=".AdminManageAccounts"
-            android:label="@string/title_activity_admin_manage_accounts"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AdminManageAccounts" />
         <activity android:name=".AdminAddAccountActivity" />
         <activity android:name=".AdminEditAccountActivity" />
-        <activity android:name=".AdminPunchSelectStudentActivity"></activity>
+        <activity android:name=".AdminPunchSelectStudentActivity"/>
     </application>
 
 </manifest>

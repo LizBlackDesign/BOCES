@@ -128,8 +128,4 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
 
     }
 
-    //Opens Student Selection Screen (back one screen)
-    public void onClickAdminTeacherBack(View v) {
-        finish();
-    }
 }

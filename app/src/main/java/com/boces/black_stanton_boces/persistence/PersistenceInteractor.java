@@ -446,13 +446,15 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
     //END OF TASK
 
-    private static final String TASK_PUNCH_QUERY = "SELECT " +
+    private static final String TASK_PUNCH_QUERY =
+            "SELECT " +
             TASK_PUNCH.ID + ", " +
             TASK_PUNCH.STUDENT_ID + ", " +
             TASK_PUNCH.TASK_ID + ", " +
             TASK_PUNCH.TIME_START + ", " +
-            TASK_PUNCH.TIME_STOP + " " +
+            TASK_PUNCH.TIME_STOP +
             " FROM " + TASK_PUNCH.TABLE;
+
     private TaskPunch taskPunchFromRow(Cursor cursor) {
         TaskPunch taskPunch = new TaskPunch();
         taskPunch.setId(cursor.getInt(0));
@@ -545,6 +547,25 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskPunches;
     }
 
+    public ArrayList<TaskPunch> getTaskPunchesForStudent(int studentId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                TASK_PUNCH_QUERY + " WHERE " + STUDENT.ID + "=?",
+                new String[]{Integer.toString(studentId)});
+
+        ArrayList<TaskPunch> taskPunches = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                taskPunches.add(taskPunchFromRow(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return taskPunches;
+    }
+
     /**
      * Finds An Open Punch For A Given Student
      * @param studentId
@@ -556,13 +577,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         TaskPunch taskPunch = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        TASK_PUNCH.ID + ", " +
-                        TASK_PUNCH.STUDENT_ID + ", " +
-                        TASK_PUNCH.TASK_ID + ", " +
-                        TASK_PUNCH.TIME_START + ", " +
-                        TASK_PUNCH.TIME_STOP + " " +
-                        " FROM " + TASK_PUNCH.TABLE +
+                TASK_PUNCH_QUERY +
                         " WHERE " + TASK_PUNCH.STUDENT_ID + "=" + studentId +
                         " AND " + TASK_PUNCH.TIME_STOP + " IS NULL" , null);
         if (cursor.moveToFirst())

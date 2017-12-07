@@ -164,4 +164,7 @@
     <string name="title_admin_select_student">Select Student</string>
     <string name="search_hint_type_admin_student_name">Type Student Name</string>
 
+    <!--dialogue_date_picker-->
+    <string name="dialogue_okay">Okay</string>
+    <string name="dialogue_cancel">Cancel</string>
 </resources>

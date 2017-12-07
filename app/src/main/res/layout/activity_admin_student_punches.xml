@@ -20,13 +20,6 @@
         android:textColor="@android:color/black"
         android:textSize="36sp"
         android:textStyle="bold" />
-    <!--TODO: add hint-->
-    <SearchView
-        android:id="@+id/searchAdminPunches"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="visible"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/punchList"
@@ -35,6 +28,15 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         tools:listitem="@layout/item_time" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddPunch"
+        android:layout_width="71dp"
+        android:layout_height="66dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 
 
 </LinearLayout>

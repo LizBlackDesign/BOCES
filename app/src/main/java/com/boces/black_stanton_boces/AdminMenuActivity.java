@@ -29,7 +29,9 @@ public class AdminMenuActivity extends AppCompatActivity {
         startActivity(new Intent(this, AdminTasksActivity.class));
     }
 
-    //There is no time clocked currently
+    public void onTimeClocked(View v) {
+        startActivity(new Intent(this, AdminPunchSelectStudentActivity.class));
+    }
     //There is no reports currently
 
     public void onClickAdminMenuAccounts(View v) {

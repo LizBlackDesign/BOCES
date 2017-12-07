@@ -1,25 +1,22 @@
 package com.boces.black_stanton_boces;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
-import com.boces.black_stanton_boces.persistence.model.Student;
-import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.student.StudentSpinnerInteractor;
 import com.boces.black_stanton_boces.task.TaskSpinnerInteractor;
 import com.boces.black_stanton_boces.util.DatePickerDialogueFactory;
+import com.boces.black_stanton_boces.util.TimePickerDialogueFactory;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -79,7 +76,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
 
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
         final Context context = this;
 
         txtDate.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +86,40 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
                         txtDate.setText(dateFormat.format(date));
+                    }
+
+                    @Override
+                    public void onNegative(Dialog dialog) {
+                        // Ignored
+                    }
+                }).show();
+            }
+        });
+
+        txtStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialogueFactory.make(context, new TimePickerDialogueFactory.TimePickerDialogueListener() {
+                    @Override
+                    public void onPositive(Date date, Dialog dialog) {
+                        txtStart.setText(timeFormat.format(date));
+                    }
+
+                    @Override
+                    public void onNegative(Dialog dialog) {
+                        //ignored
+                    }
+                }).show();
+            }
+        });
+
+        txtEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialogueFactory.make(context, new TimePickerDialogueFactory.TimePickerDialogueListener() {
+                    @Override
+                    public void onPositive(Date date, Dialog dialog) {
+                        txtEnd.setText(timeFormat.format(date));
                     }
 
                     @Override

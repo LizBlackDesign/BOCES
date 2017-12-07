@@ -8,14 +8,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
+import com.boces.black_stanton_boces.persistence.model.Student;
+import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.student.StudentSpinnerInteractor;
 import com.boces.black_stanton_boces.task.TaskSpinnerInteractor;
 import com.boces.black_stanton_boces.util.DatePickerDialogueFactory;
 import com.boces.black_stanton_boces.util.TimePickerDialogueFactory;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -141,5 +145,36 @@ public class AdminPunchEditActivity extends AppCompatActivity {
             String difference = Long.toString(minutes) + ":" + seconds;
             lblDurationValue.setText(difference);
         }
+    }
+
+
+    public void onSave(View v) {
+        TaskPunch punch = persistence.getTaskPunch(punchId);
+        if (punch == null) {
+            Toast.makeText(this, "Error: Task Punch Not Found", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final SimpleDateFormat parser = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
+        String start = txtDate.getText().toString() + " " + txtStart.getText().toString();
+        String end = txtDate.getText().toString() + " " + txtEnd.getText().toString();
+
+        try {
+            punch.setTimeStart(parser.parse(start));
+            punch.setTimeEnd(parser.parse(end));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Student selectedStudent = studentSpinnerInteractor.getSelectedItem();
+        if (selectedStudent != null)
+            punch.setStudentId(selectedStudent.getId());
+
+        Task selectedTask = taskSpinnerInteractor.getSelectedItem();
+        if (selectedTask != null)
+            punch.setTaskId(selectedTask.getId());
+
+        persistence.update(punch);
+        finish();
     }
 }

@@ -31,34 +31,59 @@ public class ReportGenerator {
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         final SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
-
+        StringBuilder stringBuilder = new StringBuilder();
 
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(tempFile));
 
+            final String header[] = new String[]{"Student", "Task", "Date", "Time In", "Time Out", "Duration"};
             // Header
-            writer.writeNext(new String[]{"Student", "Task", "Date", "Duration"});
+            writer.writeNext(header);
 
 
             // Data
-            String buffer[] = new String[4];
+            String buffer[] = new String[header.length];
             int lastStudentId = -1;
             for (StudentPunches studentPunch : studentPunches) {
 
                 for (TaskPunch taskPunch : studentPunch.getPunches()) {
+
+                    // If We've Moved To A New Student, Write Their Name
                     if (studentPunch.getStudent().getId() != lastStudentId) {
                         buffer[0] = studentPunch.getStudent().getLastName() + " " + studentPunch.getStudent().getFirstName();
                         lastStudentId = studentPunch.getStudent().getId();
-                    } else
+                    } else // Do Not Repeat Student Names If We Don't Need To
                         buffer[0] = "";
 
                     buffer[1] = taskMap.get(taskPunch.getTaskId()).getName();
                     buffer[2] = dateFormat.format(taskPunch.getTimeStart());
-                    final long deltaTime = taskPunch.getTimeStart().getTime();
-                    final long deltaMinutes = TimeUnit.MILLISECONDS.toMinutes(deltaTime);
-                    final long extraSeconds = TimeUnit.MILLISECONDS.toSeconds(deltaTime) % 60;
-                    buffer[3] = Long.toString(deltaMinutes) + ":" + Long.toString(extraSeconds);
 
+                    // Both Start Date & Time Come From timeStart
+                    buffer[3] = timeFormat.format(taskPunch.getTimeStart());
+
+                    if (taskPunch.getTimeEnd() != null)
+                        buffer[4] = timeFormat.format(taskPunch.getTimeEnd());
+                    else
+                        buffer[4] = "--Clocked In--";
+
+                    final long deltaTime = taskPunch.getTimeEnd().getTime() - taskPunch.getTimeStart().getTime();
+                    final long deltaHours = TimeUnit.MILLISECONDS.toHours(deltaTime);
+                    final long extraMinutes = TimeUnit.MILLISECONDS.toMinutes(deltaTime) % 60;
+                    final long extraSeconds = TimeUnit.MILLISECONDS.toSeconds(deltaTime) % 60;
+
+                    // Only Add Hours If Needed
+                    if (deltaHours > 0)
+                        stringBuilder.append(Long.toString(deltaHours)).append(":");
+
+                    // Always Add Minutes/Seconds
+                    stringBuilder.append(Long.toString(extraMinutes)).append(":").append(Long.toString(extraSeconds));
+
+                    buffer[5] = stringBuilder.toString();
+
+                    // Empty String Builder
+                    stringBuilder.setLength(0);
+
+                    // Write Line
                     writer.writeNext(buffer);
                 }
             }

@@ -32,7 +32,10 @@ public class AdminMenuActivity extends AppCompatActivity {
     public void onTimeClocked(View v) {
         startActivity(new Intent(this, AdminPunchSelectStudentActivity.class));
     }
-    //There is no reports currently
+
+    public void onReports(View v) {
+        startActivity(new Intent(this, AdminReportsActivity.class));
+    }
 
     public void onClickAdminMenuAccounts(View v) {
         startActivity(new Intent(this, AdminManageAccounts.class));

@@ -2,35 +2,39 @@ package com.boces.black_stanton_boces;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Task;
-import com.boces.black_stanton_boces.report.ReportGenerator;
+import com.boces.black_stanton_boces.report.ReportRunner;
 import com.boces.black_stanton_boces.report.StudentPunches;
 import com.boces.black_stanton_boces.util.DatePickerDialogueFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class AdminReportsActivity extends AppCompatActivity {
 
+    private Button btnSaveTime;
     private EditText txtStartDate;
     private EditText txtEndDate;
     private DateCache dateCache = new DateCache();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    private Thread reportGenerator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_reports);
 
+        btnSaveTime = findViewById(R.id.btnSaveTime);
         txtStartDate = findViewById(R.id.txtStart);
         txtEndDate = findViewById(R.id.txtEnd);
 
@@ -75,10 +79,50 @@ public class AdminReportsActivity extends AppCompatActivity {
 
 
     public void onSave(View v) {
+        btnSaveTime.setEnabled(false);
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         ArrayList<StudentPunches> punches = persistence.getStudentPunches(dateCache.start, dateCache.end);
         ArrayList<Task> tasks = persistence.getAllTasks();
-        ReportGenerator.exportTaskReport(punches, "file", tasks);
+        String filename = "Test";
+        final Context context = this;
+
+        if (reportGenerator == null || reportGenerator.getState() == Thread.State.TERMINATED) {
+            ReportRunner runner = new ReportRunner(filename, punches, tasks, new ReportRunner.Callback() {
+                @Override
+                public void onSuccess() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Report Done", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(String message) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Report Failed", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void always() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnSaveTime.setEnabled(true);
+                        }
+                    });
+                }
+            });
+
+            reportGenerator = new Thread(runner);
+            reportGenerator.start();
+        }
+
     }
 
     private class DateCache {
@@ -86,16 +130,4 @@ public class AdminReportsActivity extends AppCompatActivity {
         public Date end = new Date();
     }
 
-    private class ReportRunner implements Runnable {
-        private Date startDate;
-        private Date endDate;
-        private String filename;
-        private List<StudentPunches> punches;
-        private ArrayList<Task> tasks;
-
-        @Override
-        public void run() {
-
-        }
-    }
 }

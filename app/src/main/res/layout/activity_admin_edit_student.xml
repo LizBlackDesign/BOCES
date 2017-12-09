@@ -26,10 +26,12 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentFirstName"
-        android:hint="@string/btn_edit_students_hint_first"
+        android:hint="@string/students_hint_first"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp" />
     <Space
         android:layout_weight="1"
@@ -37,10 +39,12 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentLastName"
-        android:hint="@string/btn_edit_students_hint_last"
+        android:hint="@string/students_hint_last"
         android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp"  />
     <Space
         android:layout_weight="1"
@@ -48,10 +52,12 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentAge"
-        android:hint="@string/btn_edit_students_hint_age"
+        android:hint="@string/students_hint_age"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp" />
     <Space
         android:layout_weight="1"
@@ -59,10 +65,12 @@
         android:layout_width="match_parent"/>
     <EditText
         android:id="@+id/inputStudentYear"
-        android:hint="@string/btn_edit_students_hint_year"
+        android:hint="@string/students_hint_year"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp" />
     <Space
         android:layout_weight="1"
@@ -72,6 +80,8 @@
         android:id="@+id/spinnerTeacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp"  />
     <Space
         android:layout_weight="1"
@@ -94,13 +104,15 @@
         android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
         android:onClick="onDeleteStudent"
-        android:text="@string/btnDelete"/>
+        android:text="@string/btn_Delete"/>
 
     <Button
         android:id="@+id/btnSaveStudent"
         android:onClick="onSave"
-        android:text="@string/btn_edit_students_save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

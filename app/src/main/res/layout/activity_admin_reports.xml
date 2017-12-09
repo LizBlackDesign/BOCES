@@ -48,17 +48,14 @@
                 android:textColor="@android:color/black"
                 android:textSize="24sp"  />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
             <EditText
                 android:id="@+id/txtStart"
                 android:inputType="time"
                 android:focusable="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -76,22 +73,20 @@
                 android:textColor="@android:color/black"
                 android:textSize="24sp"  />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/txtEnd"
                 android:inputType="time"
                 android:focusable="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
     </LinearLayout>
     <Button
         android:id="@+id/btnSaveTime"
-        android:text="@string/btn_add_time_Save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

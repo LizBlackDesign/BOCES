@@ -37,12 +37,16 @@
             android:text="@string/lbl_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
         <Spinner
             android:id="@+id/spinnerStudent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
     <Space
         android:layout_weight="1"
@@ -62,11 +66,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textSize="24sp" />
         <Spinner
             android:id="@+id/spinnerTask"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"  />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
     <Space
         android:layout_weight="1"
@@ -95,8 +103,12 @@
 
         <EditText
             android:id="@+id/txtDate"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:textAlignment="center"
             android:inputType="date"/>
     </LinearLayout>
     <Space
@@ -137,8 +149,12 @@
             <EditText
                 android:id="@+id/txtStart"
                 android:inputType="time"
+                android:focusable="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -165,8 +181,12 @@
             <EditText
                 android:id="@+id/txtEnd"
                 android:inputType="time"
+                android:focusable="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -192,6 +212,7 @@
         <TextView
             android:id="@+id/lblDurationValue"
             android:text=""
+            android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -201,7 +222,7 @@
         android:layout_width="match_parent"/>
     <Button
         android:id="@+id/btnSaveTime"
-        android:text="@string/btn_add_time_Save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

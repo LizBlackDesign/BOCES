@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class AdminStudentsActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
+    private SearchView searchAdminStudent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,25 @@ public class AdminStudentsActivity extends AppCompatActivity {
         };
 
         persistence = new PersistenceInteractor(this);
-        StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence, onclick);
+        final StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence, onclick);
 
         studentList = (RecyclerView) findViewById(R.id.recyclerSelectStudent);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
+        searchAdminStudent = (SearchView) findViewById(R.id.login_select_student_search);
+        searchAdminStudent.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
     @Override

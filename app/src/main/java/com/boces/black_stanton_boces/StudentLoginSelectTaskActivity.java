@@ -1,30 +1,19 @@
 package com.boces.black_stanton_boces;
-//TODO: search bar, save information for current task page
-import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
-import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
+import com.boces.black_stanton_boces.task.TaskAdapter;
+import com.boces.black_stanton_boces.task.TaskAdapterOnclick;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class StudentLoginSelectTaskActivity extends AppCompatActivity {
 
@@ -55,10 +44,41 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
         if (currentStudent == null)
             throw new IllegalStateException("Student With ID " + studentId + " Not Found");
 
-        TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks(), persistence);
-        taskList = (RecyclerView) findViewById(R.id.recyclerSelectTask);
+        final TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks(), new TaskAdapterOnclick() {
+            @Override
+            public void onClick(int taskId) {
+                TaskPunch taskPunch = new TaskPunch();
+                taskPunch.setStudentId(studentId);
+                taskPunch.setTaskId(taskId);
+                taskPunch.setTimeStart(new Date());
+                int punchId = persistence.addTaskPunch(taskPunch);
+
+                Intent startTask = new Intent(getApplicationContext(), StudentCurrentTaskViewActivity.class);
+                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.TASK_ID.name(), taskId);
+                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.PUNCH_ID.name(), punchId);
+                startActivity(startTask);
+            }
+        });
+
+        taskList = findViewById(R.id.recyclerSelectTask);
         taskList.setAdapter(adapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
+
+        SearchView searchView = findViewById(R.id.login_select_task_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -66,84 +86,5 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
         super.onResume();
         ((TaskAdapter) taskList.getAdapter()).setTasks(persistence.getAllTasks());
         taskList.getAdapter().notifyDataSetChanged();
-    }
-
-    private class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
-        List<Task> tasks;
-        PersistenceInteractor persistence;
-
-        public TaskAdapter(List<Task> tasks, PersistenceInteractor persistence) {
-            this.tasks = tasks;
-            this.persistence = persistence;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View taskView = inflater.inflate(R.layout.item_task, parent, false);
-            return new ViewHolder(taskView);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Task task = tasks.get(position);
-
-            holder.taskId = task.getId();
-            holder.taskName.setText(task.getName());
-            if (task.getImage() != null)
-                holder.taskImage.setImageBitmap(task.getImage());
-        }
-
-        @Override
-        public int getItemCount() {
-            return tasks.size();
-        }
-
-        public List<Task> getTasks() {
-            return tasks;
-        }
-
-        public void setTasks(List<Task> tasks) {
-            this.tasks = tasks;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            int taskId;
-            public TextView taskName;
-            public ImageView taskImage;
-
-            public ViewHolder(View v) {
-                super(v);
-                taskName = v.findViewById(R.id.taskName);
-                taskImage = v.findViewById(R.id.taskImage);
-
-                v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (taskId < 1)
-                            throw new IllegalStateException("Task Id Not Defined");
-
-                        TaskPunch taskPunch = new TaskPunch();
-                        taskPunch.setStudentId(studentId);
-                        taskPunch.setTaskId(taskId);
-                        taskPunch.setTimeStart(new Date());
-                        int punchId = persistence.addTaskPunch(taskPunch);
-
-                        Intent startTask = new Intent(getApplicationContext(), StudentCurrentTaskViewActivity.class);
-                        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.TASK_ID.name(), taskId);
-                        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
-                        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.PUNCH_ID.name(), punchId);
-                        startActivity(startTask);
-                    }
-                });
-            }
-        }
-    }
-
-    //Opens teacher Selection Screen (back one screen)
-    public void onClickAdminTaskBack(View v) {
-        finish();
     }
 }

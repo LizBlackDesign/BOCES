@@ -1,11 +1,11 @@
 package com.boces.black_stanton_boces;
-//TODO: search bar, save information for current task page
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
@@ -61,9 +61,24 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
             }
         });
 
-        taskList = (RecyclerView) findViewById(R.id.recyclerSelectTask);
+        taskList = findViewById(R.id.recyclerSelectTask);
         taskList.setAdapter(adapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
+
+        SearchView searchView = findViewById(R.id.login_select_task_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
     @Override

@@ -5,20 +5,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boces.black_stanton_boces.R;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> {
+public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> implements Filterable {
     private List<Teacher> teachers;
+    private List<Teacher> displayTeachers;
     private TeacherAdapterOnclick onclickHandler;
+    private TeacherFilter filter;
 
     public TeacherAdapter(List<Teacher> teachers, TeacherAdapterOnclick onclickHandler) {
         this.teachers = teachers;
+        this.displayTeachers = teachers;
         this.onclickHandler = onclickHandler;
     }
 
@@ -33,7 +39,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Teacher teacher = teachers.get(position);
+        Teacher teacher = displayTeachers.get(position);
 
         holder.teacherId = teacher.getId();
         holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
@@ -45,25 +51,26 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return teachers.size();
-    }
-
-    public void addTeacher(Teacher teacher) {
-        teachers.add(teacher);
-        this.notifyItemInserted(teachers.size() - 1);
-    }
-
-    public void clearAll() {
-        teachers.clear();
-        this.notifyDataSetChanged();
-    }
-
-    public List<Teacher> getTeachers() {
-        return teachers;
+        return displayTeachers.size();
     }
 
     public void setTeachers(List<Teacher> teachers) {
         this.teachers = teachers;
+
+        // If We Have A Filter, Update It As Well
+        if (filter != null) {
+            filter.updateTeachers(this.teachers);
+        }
+    }
+
+    @Override
+    public Filter getFilter() {
+        // If The Filter Has Not Been Constructed Yet, Do So
+        if (filter == null) {
+            filter = new TeacherFilter(teachers);
+        }
+
+        return filter;
     }
 
 
@@ -93,4 +100,48 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
         }
     }
 
+    private class TeacherFilter extends Filter {
+        private List<Teacher> teachers;
+
+        public TeacherFilter(List<Teacher> teachers) {
+            this.teachers = teachers;
+        }
+
+        public void updateTeachers(List<Teacher> teachers) {
+            this.teachers = teachers;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+
+            if (constraint == null || constraint.length() == 0) {
+                results.values = teachers;
+                results.count = teachers.size();
+                return results;
+            }
+
+            final String caseConstraint = constraint.toString().toUpperCase();
+            ArrayList<Teacher> filteredTeachers = new ArrayList<>();
+
+            for (Teacher teacher: teachers) {
+                if (teacher.getFirstName().toUpperCase().contains(caseConstraint) ||
+                        teacher.getLastName().toUpperCase().contains(caseConstraint)) {
+                    filteredTeachers.add(teacher);
+                }
+            }
+
+            results.values = filteredTeachers;
+            results.count = filteredTeachers.size();
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            //noinspection unchecked
+            displayTeachers = (List<Teacher>) results.values ;
+            notifyDataSetChanged();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.teacher.TeacherAdapter;
@@ -13,6 +14,7 @@ import com.boces.black_stanton_boces.teacher.TeacherAdapterOnclick;
 
 public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
 
+    private SearchView searchView;
     private RecyclerView teacherList;
     private PersistenceInteractor persistence;
 
@@ -22,7 +24,7 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_login_select_teacher);
 
         persistence = new PersistenceInteractor(this);
-        TeacherAdapter adapter = new TeacherAdapter(persistence.getAllTeachers(), new TeacherAdapterOnclick() {
+        final TeacherAdapter adapter = new TeacherAdapter(persistence.getAllTeachers(), new TeacherAdapterOnclick() {
             @Override
             public void onClick(int teacherId) {
                 Intent selectStudent = new Intent(getApplicationContext(), StudentLoginSelectStudentActivity.class);
@@ -34,6 +36,21 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
         teacherList = (RecyclerView) findViewById(R.id.recyclerSelectTeacher);
         teacherList.setAdapter(adapter);
         teacherList.setLayoutManager(new LinearLayoutManager(this));
+
+        searchView = (SearchView) findViewById(R.id.login_select_teacher_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
 

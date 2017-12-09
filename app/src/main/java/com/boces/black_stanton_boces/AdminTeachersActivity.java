@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.teacher.TeacherAdapter;
@@ -22,7 +23,7 @@ public class AdminTeachersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_teachers);
 
         persistence = new PersistenceInteractor(this);
-        TeacherAdapter adapter = new TeacherAdapter(persistence.getAllTeachers(), new TeacherAdapterOnclick() {
+        final TeacherAdapter adapter = new TeacherAdapter(persistence.getAllTeachers(), new TeacherAdapterOnclick() {
             @Override
             public void onClick(int teacherId) {
                 Intent editTeacher = new Intent(getApplicationContext(), AdminEditTeacherActivity.class);
@@ -34,6 +35,21 @@ public class AdminTeachersActivity extends AppCompatActivity {
         teacherList = (RecyclerView) findViewById(R.id.teacherList);
         teacherList.setAdapter(adapter);
         teacherList.setLayoutManager(new LinearLayoutManager(this));
+
+        SearchView searchView = findViewById(R.id.searchAdminTeachers);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
 
@@ -44,12 +60,6 @@ public class AdminTeachersActivity extends AppCompatActivity {
         teacherList.getAdapter().notifyDataSetChanged();
     }
 
-    //Opens Admin Teacher Back (back one screen)
-    public void onClickAdminBackTeacher(View v) {
-        finish();
-    }
-
-    //Opens Admin Teacher Add (back one screen)
     public void onClickAdminAddTeacher(View v) {
         startActivity(new Intent(this, AdminAddTeacherActivity.class));
     }

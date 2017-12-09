@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.content.Context;
@@ -17,11 +22,19 @@ import com.boces.black_stanton_boces.persistence.model.AdminAccount;
 
 import java.util.List;
 
+/**
+ * Shows Existing Accounts and Allows User Choose to Edit or Create and New One
+ */
 public class AdminManageAccounts extends AppCompatActivity {
 
     private RecyclerView accountList;
     private AdminAccountAdapter accountAdapter;
 
+    /**
+     * Retrieve Existing Information
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +48,6 @@ public class AdminManageAccounts extends AppCompatActivity {
             }
         });
 
-
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         accountAdapter = new AdminAccountAdapter(persistence.getAllAdminAccounts());
         accountList = findViewById(R.id.accountList);
@@ -43,6 +55,9 @@ public class AdminManageAccounts extends AppCompatActivity {
         accountList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    /**
+     * Re-retrieves Information In Case of Updates
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -66,6 +81,13 @@ public class AdminManageAccounts extends AppCompatActivity {
             return new ViewHolder(taskView);
         }
 
+        /**
+         * Binds Data in List to View Holder
+         * @param holder
+         * Items In Recycler
+         * @param position
+         * Item Number in List
+         */
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             AdminAccount adminAccount = accounts.get(position);
@@ -73,6 +95,7 @@ public class AdminManageAccounts extends AppCompatActivity {
             holder.accountId = adminAccount.getId();
             holder.username.setText(adminAccount.getUsername());
         }
+
 
         @Override
         public int getItemCount() {

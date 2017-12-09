@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.app.Dialog;
@@ -26,6 +31,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Pulls Existing Information And Save Update Information From User
+ */
 public class AdminPunchEditActivity extends AppCompatActivity {
 
     private int punchId;
@@ -49,6 +57,13 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         PUNCH_ID
     }
 
+    /**
+     * Brings in Extras, Validates, Sets Fields
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +167,11 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
     public void onSave(View v) {
         TaskPunch punch = persistence.getTaskPunch(punchId);
         if (punch == null) {
@@ -183,6 +202,15 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Calculates Duration
+     * @param start
+     * Start Time
+     * @param end
+     * Start End
+     * @return
+     * Duration
+     */
     private String calculateDifference(Date start, Date end) {
         Date startNoDate = removeDateSeconds(start);
         Date endNoDate = removeDateSeconds(end);
@@ -191,6 +219,13 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         return Long.toString(minutes) + "Min";
     }
 
+    /**
+     * Removes Seconds From Time
+     * @param date
+     * Date of Punch
+     * @return
+     * Time Without Seconds
+     */
     private Date removeDateSeconds(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

@@ -1,8 +1,13 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.SearchView;
@@ -11,12 +16,21 @@ import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.student.StudentAdapter;
 import com.boces.black_stanton_boces.student.StudentAdapterOnclick;
 
+
+/**
+ * Selects a Student To Manage the Punches of
+ */
 public class AdminPunchSelectStudentActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
     private SearchView studentSearch;
 
+    /**
+     * Retrieves Information
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +67,9 @@ public class AdminPunchSelectStudentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates Changed Information
+     */
     @Override
     protected void onResume() {
         super.onResume();

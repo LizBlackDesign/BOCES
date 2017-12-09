@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.Manifest;
@@ -20,6 +25,9 @@ import android.widget.ImageView;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Task;
 
+/**
+ * Collects Account Information From User And Creates New Task
+ */
 public class AdminAddTaskActivity extends AppCompatActivity {
 
     private EditText inputTaskName;
@@ -30,6 +38,11 @@ public class AdminAddTaskActivity extends AppCompatActivity {
     private static final int EXTERNAL_STORAGE_REQUEST = 0;
     private static final int RESULT_LOAD_IMAGE = 1;
 
+    /**
+     * Gathers Input References
+     * @param savedInstanceState
+     * Unused/Null
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +55,11 @@ public class AdminAddTaskActivity extends AppCompatActivity {
         persistence = new PersistenceInteractor(this);
     }
 
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
     public void onClickAdminTaskAddSave(View v) {
         Task task = new Task();
         task.setName(inputTaskName.getText().toString());
@@ -49,7 +67,7 @@ public class AdminAddTaskActivity extends AppCompatActivity {
             task.setImage(image);
 
         persistence.addTask(task);
-        finish();
+        finish();//Ends activity
     }
 
     public void onCamera(View v) {
@@ -101,8 +119,4 @@ public class AdminAddTaskActivity extends AppCompatActivity {
         }
     }
 
-    //Opens Task Manager(back one screen)
-    public void onClickAdminTasksAddBack(View v) {
-        finish();
-    }
 }

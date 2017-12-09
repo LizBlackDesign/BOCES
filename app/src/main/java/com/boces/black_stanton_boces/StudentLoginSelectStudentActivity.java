@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.content.Intent;
@@ -5,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
@@ -14,6 +18,9 @@ import com.boces.black_stanton_boces.persistence.model.Teacher;
 import com.boces.black_stanton_boces.student.StudentAdapter;
 import com.boces.black_stanton_boces.student.StudentAdapterOnclick;
 
+/**
+ * Allows Student to Choose Themselves
+ */
 public class StudentLoginSelectStudentActivity extends AppCompatActivity {
 
     private int teacherId;
@@ -28,6 +35,13 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
         TEACHER_ID
     }
 
+    /**
+     * Brings in Extras, Validates
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +100,9 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Updates Changed Information
+     */
     @Override
     public void onResume() {
         super.onResume();

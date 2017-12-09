@@ -1,3 +1,9 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
+
 package com.boces.black_stanton_boces;
 
 import android.Manifest;
@@ -11,9 +17,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
-import com.boces.black_stanton_boces.persistence.model.Student;
-import com.boces.black_stanton_boces.persistence.model.Task;
-import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.report.ReportGenerator;
 import com.boces.black_stanton_boces.report.StudentPunches;
 

@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.Manifest;
@@ -25,6 +30,9 @@ import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 import com.boces.black_stanton_boces.teacher.TeacherSpinnerInteractor;
 
+/**
+ * Collects Account Information From User And Creates New Student
+ */
 public class AdminAddStudentActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
@@ -39,6 +47,11 @@ public class AdminAddStudentActivity extends AppCompatActivity {
     private static final int EXTERNAL_STORAGE_REQUEST = 0;
     private static final int RESULT_LOAD_IMAGE = 1;
 
+    /**
+     * Gathers Input References
+     * @param savedInstanceState
+     * Unused/Null
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +73,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
     }
 
     /**
-     * Persists A Student Based Based On Inputs
-     * And Updates Recycler
-     *
+     * Checks If Required Field Is Empty Before For Saving
      * @param v
      * Current View
      */
@@ -72,7 +83,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         student.setLastName(inputStudentLastName.getText().toString());
 
         try {
-            student.setAge(Integer.parseInt(inputStudentAge.getText().toString()));
+            student.setAge(Integer.parseInt(inputStudentAge.getText().toString())); //Attempts parse
         } catch (NumberFormatException e) {
             new AlertDialog.Builder(this)
                     .setTitle("Age Is Invalid")
@@ -88,7 +99,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         }
 
         try {
-            student.setYear(Integer.parseInt(inputStudentYear.getText().toString()));
+            student.setYear(Integer.parseInt(inputStudentYear.getText().toString())); //Attempt parse
         } catch (NumberFormatException e) {
             new AlertDialog.Builder(this)
                     .setTitle("Age Is Invalid")
@@ -102,7 +113,6 @@ public class AdminAddStudentActivity extends AppCompatActivity {
                     .show();
             return;
         }
-
 
         Teacher spinnerTeacher = teacherSpinnerInteractor.getSelectedItem();
         if (spinnerTeacher == null) {
@@ -124,7 +134,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
             student.setImage(image);
 
         persistence.addStudent(student);
-        finish();
+        finish();//Ends activity
     }
 
     public void onCamera(View v) {
@@ -174,10 +184,5 @@ public class AdminAddStudentActivity extends AppCompatActivity {
                 }
                 break;
         }
-    }
-
-    //Opens Student Manager (back one screen)
-    public void onClickAdminStudentsAddBack(View v) {
-        finish();
     }
 }

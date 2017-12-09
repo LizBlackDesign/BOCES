@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.app.Dialog;
@@ -20,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Lets User Choose Settings for Exporting Report
+ */
 public class AdminReportsActivity extends AppCompatActivity {
 
     private Button btnSaveTime;
@@ -29,6 +37,11 @@ public class AdminReportsActivity extends AppCompatActivity {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private Thread reportGenerator;
 
+    /**
+     * Retrieves Information
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +90,11 @@ public class AdminReportsActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
     public void onSave(View v) {
         btnSaveTime.setEnabled(false);
         PersistenceInteractor persistence = new PersistenceInteractor(this);

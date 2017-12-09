@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.Manifest;
@@ -26,6 +31,9 @@ import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 import com.boces.black_stanton_boces.teacher.TeacherSpinnerInteractor;
 
+/**
+ * Pulls Existing Information And Save Update Information From User
+ */
 public class AdminEditStudentActivity extends AppCompatActivity {
 
     private int studentId;
@@ -47,6 +55,13 @@ public class AdminEditStudentActivity extends AppCompatActivity {
         STUDENT_ID
     }
 
+    /**
+     * Brings in Extras, Validates, Sets Fields
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +77,10 @@ public class AdminEditStudentActivity extends AppCompatActivity {
 
 
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        Student currentStudent = persistence.getStudent(studentId);
+        Student currentStudent = persistence.getStudent(studentId); //Re-retrieve information in case account is deleted
+
         if (currentStudent == null)
-            throw new IllegalStateException("Student With ID " + studentId + " Not Found");
+            throw new IllegalStateException("Student With ID " + studentId + " Not Found"); //ID doesn't match student
 
         // Get Input References
         inputStudentFirstName = (EditText) findViewById(R.id.inputStudentFirstName);
@@ -88,7 +104,12 @@ public class AdminEditStudentActivity extends AppCompatActivity {
 
     }
 
-    public void onSave(View view) {
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
+    public void onSave(View v) {
         // Collect Existing Info
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         Student student = persistence.getStudent(studentId);
@@ -133,6 +154,7 @@ public class AdminEditStudentActivity extends AppCompatActivity {
 
 
         Teacher spinnerTeacher = teacherSpinnerInteractor.getSelectedItem();
+
         if (spinnerTeacher == null) {
             new AlertDialog.Builder(this)
                     .setTitle("A Teacher Is Required")
@@ -155,7 +177,7 @@ public class AdminEditStudentActivity extends AppCompatActivity {
         persistence.update(student);
 
         // End The Current Activity
-        finish();
+        finish(); //Ends activity
     }
 
     public void onCamera(View v) {
@@ -207,13 +229,14 @@ public class AdminEditStudentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Deletes Student
+     * @param v
+     * Current View
+     */
     public void onDeleteStudent(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         persistence.deleteStudent(studentId);
-        finish();
-    }
-
-    public void onClickAdminStudentsEditBack(View v) {
         finish();
     }
 

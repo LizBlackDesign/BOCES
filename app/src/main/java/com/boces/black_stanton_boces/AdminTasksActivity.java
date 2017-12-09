@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.content.Intent;
@@ -12,11 +17,19 @@ import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.task.TaskAdapter;
 import com.boces.black_stanton_boces.task.TaskAdapterOnclick;
 
+/**
+ * Shows Existing Tasks and Allows User Choose to Edit or Create and New One
+ */
 public class AdminTasksActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
     private RecyclerView taskList;
 
+    /**
+     * Retrieve Existing Information
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +64,9 @@ public class AdminTasksActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Re-retrieves Information In Case of Updates
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -58,6 +74,11 @@ public class AdminTasksActivity extends AppCompatActivity {
         taskList.getAdapter().notifyDataSetChanged();
     }
 
+    /**
+     * Starts Add Activity
+     * @param v
+     * View Holder
+     */
     public void onClickAdminAddTasks(View v) {
         startActivity(new Intent(this, AdminAddTaskActivity.class));
     }

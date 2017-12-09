@@ -1,7 +1,12 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,6 +14,9 @@ import android.widget.Toast;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.AdminAccount;
 
+/**
+ * Pulls Existing Information And Save Update Information From User
+ */
 public class AdminEditAccountActivity extends AppCompatActivity {
 
     private int id;
@@ -23,6 +31,13 @@ public class AdminEditAccountActivity extends AppCompatActivity {
         ACCOUNT_ID
     }
 
+    /**
+     * Brings in Extras, Validates, Sets Fields
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +46,16 @@ public class AdminEditAccountActivity extends AppCompatActivity {
 
         // Painfully Validate That We Got Something
         if (extras == null)
-            throw new IllegalStateException("No Data Passed To Edit");
+            throw new IllegalStateException("No Data Passed To Edit"); //Nothing passed
         id = extras.getInt(BUNDLE_KEY.ACCOUNT_ID.name());
         if (id == 0)
-            throw new IllegalStateException("Account ID Not Passed To Edit");
+            throw new IllegalStateException("Account ID Not Passed To Edit"); //ID is wrong
 
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        AdminAccount account = persistence.getAdminAccount(id);
+        AdminAccount account = persistence.getAdminAccount(id); //Re-retrieve information in case account is deleted
+
         if (account == null)
-            throw new IllegalStateException("Account With ID " + id + " Not Found");
+            throw new IllegalStateException("Account With ID " + id + " Not Found"); //ID doesn't match account
 
         // Get Input References
         username = (EditText) findViewById(R.id.inputUsername);
@@ -49,9 +65,14 @@ public class AdminEditAccountActivity extends AppCompatActivity {
         username.setText(account.getUsername());
     }
 
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
     public void onSave(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        AdminAccount account = persistence.getAdminAccount(id);
+        AdminAccount account = persistence.getAdminAccount(id); //Re-retrieve information in case account is deleted
 
         if (account == null) {
             Toast.makeText(this, "Error Account With ID " + id + " Not Found", Toast.LENGTH_LONG).show();
@@ -61,7 +82,7 @@ public class AdminEditAccountActivity extends AppCompatActivity {
         if (username.getText().toString().isEmpty())
             return;
 
-        // I Hate Java
+
         if (!account.getUsername().equals(username.getText().toString())) {
             account.setUsername(username.getText().toString());
             persistence.updateUsername(account);
@@ -69,13 +90,14 @@ public class AdminEditAccountActivity extends AppCompatActivity {
 
         // If A New Password Was Not Entered, Then  We're Done
         if (password.getText().toString().isEmpty() && confirmPassword.getText().toString().isEmpty()) {
-            finish();
+            finish(); //Ends activity
             return;
         }
 
+        //Checks both passwords to assure they match
         if (password.getText().toString().equals(confirmPassword.getText().toString()))
             persistence.updateAdminPassword(id, password.getText().toString());
 
-        finish();
+        finish(); //Ends activity
     }
 }

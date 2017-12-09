@@ -1,11 +1,12 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,13 +17,13 @@ import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Displays Student, Task, And Duration
+ */
 public class StudentCurrentTaskViewActivity extends AppCompatActivity {
 
     private int taskId;
@@ -42,7 +43,13 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         TASK_ID, STUDENT_ID, PUNCH_ID
     }
 
-
+    /**
+     * Brings in Extras, Validates
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +130,11 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         timer.schedule(timerTask, 1000L, 1000L);
     }
 
+    /**
+     * Validates, and Updates End Punch
+     * @param view
+     * Current View
+     */
     public void onTaskComplete(View view) {
         timer.cancel();
         PersistenceInteractor persistence = new PersistenceInteractor(this);

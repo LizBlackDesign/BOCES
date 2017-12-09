@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.Manifest;
@@ -21,6 +26,9 @@ import android.widget.Toast;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 
+/**
+ * Pulls Existing Information And Save Update Information From User
+ */
 public class AdminEditTeacherActivity extends AppCompatActivity {
 
     private int id;
@@ -41,6 +49,13 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         TEACHER_ID
     }
 
+    /**
+     * Brings in Extras, Validates, Sets Fields
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +70,10 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
             throw new IllegalStateException("Teacher ID Not Passed To Edit");
 
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        Teacher teacher = persistence.getTeacher(id);
+        Teacher teacher = persistence.getTeacher(id); //Re-retrieve information in case account is deleted
+
         if (teacher == null)
-            throw new IllegalStateException("Teacher With ID " + id + " Not Found");
+            throw new IllegalStateException("Teacher With ID " + id + " Not Found"); //ID doesn't match teacher
 
         // Get Input References
         firstName = (EditText) findViewById(R.id.inputTeacherFirstName);
@@ -75,7 +91,12 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
             imageView.setImageBitmap(teacher.getImage());
     }
 
-    public void onSave(View view) {
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
+    public void onSave(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         Teacher teacher = persistence.getTeacher(id);
         if (teacher == null) {
@@ -144,14 +165,15 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Deletes Teacher
+     * @param v
+     * Current View
+     */
     public void onDeleteTeacher(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         persistence.deleteTeacher(id);
         finish();
     }
 
-    //Opens Teacher Manager (back one screen)
-    public void onClickAdminTeacherEditBack(View v) {
-        finish();
-    }
 }

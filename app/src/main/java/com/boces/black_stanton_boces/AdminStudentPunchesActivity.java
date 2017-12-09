@@ -1,10 +1,14 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
-
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * Shows Existing Punches and Allows User Choose to Edit or Create and New One
+ */
 public class AdminStudentPunchesActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
@@ -32,6 +39,11 @@ public class AdminStudentPunchesActivity extends AppCompatActivity {
         STUDENT_ID
     }
 
+    /**
+     * Retrieve Existing Information for Chosen Student
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +79,9 @@ public class AdminStudentPunchesActivity extends AppCompatActivity {
         punchesList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    /**
+     * Re-retrieves Information In Case of Updates
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -77,12 +92,22 @@ public class AdminStudentPunchesActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Starts Add Activity
+     * @param v
+     * View Holder
+     */
     public void onCreatePunch(View v) {
         Intent createPunch = new Intent(this, AdminPunchAddActivity.class);
         createPunch.putExtra(AdminPunchAddActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
         startActivity(createPunch);
     }
 
+    /**
+     * Makes Adapter Aware of Tasks
+     * @return
+     * Tasks
+     */
     private HashMap<Integer, Task> getTaskCache() {
         @SuppressLint("UseSparseArrays")
         HashMap<Integer, Task> tasks = new HashMap<>();

@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.content.Intent;
@@ -14,7 +19,9 @@ import com.boces.black_stanton_boces.task.TaskAdapter;
 import com.boces.black_stanton_boces.task.TaskAdapterOnclick;
 
 import java.util.Date;
-
+/**
+ * Allows Student to Choose A Task
+ */
 public class StudentLoginSelectTaskActivity extends AppCompatActivity {
 
     private int studentId;
@@ -28,6 +35,13 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
         STUDENT_ID
     }
 
+    /**
+     * Brings in Extras, Validates
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +94,9 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Updates Changed Information
+     */
     @Override
     public void onResume() {
         super.onResume();

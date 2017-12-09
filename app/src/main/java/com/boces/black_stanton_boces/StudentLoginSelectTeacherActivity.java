@@ -1,5 +1,9 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
-//TODO: search bar, save information for current task page, filter for teacher selected in this page to display students in next page
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +16,23 @@ import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.teacher.TeacherAdapter;
 import com.boces.black_stanton_boces.teacher.TeacherAdapterOnclick;
 
+/**
+ * Allows Student to Choose a Teacher
+ */
+
 public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView teacherList;
     private PersistenceInteractor persistence;
 
+    /**
+     * Brings in Extras, Validates
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +68,9 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Updates Changed Information
+     */
     @Override
     public void onResume() {
         super.onResume();

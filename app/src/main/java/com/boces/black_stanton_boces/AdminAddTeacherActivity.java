@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 
@@ -21,7 +26,9 @@ import android.widget.ImageView;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Teacher;
 
-
+/**
+ * Collects Account Information From User And Creates New Teacher
+ */
 public class AdminAddTeacherActivity extends AppCompatActivity {
 
     private EditText inputTeacherFirstName;
@@ -35,6 +42,11 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
     private static final int EXTERNAL_STORAGE_REQUEST = 0;
     private static final int RESULT_LOAD_IMAGE = 1;
 
+    /**
+     * Gathers Input References
+     * @param savedInstanceState
+     * Unused/Null
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +62,23 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         persistence = new PersistenceInteractor(this);
     }
 
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
     public void onClickAdminTeacherAddSave(View v) {
         Teacher teacher = new Teacher();
         teacher.setFirstName(inputTeacherFirstName.getText().toString());
         teacher.setLastName(inputTeacherLastName.getText().toString());
         teacher.setEmail(inputTeacherEmail.getText().toString());
         teacher.setPhoneNumber(inputTeacherPhone.getText().toString());
+
         if (image != null)
             teacher.setImage(image);
 
         persistence.addTeacher(teacher);
-        finish();
+        finish();//Ends activity
     }
 
     public void onCamera(View v) {
@@ -112,7 +130,4 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickAdminTeacherAddBack(View v) {
-        finish();
-    }
 }

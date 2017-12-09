@@ -1,38 +1,36 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
-import com.boces.black_stanton_boces.persistence.model.Student;
-import com.boces.black_stanton_boces.persistence.model.Teacher;
 import com.boces.black_stanton_boces.student.StudentAdapter;
 import com.boces.black_stanton_boces.student.StudentAdapterOnclick;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Shows Existing Students and Allows User Choose to Edit or Create and New One
+ */
 public class AdminStudentsActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
     private SearchView searchAdminStudent;
 
+    /**
+     * Retrieve Existing Information
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +66,9 @@ public class AdminStudentsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Re-retrieves Information In Case of Updates
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -75,12 +76,11 @@ public class AdminStudentsActivity extends AppCompatActivity {
         studentList.getAdapter().notifyDataSetChanged();
     }
 
-    //Opens Admin Student Back (back one screen)
-    public void onClickAdminBackStudent(View v) {
-        finish();
-    }
-
-    //Opens Admin Student Add (back one screen)
+    /**
+     * Starts Add Activity
+     * @param v
+     * View Holder
+     */
     public void onClickAdminAddStudent(View v) {
         startActivity(new Intent(this, AdminAddStudentActivity.class));
     }

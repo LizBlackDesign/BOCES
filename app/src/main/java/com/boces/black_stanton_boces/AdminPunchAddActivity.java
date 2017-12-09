@@ -1,9 +1,14 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,6 +30,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Collects Punch Information From User And Create New Punch
+ */
 public class AdminPunchAddActivity extends AppCompatActivity {
 
     private int studentId;
@@ -49,6 +57,12 @@ public class AdminPunchAddActivity extends AppCompatActivity {
         STUDENT_ID
     }
 
+
+    /**
+     * Gathers Input References
+     * @param savedInstanceState
+     * Bundle with Extras Set - Unused
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +157,14 @@ public class AdminPunchAddActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Brings in Extras, Validates, Sets Fields
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param v
+     * Current View
+     */
     public void onSave(View v) {
         TaskPunch punch = new TaskPunch();
 
@@ -168,6 +190,15 @@ public class AdminPunchAddActivity extends AppCompatActivity {
         persistence.addTaskPunch(punch);
     }
 
+    /**
+     * Calculates Duration
+     * @param start
+     * Start Time
+     * @param end
+     * Start End
+     * @return
+     * Duration
+     */
     private String calculateDifference(Date start, Date end) {
         Date startNoDate = removeDateSecond(start);
         Date endNoDate = removeDateSecond(end);
@@ -176,6 +207,13 @@ public class AdminPunchAddActivity extends AppCompatActivity {
         return Long.toString(minutes) + "Min";
     }
 
+    /**
+     * Removes Seconds From Time
+     * @param date
+     * Date of Punch
+     * @return
+     * Time Without Seconds
+     */
     private Date removeDateSecond(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

@@ -1,3 +1,8 @@
+/*
+ * BOCES
+ *
+ * Authors: Evan Black, Elizabeth Stanton
+ */
 package com.boces.black_stanton_boces;
 
 import android.Manifest;
@@ -21,6 +26,9 @@ import android.widget.Toast;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Task;
 
+/**
+ * Pulls Existing Information And Save Update Information From User
+ */
 public class AdminEditTaskActivity extends AppCompatActivity {
 
     private int id;
@@ -38,6 +46,13 @@ public class AdminEditTaskActivity extends AppCompatActivity {
     private static final int EXTERNAL_STORAGE_REQUEST = 0;
     private static final int RESULT_LOAD_IMAGE = 1;
 
+    /**
+     * Brings in Extras, Validates, Sets Fields
+     * @throws IllegalStateException
+     * When Extras Fail to Validate
+     * @param savedInstanceState
+     * Bundle with Extras Set
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +67,10 @@ public class AdminEditTaskActivity extends AppCompatActivity {
             throw new IllegalStateException("Task ID Not Passed To Edit");
 
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        Task task = persistence.getTask(id);
+        Task task = persistence.getTask(id);//Re-retrieve information in case account is deleted
+
         if (task == null)
-            throw new IllegalStateException("Task With ID " + id + " Not Found");
+            throw new IllegalStateException("Task With ID " + id + " Not Found"); //ID doesn't match task
 
         // Get Input References
         name = (EditText) findViewById(R.id.inputTask);
@@ -66,7 +82,12 @@ public class AdminEditTaskActivity extends AppCompatActivity {
         name.setText(task.getName());
     }
 
-    public void onSave(View view) {
+    /**
+     * Checks If Required Field Is Empty Before For Saving
+     * @param v
+     * Current View
+     */
+    public void onSave(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         Task task = persistence.getTask(id);
         if (task == null) {
@@ -79,7 +100,7 @@ public class AdminEditTaskActivity extends AppCompatActivity {
             task.setImage(image);
 
         persistence.update(task);
-        finish();
+        finish(); //Ends activity
     }
 
     public void onCamera(View v) {
@@ -131,14 +152,15 @@ public class AdminEditTaskActivity extends AppCompatActivity {
         }
     }
 
-    public void onDelete(View view) {
+    /**
+     * Deletes Task
+     * @param v
+     * Current View
+     */
+    public void onDelete(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         persistence.deleteTask(id);
         finish();
     }
 
-    // Opens Task Manager(back one screen)
-    public void onClickAdminTaskEditBack(View v) {
-        finish();
-    }
 }

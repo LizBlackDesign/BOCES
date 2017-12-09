@@ -2,11 +2,11 @@ package com.boces.black_stanton_boces;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +17,7 @@ import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.report.ReportGenerator;
 import com.boces.black_stanton_boces.report.StudentPunches;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -70,7 +71,11 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
         Date end = new Date();
 
         ArrayList<StudentPunches> studentPunches = persistence.getStudentPunches(start, end);
-        ReportGenerator.exportTaskReport(studentPunches, "", persistence.getAllTasks());
+        try {
+            ReportGenerator.exportTaskReport(studentPunches, "", persistence.getAllTasks());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -9,21 +9,25 @@ import android.widget.TextView;
 
 import com.boces.black_stanton_boces.R;
 import com.boces.black_stanton_boces.persistence.model.Student;
+import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class PunchAdapter extends RecyclerView.Adapter<PunchAdapter.ViewHolder> {
     private List<TaskPunch> punches;
-    private List<Student> students;
+    private Map<Integer, Student> students;
+    private Map<Integer, Task> tasks;
     private PunchAdapterOnclick onclick;
 
-    public PunchAdapter(List<TaskPunch> punches, List<Student> students, PunchAdapterOnclick onclick) {
+    public PunchAdapter(List<TaskPunch> punches, Map<Integer, Student> students, Map<Integer, Task> tasks,  PunchAdapterOnclick onclick) {
         this.punches = punches;
         this.students = students;
+        this.tasks = tasks;
         this.onclick = onclick;
     }
 
@@ -38,24 +42,26 @@ public class PunchAdapter extends RecyclerView.Adapter<PunchAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         TaskPunch punch = punches.get(position);
+        Student student = students.get(punch.getStudentId());
         String studentName = "";
-        for (final Student student : students) {
-            if (student.getId().equals(punch.getId())) {
-                studentName = student.getFirstName() + " " + student.getLastName();
-                break;
-            }
-        }
+        if (student != null)
+            studentName = student.getFirstName() + " " + student.getLastName();
+        String taskName = "";
+        Task task = tasks.get(punch.getTaskId());
+        if (task != null)
+            taskName = task.getName();
 
         holder.punchId = punch.getId();
         holder.studentListName.setText(studentName);
         holder.timeListDate.setText(new SimpleDateFormat("HH:mm:ss", Locale.US).format(punch.getTimeStart()));
         if (punch.getTimeEnd() != null) {
             final long diff = punch.getTimeEnd().getTime() - punch.getTimeStart().getTime();
-            final long minutes = TimeUnit.MINUTES.toMinutes(diff);
-            final long seconds = TimeUnit.SECONDS.toSeconds(diff) % 60L;
+            final long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+            final long seconds = TimeUnit.MILLISECONDS.toSeconds(diff) % 60L;
             String duration = Long.toString(minutes) + ":" + Long.toString(seconds);
             holder.timeListDuration.setText(duration);
         }
+        holder.timeListTask.setText(taskName);
     }
 
     @Override
@@ -71,12 +77,25 @@ public class PunchAdapter extends RecyclerView.Adapter<PunchAdapter.ViewHolder> 
         this.punches = punches;
     }
 
-    public List<Student> getStudents() {
+    public Map<Integer, Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Map<Integer, Student> students) {
         this.students = students;
+    }
+
+    public Map<Integer, Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Map<Integer, Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position, List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
     }
 
     @SuppressWarnings("WeakerAccess")

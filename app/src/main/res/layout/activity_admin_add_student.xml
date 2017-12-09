@@ -28,10 +28,12 @@
         android:id="@+id/inputStudentFirstName"
         android:layout_weight="4"
         android:layout_marginTop="20dp"
-        android:hint="@string/btn_add_students_hint_first"
+        android:hint="@string/students_hint_first"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp" />
     <Space
         android:layout_weight="1"
@@ -40,10 +42,12 @@
     <EditText
         android:id="@+id/inputStudentLastName"
         android:layout_weight="4"
-        android:hint="@string/btn_add_students_hint_last"
+        android:hint="@string/students_hint_last"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textSize="24sp" />
     <Space
         android:layout_weight="1"
@@ -60,8 +64,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/btn_add_students_hint_age"
+            android:hint="@string/students_hint_age"
             android:inputType="number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textSize="24sp" />
 
         <EditText
@@ -69,8 +75,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/btn_add_students_hint_year"
+            android:hint="@string/students_hint_year"
             android:inputType="number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textSize="24sp" />
     </LinearLayout>
     <Space
@@ -82,13 +90,15 @@
         android:layout_weight="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="9dp"/>
     <Space
         android:layout_weight="1"
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/imgAddStudent"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -103,7 +113,7 @@
     <Button
         android:id="@+id/btnSaveStudent"
         android:onClick="onClickAdminStudentAddSave"
-        android:text="@string/btn_add_students_save"
+        android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

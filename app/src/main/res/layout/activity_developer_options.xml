@@ -27,15 +27,16 @@
         android:layout_width="match_parent"/>
     <Button
         android:id="@+id/btnAddPunch"
-        android:onClick="onCreatePunch"
-        android:text="Add Punch"
+        android:onClick="onGenerateReport"
+        android:text="Generate Test Report"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        />
     <Space
         android:layout_weight="20"
         android:layout_height="0dp"

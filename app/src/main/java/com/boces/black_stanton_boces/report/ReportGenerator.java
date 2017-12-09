@@ -74,7 +74,8 @@ public class ReportGenerator {
                     stringBuilder.append(Long.toString(deltaHours)).append(":");
 
                 // Always Add Minutes/Seconds
-                stringBuilder.append(Long.toString(extraMinutes)).append(":").append(Long.toString(extraSeconds));
+                stringBuilder.append(String.format(Locale.US, "%02d", extraMinutes)).append(":");
+                stringBuilder.append(String.format(Locale.US, "%02d", extraSeconds));
 
                 buffer[5] = stringBuilder.toString();
 

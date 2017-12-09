@@ -158,6 +158,7 @@
     <string name="title_report">Report</string>
     <string name="lbl_start_date">Start Date</string>
     <string name="lbl_end_date">End Date</string>
+    <string name="hint_file">File Name</string>
     <string name="btn_report">Export</string>
 
     <!--activity_admin_punch_select-student-->

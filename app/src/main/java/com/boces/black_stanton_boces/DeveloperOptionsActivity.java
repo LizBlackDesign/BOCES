@@ -33,27 +33,14 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
 
     public void onClearDatabase(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        persistence.dropAndRecreate();
+        persistence.emptyAndRecreate();
         Toast.makeText(this, "Database Recreated", Toast.LENGTH_LONG).show();
     }
 
-    public void onCreatePunch(View v) {
+    public void onDropDatabase(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        ArrayList<Student> students = persistence.getAllStudents();
-        if (students.size() < 1)
-            return;
-
-        ArrayList<Task> tasks = persistence.getAllTasks();
-        if (tasks.size() < 1)
-            return;
-
-        TaskPunch taskPunch = new TaskPunch();
-        taskPunch.setStudentId(students.get(0).getId());
-        taskPunch.setTaskId(tasks.get(0).getId());
-        taskPunch.setTimeStart(new Date());
-
-        int id = persistence.addTaskPunch(taskPunch);
-        TaskPunch inserted = persistence.getTaskPunch(id);
+        persistence.dropDatabase(this);
+        Toast.makeText(this, "Database Dropped. Restart App To See Effect", Toast.LENGTH_LONG).show();
     }
 
     public void onGenerateReport(View v) {

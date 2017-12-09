@@ -18,11 +18,14 @@
     <string name="title_activity_admin_edit_task">AdminEditTaskActivity</string>
     <string name="title_activity_admin_manage_accounts">AdminManageAccounts</string>
 
+    <!--Wide Use-->
+    <string name="btn_save">Save</string>
+    <string name="btn_Delete">Delete</string>
+
     <!--activity_login_type-->
     <string name="title_login">Welcome to BOCES</string>
     <string name="btn_login_student">Student Login</string>
     <string name="btn_login_admin">Admin Login</string>
-
 
     <!--activity_student_login_select_teacher-->
     <string name="title_select_teacher">Select Teacher</string>
@@ -70,67 +73,37 @@
     <!--activity_admin_students-->
     <string name="title_admin_students">Students</string>
     <string name="search_hint_admin_type_student_name">Type Student Name</string>
-    <string name="btn_admin_students_edit">Edit Student</string>
-    <string name="btn_admin_students_add">Add Student</string>
 
-
-    <!--activity_admin_add_students-->
-    <string name="title_add_students">Add Student</string>
-    <string name="btn_add_students_save">Save</string>
-    <string name="btn_add_students_hint_first">First</string>
-    <string name="btn_add_students_hint_last">Last</string>
-    <string name="btn_add_students_hint_age">Age</string>
-    <string name="btn_add_students_hint_teacher">Teacher</string>
-    <string name="btn_add_students_hint_year">Year</string>
-
-    <!--activity_admin_edit_students-->
+    <!--activity_admin_add/edit_students-->
     <string name="title_edit_students">Edit Student</string>
-    <string name="btn_edit_students_save">Save</string>
-    <string name="btn_edit_students_hint_first">First</string>
-    <string name="btn_edit_students_hint_last">Last</string>
-    <string name="btn_edit_students_hint_age">Age</string>
-    <string name="btn_edit_students_hint_teacher">Teacher</string>
-    <string name="btn_edit_students_hint_year">Year</string>
+    <string name="title_add_students">Add Student</string>
+    <string name="students_hint_first">First</string>
+    <string name="students_hint_last">Last</string>
+    <string name="students_hint_age">Age</string>
+    <string name="students_hint_teacher">Teacher</string>
+    <string name="students_hint_year">Year</string>
 
     <!--activity_admin_teachers-->
     <string name="title_admin_teachers">Teachers</string>
     <string name="search_hint_admin_type_teacher_name">Type Teacher Name</string>
-    <string name="btn_admin_teachers_edit">Edit Teacher</string>
-    <string name="btn_admin_teachers_add">Add Teacher</string>
 
-    <!--activity_admin_add_teachers-->
-    <string name="title_add_teachers">Add Teachers</string>
-    <string name="btn_add_teachers_save">Save</string>
-    <string name="btn_add_teachers_hint_first">First</string>
-    <string name="btn_add_teachers_hint_last">Last</string>
-    <string name="btn_add_teachers_hint_email">jsmith@example.com</string>
-    <string name="btn_add_teachers_hint_phone">8141231234</string>
-
-
-    <!--activity_admin_edit_teachers-->
+    <!--activity_admin_add/edit_teachers-->
     <string name="title_edit_teachers">Edit Teachers</string>
-    <string name="btn_edit_teachers_save">Save</string>
-    <string name="btn_edit_teachers_hint_first">First</string>
-    <string name="btn_edit_teachers_hint_last">Last</string>
-    <string name="btn_edit_teachers_hint_email">jsmith@example.com</string>
-    <string name="btn_edit_teachers_hint_phone">8141231234</string>
-
+    <string name="title_add_teachers">Add Teachers</string>
+    <string name="teachers_hint_first">First</string>
+    <string name="teachers_hint_last">Last</string>
+    <string name="teachers_hint_email">jsmith@example.com</string>
+    <string name="teachers_hint_phone">8141231234</string>
 
     <!--activity_admin_tasks-->
     <string name="title_admin_tasks">Tasks</string>
     <string name="search_hint_admin_type_task_name">Type Task Name</string>
-    <string name="btn_admin_tasks_add">Add Task</string>
 
     <!--activity_admin_add_tasks-->
     <string name="title_add_tasks">Add Task</string>
-    <string name="btn_add_tasks_save">Save</string>
-
 
     <!--activity_admin_edit_tasks-->
     <string name="title_edit_tasks">Edit Task</string>
-    <string name="btn_edit_tasks_save">Save</string>
-
-    <string name="btnDelete">Delete</string>
 
     <string name="lblAddAccount">Add Account</string>
     <string name="lblEditAccount">Edit Account</string>
@@ -141,7 +114,6 @@
     <!--activity_admin_student_punches-->
     <string name="title_punches">Punches</string>
     <string name="search_hint_admin_punches_student">Type Student Name</string>
-    <string name="btn_admin_punch_add">Add Task</string>
 
     <!--activity_admin_student_punches_add/edit-->
     <string name="title_punches_add">Add Punch</string>
@@ -152,7 +124,6 @@
     <string name="lbl_start">Start</string>
     <string name="lbl_end">End</string>
     <string name="lbl_duration">Duration</string>
-    <string name="btn_add_time_Save">Save</string>
 
     <!--activity_admin_student_reports-->
     <string name="title_report">Report</string>
@@ -168,4 +139,7 @@
     <!--dialogue_date_picker-->
     <string name="dialogue_okay">Okay</string>
     <string name="dialogue_cancel">Cancel</string>
+
+    <!--activity_manage_admin_accounts-->
+    <string name="title_manage_admin_accounts">Manage Accounts</string>
 </resources>

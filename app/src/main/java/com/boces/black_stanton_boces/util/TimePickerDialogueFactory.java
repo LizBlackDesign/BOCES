@@ -4,35 +4,38 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import com.boces.black_stanton_boces.R;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class DatePickerDialogueFactory {
-    public interface DatePickerDialogueListener {
+public class TimePickerDialogueFactory {
+    public interface TimePickerDialogueListener {
         void onPositive(Date date, Dialog dialog);
         void onNegative(Dialog dialog);
     }
 
-    public static Dialog make(Context context, final DatePickerDialogueListener listener) {
+    public static Dialog make(Context context, final TimePickerDialogueListener listener, Date initialValue) {
         final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialogue_date_picker);
-        final DatePicker datePicker = dialog.findViewById(R.id.datePicker);
+        dialog.setContentView(R.layout.dialogue_time_picker);
+        final TimePicker timePicker = dialog.findViewById(R.id.timePicker);
 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(initialValue);
+        timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+        timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
 
-        dialog.setTitle("Pick A Date");
+        dialog.setTitle("Pick A Time");
 
         Button okay = dialog.findViewById(R.id.btnDialogueOkay);
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.YEAR, datePicker.getYear());
-                cal.set(Calendar.MONTH, datePicker.getMonth());
-                cal.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+                cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
 
                 listener.onPositive(cal.getTime(), dialog);
                 dialog.dismiss();

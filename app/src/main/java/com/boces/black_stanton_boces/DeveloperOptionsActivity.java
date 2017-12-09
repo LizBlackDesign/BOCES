@@ -2,11 +2,11 @@ package com.boces.black_stanton_boces;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +17,7 @@ import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.report.ReportGenerator;
 import com.boces.black_stanton_boces.report.StudentPunches;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,27 +33,14 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
 
     public void onClearDatabase(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        persistence.dropAndRecreate();
+        persistence.emptyAndRecreate();
         Toast.makeText(this, "Database Recreated", Toast.LENGTH_LONG).show();
     }
 
-    public void onCreatePunch(View v) {
+    public void onDropDatabase(View v) {
         PersistenceInteractor persistence = new PersistenceInteractor(this);
-        ArrayList<Student> students = persistence.getAllStudents();
-        if (students.size() < 1)
-            return;
-
-        ArrayList<Task> tasks = persistence.getAllTasks();
-        if (tasks.size() < 1)
-            return;
-
-        TaskPunch taskPunch = new TaskPunch();
-        taskPunch.setStudentId(students.get(0).getId());
-        taskPunch.setTaskId(tasks.get(0).getId());
-        taskPunch.setTimeStart(new Date());
-
-        int id = persistence.addTaskPunch(taskPunch);
-        TaskPunch inserted = persistence.getTaskPunch(id);
+        persistence.dropDatabase(this);
+        Toast.makeText(this, "Database Dropped. Restart App To See Effect", Toast.LENGTH_LONG).show();
     }
 
     public void onGenerateReport(View v) {
@@ -70,7 +58,11 @@ public class DeveloperOptionsActivity extends AppCompatActivity {
         Date end = new Date();
 
         ArrayList<StudentPunches> studentPunches = persistence.getStudentPunches(start, end);
-        ReportGenerator.exportTaskReport(studentPunches, "", persistence.getAllTasks());
+        try {
+            ReportGenerator.exportTaskReport(studentPunches, "", persistence.getAllTasks());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

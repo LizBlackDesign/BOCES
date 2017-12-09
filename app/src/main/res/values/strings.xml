@@ -27,7 +27,6 @@
     <string name="btn_login_student">Student Login</string>
     <string name="btn_login_admin">Admin Login</string>
 
-
     <!--activity_student_login_select_teacher-->
     <string name="title_select_teacher">Select Teacher</string>
     <string name="search_hint_type_teacher_name">Type Teacher Name</string>
@@ -75,7 +74,6 @@
     <string name="title_admin_students">Students</string>
     <string name="search_hint_admin_type_student_name">Type Student Name</string>
 
-
     <!--activity_admin_add/edit_students-->
     <string name="title_edit_students">Edit Student</string>
     <string name="title_add_students">Add Student</string>
@@ -116,7 +114,6 @@
     <!--activity_admin_student_punches-->
     <string name="title_punches">Punches</string>
     <string name="search_hint_admin_punches_student">Type Student Name</string>
-
 
     <!--activity_admin_student_punches_add/edit-->
     <string name="title_punches_add">Add Punch</string>

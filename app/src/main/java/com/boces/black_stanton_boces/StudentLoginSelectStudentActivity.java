@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.TaskPunch;
@@ -18,6 +19,7 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
     private int teacherId;
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
+    private SearchView searchView;
 
     /**
      * Recognised Values That May Be Passed Through Bundles
@@ -64,11 +66,25 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
 
             }
         };
-        StudentAdapter adapter = new StudentAdapter(persistence.getStudentsForTeacher(teacherId), persistence, onclick);
+        final StudentAdapter adapter = new StudentAdapter(persistence.getStudentsForTeacher(teacherId), persistence, onclick);
 
         studentList = (RecyclerView) findViewById(R.id.recyclerSelectStudent);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
+        searchView = (SearchView) findViewById(R.id.login_select_student_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -76,10 +92,5 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
         super.onResume();
         ((StudentAdapter) studentList.getAdapter()).setStudents(persistence.getStudentsForTeacher(teacherId));
         studentList.getAdapter().notifyDataSetChanged();
-    }
-
-    //Opens Log in type Screen (back one screen)
-    public void onClickAdminStudentBack(View v) {
-        finish();
     }
 }

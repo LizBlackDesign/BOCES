@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.student.StudentAdapter;
@@ -14,6 +15,7 @@ public class AdminPunchSelectStudentActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
+    private SearchView studentSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,24 @@ public class AdminPunchSelectStudentActivity extends AppCompatActivity {
         };
 
         studentList = findViewById(R.id.recyclerSelectStudent);
-        StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence, onclick);
+        final StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence, onclick);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
+
+        studentSearch = (SearchView) findViewById(R.id.login_select_student_search);
+        studentSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 
     @Override

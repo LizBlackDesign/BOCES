@@ -137,40 +137,15 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(STUDENT_DDL);
         sqLiteDatabase.execSQL(TASK_PUNCH_DDL);
         sqLiteDatabase.execSQL(ADMIN_ACCOUNT_DDL);
-        //createAdminAccount("admin", "a");
+        createInitialData(sqLiteDatabase);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        dropAndRecreate();
+        emptyAndRecreate();
     }
 
-    public void empty() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(STUDENT.TABLE, null, null);
-        db.delete(TASK.TABLE, null, null);
-        db.delete(TEACHER.TABLE, null, null);
-    }
-
-    public void emptyTeachers() {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.delete(TEACHER.TABLE, null, null);
-    }
-
-    public void emptyTasks() {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.delete(TASK.TABLE, null, null);
-    }
-
-    public void emptyStudents() {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.delete(STUDENT.TABLE, null, null);
-    }
-
-    public void dropAndRecreate() {
+    public void emptyAndRecreate() {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("DROP TABLE IF EXISTS " + TASK_PUNCH.TABLE);
@@ -180,6 +155,32 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ADMIN_ACCOUNT.TABLE);
 
         this.onCreate(db);
+    }
+
+    public void dropDatabase(Context context) {
+        context.deleteDatabase(DATABASE_NAME);
+    }
+
+    private void createInitialData(SQLiteDatabase writable) {
+        writable.beginTransaction();
+
+        try {
+            // Create Initial Admin Account
+            {
+                ContentValues values = new ContentValues();
+                values.put(ADMIN_ACCOUNT.USERNAME, "admin");
+                values.put(ADMIN_ACCOUNT.PASSWORD, BCrypt.hashpw("a", BCrypt.gensalt()));
+                writable.insertOrThrow(ADMIN_ACCOUNT.TABLE, null, values);
+            }
+
+            // Last Thing That Should Be Run
+            // Marks All Operations As Successful
+            writable.setTransactionSuccessful();
+        } catch (Exception e) { // Log Failures
+            Log.e(TAG, "Error Creating Initial Data. Message: " + e.getMessage());
+        } finally { // In Anything Fails, Rollback
+            writable.endTransaction();
+        }
     }
 
     private Student studentFromRow(Cursor cursor) {
@@ -336,7 +337,6 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         db.delete(STUDENT.TABLE, STUDENT.ID + " = ?", new String[]{Integer.toString(studentId)});
     }
 
-    //START OF TASK
     private Task taskFromRow(Cursor cursor) {
         Task task = new Task();
         task.setId(cursor.getInt(0));
@@ -443,8 +443,6 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TASK.TABLE, TASK.ID + " = ?", new String[]{Integer.toString(taskId)});
     }
-
-    //END OF TASK
 
     private static final String TASK_PUNCH_QUERY =
             "SELECT " +
@@ -585,7 +583,6 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         cursor.close();
         return taskPunch;
     }
-
 
     public ArrayList<StudentPunches> getStudentPunches(Date startDate, Date endDate) {
         long startSeconds = startDate.getTime()/1000L;
@@ -763,7 +760,6 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             ADMIN_ACCOUNT.USERNAME + " , " +
             ADMIN_ACCOUNT.PASSWORD + " " +
             " FROM " + ADMIN_ACCOUNT.TABLE + " ";
-
 
     public AdminAccount getAdminAccount(int id) {
         SQLiteDatabase db = this.getReadableDatabase();

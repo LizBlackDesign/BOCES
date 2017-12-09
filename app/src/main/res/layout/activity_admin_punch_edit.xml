@@ -242,7 +242,8 @@
         android:padding="15dp"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        android:onClick="onSave"/>
 
 
 </LinearLayout>

@@ -51,6 +51,7 @@
             <EditText
                 android:id="@+id/txtStart"
                 android:inputType="time"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -76,6 +77,7 @@
             <EditText
                 android:id="@+id/txtEnd"
                 android:inputType="time"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -91,5 +93,6 @@
         android:padding="15dp"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        android:onClick="onSave"/>
 </LinearLayout>

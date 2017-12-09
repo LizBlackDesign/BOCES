@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.boces.black_stanton_boces.DeveloperOptionsActivity">
+
     <Space
-        android:layout_weight="20"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_width="match_parent"/>
+        android:layout_weight="10" />
     <Button
         android:id="@+id/btnRecreateDatabase"
         android:onClick="onClearDatabase"
@@ -22,22 +23,38 @@
         android:textSize="24sp"
         android:layout_gravity="bottom"/>
     <Space
-        android:layout_weight="20"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_width="match_parent"/>
+        android:layout_weight="10" />
+    <Button
+        android:id="@+id/btnDropDatabase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:text="Drop Database"
+        android:textSize="24sp"
+        android:onClick="onDropDatabase"
+        android:layout_gravity="bottom"
+        />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10" />
     <Button
         android:id="@+id/btnAddPunch"
-        android:onClick="onCreatePunch"
-        android:text="Add Punch"
+        android:onClick="onGenerateReport"
+        android:text="Generate Test Report"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        />
     <Space
-        android:layout_weight="20"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_width="match_parent"/>
+        android:layout_weight="10" />
 </LinearLayout>

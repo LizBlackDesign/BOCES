@@ -10,16 +10,17 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
-    <TextView
-        android:id="@+id/lblStudents"
-        android:text="@string/title_login"
+    <ImageView
+        android:id="@+id/imgLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:padding="8dp"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="36sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:srcCompat="@drawable/logo" />
 
     <Space
         android:layout_width="match_parent"

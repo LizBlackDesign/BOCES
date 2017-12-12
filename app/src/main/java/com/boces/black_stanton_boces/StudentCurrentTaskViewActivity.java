@@ -5,6 +5,7 @@
  */
 package com.boces.black_stanton_boces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -103,12 +104,12 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
             public void run() {
                 seconds++;
                 StringBuilder stringBuilder = new StringBuilder();
-                if (seconds > 60L * 60L) {
+                if (seconds >= 60L * 60L) {
                     stringBuilder.append("Hours: ");
                     stringBuilder.append(seconds / (60L * 60L));
                     stringBuilder.append(' ');
                 }
-                if (seconds > 60L) {
+                if (seconds >= 60L) {
                     stringBuilder.append("Minutes: ");
                     stringBuilder.append(seconds / 60L);
                     stringBuilder.append(' ');
@@ -142,7 +143,8 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         if (taskPunch != null) {
             taskPunch.setTimeEnd(new Date());
             persistence.update(taskPunch);
-            finish();
+
+            startActivity(new Intent(this, LoginTypeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         } else {
             Toast.makeText(this, "Task Not Found", Toast.LENGTH_LONG).show();
         }

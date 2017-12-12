@@ -79,9 +79,10 @@ public class AdminEditAccountActivity extends AppCompatActivity {
             return;
         }
 
-        if (username.getText().toString().isEmpty())
+        if (username.getText().toString().isEmpty()) {
+            username.setError("Username Is Required");
             return;
-
+        }
 
         if (!account.getUsername().equals(username.getText().toString())) {
             account.setUsername(username.getText().toString());
@@ -95,8 +96,11 @@ public class AdminEditAccountActivity extends AppCompatActivity {
         }
 
         //Checks both passwords to assure they match
-        if (password.getText().toString().equals(confirmPassword.getText().toString()))
+        if (password.getText().toString().equals(confirmPassword.getText().toString())) {
             persistence.updateAdminPassword(id, password.getText().toString());
+        } else {
+            confirmPassword.setError("Passwords Must Match");
+        }
 
         finish(); //Ends activity
     }

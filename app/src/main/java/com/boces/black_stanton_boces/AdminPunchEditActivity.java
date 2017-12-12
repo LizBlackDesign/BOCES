@@ -7,7 +7,9 @@ package com.boces.black_stanton_boces;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -49,6 +51,10 @@ public class AdminPunchEditActivity extends AppCompatActivity {
     private EditText txtStart;
     private EditText txtEnd;
     private TextView lblDurationValue;
+
+    private final SimpleDateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    private final SimpleDateFormat timeParser = new SimpleDateFormat("h:mm a", Locale.US);
+    private final SimpleDateFormat fullParser = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
 
     /**
      * Recognised Values That May Be Passed Through Bundles
@@ -94,9 +100,6 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         txtEnd = findViewById(R.id.txtEnd);
         lblDurationValue = findViewById(R.id.lblDurationValue);
 
-
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        final SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
         final Context context = this;
 
         txtDate.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +108,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                 DatePickerDialogueFactory.make(context, new DatePickerDialogueFactory.DatePickerDialogueListener() {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
-                        txtDate.setText(dateFormat.format(date));
+                        txtDate.setText(dateParser.format(date));
                     }
 
                     @Override
@@ -122,7 +125,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                 TimePickerDialogueFactory.make(context, new TimePickerDialogueFactory.TimePickerDialogueListener() {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
-                        txtStart.setText(timeFormat.format(date));
+                        txtStart.setText(timeParser.format(date));
                         punch.setTimeStart(date);
                         if (!txtEnd.getText().toString().isEmpty()) {
                             lblDurationValue.setText(calculateDifference(punch.getTimeStart(), punch.getTimeEnd()));
@@ -143,7 +146,7 @@ public class AdminPunchEditActivity extends AppCompatActivity {
                 TimePickerDialogueFactory.make(context, new TimePickerDialogueFactory.TimePickerDialogueListener() {
                     @Override
                     public void onPositive(Date date, Dialog dialog) {
-                        txtEnd.setText(timeFormat.format(date));
+                        txtEnd.setText(timeParser.format(date));
                         punch.setTimeEnd(date);
                         if (!txtStart.getText().toString().isEmpty()) {
                             lblDurationValue.setText(calculateDifference(punch.getTimeStart(), punch.getTimeEnd()));
@@ -159,10 +162,10 @@ public class AdminPunchEditActivity extends AppCompatActivity {
         });
 
 
-        txtDate.setText(dateFormat.format(punch.getTimeStart()));
-        txtStart.setText(timeFormat.format(punch.getTimeStart()));
+        txtDate.setText(dateParser.format(punch.getTimeStart()));
+        txtStart.setText(timeParser.format(punch.getTimeStart()));
         if (punch.getTimeEnd() != null) {
-            txtEnd.setText(timeFormat.format(punch.getTimeEnd()));
+            txtEnd.setText(timeParser.format(punch.getTimeEnd()));
             lblDurationValue.setText(calculateDifference(punch.getTimeStart(), punch.getTimeEnd()));
         }
     }
@@ -179,24 +182,94 @@ public class AdminPunchEditActivity extends AppCompatActivity {
             return;
         }
 
-        final SimpleDateFormat parser = new SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.US);
-        String start = txtDate.getText().toString() + " " + txtStart.getText().toString();
-        String end = txtDate.getText().toString() + " " + txtEnd.getText().toString();
+        boolean hasError = false;
+
+        if (txtDate.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            txtDate.setError("Date Is Required");
+        } else {
+            try {
+                dateParser.parse(txtDate.getText().toString());
+            } catch (ParseException e) {
+                hasError = true;
+                txtDate.setError("Date Is In Invalid Format");
+            }
+        }
+
+        if (txtStart.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            txtStart.setError("Start Time Is Required");
+        } else {
+            try {
+                timeParser.parse(txtStart.getText().toString().trim());
+            } catch (ParseException e) {
+                hasError = true;
+                txtStart.setError("Time Is In Invalid Format");
+            }
+        }
+
+        if (txtEnd.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            txtEnd.setError("End Time Is Required");
+        } else {
+            try {
+                timeParser.parse(txtEnd.getText().toString().trim());
+            } catch (ParseException e) {
+                hasError = true;
+                txtEnd.setError("Time Is In Invalid Format");
+            }
+        }
+
+        // Block Empty Fields Before Parsing, Since They Will Error Anyway
+        if (hasError)
+            return;
+
+        String start = txtDate.getText().toString().trim() + " " + txtStart.getText().toString().trim();
+        String end = txtDate.getText().toString().trim() + " " + txtEnd.getText().toString().trim();
 
         try {
-            punch.setTimeStart(parser.parse(start));
-            punch.setTimeEnd(parser.parse(end));
+            punch.setTimeStart(fullParser.parse(start));
+            punch.setTimeEnd(fullParser.parse(end));
         } catch (ParseException e) {
-            e.printStackTrace();
+            // If This Fails, Crash
+            throw new RuntimeException("Time Fails To Parse After Validation", e);
         }
 
         Student selectedStudent = studentSpinnerInteractor.getSelectedItem();
-        if (selectedStudent != null)
+        if (selectedStudent == null) {
+            hasError = true;
+            new AlertDialog.Builder(this)
+                    .setTitle("A Student Is Required")
+                    .setMessage("Error, A Student Is Required")
+                    .setCancelable(true)
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+        } else
             punch.setStudentId(selectedStudent.getId());
 
         Task selectedTask = taskSpinnerInteractor.getSelectedItem();
-        if (selectedTask != null)
+        if (selectedTask == null) {
+            hasError = true;
+            new AlertDialog.Builder(this)
+                    .setTitle("A Task Is Required")
+                    .setMessage("Error, A Task Is Required")
+                    .setCancelable(true)
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+        } else
             punch.setTaskId(selectedTask.getId());
+
+        // Block Invalid Data
+        if (hasError)
+            return;
 
         persistence.update(punch);
         finish();
@@ -220,11 +293,11 @@ public class AdminPunchEditActivity extends AppCompatActivity {
     }
 
     /**
-     * Removes Seconds From Time
+     * Removes Date And Seconds From Time
      * @param date
      * Date of Punch
      * @return
-     * Time Without Seconds
+     * Time Without A Date/Seconds
      */
     private Date removeDateSeconds(Date date) {
         Calendar cal = Calendar.getInstance();

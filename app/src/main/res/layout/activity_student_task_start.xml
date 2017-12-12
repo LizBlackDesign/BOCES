@@ -7,50 +7,51 @@
     android:orientation="vertical"
     tools:context="com.boces.black_stanton_boces.StudentTaskStart">
 
-    <!--TODO: Connect to Student Name, other: add picture of student? Fix hard coded text-->
     <TextView
-        android:id="@+id/lblCurrentTaskStudentName"
+        android:id="@+id/lblStudentName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textAlignment="center"
         android:text="@string/lbl_current_student"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="28sp"/>
+        android:textSize="28sp" />
 
     <Space
         android:layout_weight="1"
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
+
     <TextView
-        android:id="@+id/lblCurrentTask"
+        android:id="@+id/lblReady"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textAlignment="center"
         android:text="@string/title_start_prompt"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="36sp" />
     <Space
         android:layout_weight="1"
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
+
     <TextView
-        android:id="@+id/lblCurrentTaskTaskName"
+        android:id="@+id/lblTaskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textAlignment="center"
         android:text="@string/lbl_current_task"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="28sp" />
     <Space
         android:layout_weight="1"
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
-    <!--TODO: Connect to chosen task picture-->
+
     <ImageView
-        android:id="@+id/imageCurrentTask"
+        android:id="@+id/imgCurrentTask"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
@@ -68,13 +69,13 @@
         android:text="@string/btn_login"/>
 
     <Button
-        android:id="@+id/btnCurrentTaskStart"
-        android:text="@string/title_start_prompt"
-        android:background="@color/colorPrimary"
+        android:id="@+id/btnReady"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
         android:padding="15dp"
+        android:text="@string/title_start_prompt"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:layout_gravity="bottom"  />
+        android:textSize="24sp" />
 </LinearLayout>

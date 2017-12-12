@@ -32,7 +32,7 @@ import com.boces.black_stanton_boces.persistence.model.Task;
 public class AdminEditTaskActivity extends AppCompatActivity {
 
     private int id;
-    private EditText name;
+    private EditText taskName;
     private ImageView imageView;
     private Bitmap image;
 
@@ -73,13 +73,13 @@ public class AdminEditTaskActivity extends AppCompatActivity {
             throw new IllegalStateException("Task With ID " + id + " Not Found"); //ID doesn't match task
 
         // Get Input References
-        name = (EditText) findViewById(R.id.inputTask);
+        taskName = (EditText) findViewById(R.id.inputTask);
         imageView = (ImageView) findViewById(R.id.imgTask);
         if (task.getImage() != null)
             imageView.setImageBitmap(task.getImage());
 
         // Set Current Values
-        name.setText(task.getName());
+        taskName.setText(task.getName());
     }
 
     /**
@@ -95,7 +95,11 @@ public class AdminEditTaskActivity extends AppCompatActivity {
             return;
         }
 
-        task.setName(name.getText().toString());
+        if (taskName.getText().toString().trim().isEmpty()) {
+            taskName.setError("Name Is Required");
+            return;
+        }
+
         if (image != null)
             task.setImage(image);
 
@@ -103,7 +107,14 @@ public class AdminEditTaskActivity extends AppCompatActivity {
         finish(); //Ends activity
     }
 
-    public void onCamera(View v) {
+    /**
+     * Bring Up A Media Picker To Choose A Picture
+     * If Not Already Granted, Requests WRITE_EXTERNAL_STORAGE Permission
+     * Reenters onActivityResult With Result RESULT_LOAD_IMAGE
+     * @param v
+     * Current View, May Be Null
+     */
+    public void onSelectImage(View v) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST);
             return;
@@ -112,6 +123,10 @@ public class AdminEditTaskActivity extends AppCompatActivity {
         startActivityForResult(mediaIntent, RESULT_LOAD_IMAGE);
     }
 
+    /**
+     * Reentrant Point For onSelectImage
+     * Enters With RESULT_LOAD_IMAGE
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -141,12 +156,16 @@ public class AdminEditTaskActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reentrant Point If Permission Must Be Requested
+     * Enters With EXTERNAL_STORAGE_REQUEST
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case EXTERNAL_STORAGE_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    onCamera(null);
+                    onSelectImage(null);
                 }
                 break;
         }

@@ -40,7 +40,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
-        android:onClick="onCamera"
+        android:onClick="onSelectImage"
         app:srcCompat="@mipmap/ic_launcher" />
     <Space
         android:layout_weight="60"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"/>
     <Button
         android:id="@+id/btnSaveTask"
-        android:onClick="onClickAdminTaskAddSave"
+        android:onClick="onSave"
         android:text="@string/btn_save"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"

@@ -14,11 +14,8 @@ import android.widget.SearchView;
 
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
-import com.boces.black_stanton_boces.persistence.model.TaskPunch;
 import com.boces.black_stanton_boces.task.TaskAdapter;
 import com.boces.black_stanton_boces.task.TaskAdapterOnclick;
-
-import java.util.Date;
 /**
  * Allows Student to Choose A Task
  */
@@ -61,16 +58,9 @@ public class StudentLoginSelectTaskActivity extends AppCompatActivity {
         final TaskAdapter adapter = new TaskAdapter(persistence.getAllTasks(), new TaskAdapterOnclick() {
             @Override
             public void onClick(int taskId) {
-                TaskPunch taskPunch = new TaskPunch();
-                taskPunch.setStudentId(studentId);
-                taskPunch.setTaskId(taskId);
-                taskPunch.setTimeStart(new Date());
-                int punchId = persistence.addTaskPunch(taskPunch);
-
-                Intent startTask = new Intent(getApplicationContext(), StudentCurrentTaskViewActivity.class);
-                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.TASK_ID.name(), taskId);
-                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
-                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.PUNCH_ID.name(), punchId);
+                Intent startTask = new Intent(getApplicationContext(), StudentTaskStart.class);
+                startTask.putExtra(StudentTaskStart.BUNDLE_KEY.TASK_ID.name(), taskId);
+                startTask.putExtra(StudentTaskStart.BUNDLE_KEY.STUDENT_ID.name(), studentId);
                 startActivity(startTask);
             }
         });

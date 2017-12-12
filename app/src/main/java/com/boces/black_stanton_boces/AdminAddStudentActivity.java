@@ -36,10 +36,10 @@ import com.boces.black_stanton_boces.teacher.TeacherSpinnerInteractor;
 public class AdminAddStudentActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
-    private EditText inputStudentFirstName;
-    private EditText inputStudentLastName;
-    private EditText inputStudentAge;
-    private EditText inputStudentYear;
+    private EditText firstName;
+    private EditText lastName;
+    private EditText age;
+    private EditText year;
     private ImageView imageView;
     private Bitmap image;
     private TeacherSpinnerInteractor teacherSpinnerInteractor;
@@ -58,10 +58,10 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_student);
 
         // Get Input References
-        inputStudentFirstName = (EditText) findViewById(R.id.inputStudentFirstName);
-        inputStudentLastName = (EditText) findViewById(R.id.inputStudentLastName);
-        inputStudentAge = (EditText) findViewById(R.id.inputStudentAge);
-        inputStudentYear = (EditText) findViewById(R.id.inputStudentYear);
+        firstName = (EditText) findViewById(R.id.inputStudentFirstName);
+        lastName = (EditText) findViewById(R.id.inputStudentLastName);
+        age = (EditText) findViewById(R.id.inputStudentAge);
+        year = (EditText) findViewById(R.id.inputStudentYear);
         imageView = (ImageView) findViewById(R.id.imgAddStudent);
 
         // Get Access To The Database
@@ -79,43 +79,53 @@ public class AdminAddStudentActivity extends AppCompatActivity {
      */
     public void onClickAdminStudentAddSave(View v) {
         Student student = new Student();
-        student.setFirstName(inputStudentFirstName.getText().toString());
-        student.setLastName(inputStudentLastName.getText().toString());
+        boolean hasError = false;
 
-        try {
-            student.setAge(Integer.parseInt(inputStudentAge.getText().toString())); //Attempts parse
-        } catch (NumberFormatException e) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Age Is Invalid")
-                    .setMessage("Error, Please Enter A Valid Number For Age")
-                    .setCancelable(true)
-                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .show();
-            return;
+        if (firstName.getText().toString().isEmpty()) {
+            hasError = true;
+            firstName.setError("First Name Is Required");
+        } else
+            student.setFirstName(firstName.getText().toString());
+
+        if (lastName.getText().toString().isEmpty()) {
+            hasError = true;
+            lastName.setError("Last Name Is Required");
+        } else
+            student.setLastName(lastName.getText().toString());
+
+        if (age.getText().toString().isEmpty()) {
+            hasError = true;
+            age.setError("Age Is Required");
+        } else {
+            try {
+                student.setAge(Integer.parseInt(age.getText().toString()));
+                if (student.getAge() < 1) {
+                    hasError = true;
+                    age.setError("Age Must Be Positive");
+                }
+            } catch (NumberFormatException e) {
+                age.setError("Age Must Be A Number");
+            }
         }
 
-        try {
-            student.setYear(Integer.parseInt(inputStudentYear.getText().toString())); //Attempt parse
-        } catch (NumberFormatException e) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Age Is Invalid")
-                    .setMessage("Error, Please Enter A Valid Number For Year")
-                    .setCancelable(true)
-                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .show();
-            return;
+        if (year.getText().toString().isEmpty()) {
+            hasError = true;
+            year.setError("Year Is Required");
+        } else {
+            try {
+                student.setYear(Integer.parseInt(year.getText().toString()));
+                if (student.getYear() < 1) {
+                    hasError = true;
+                    year.setError("Year Must Be Positive");
+                }
+            } catch (NumberFormatException e) {
+                year.setError("Year Must Be A Number");
+            }
         }
 
         Teacher spinnerTeacher = teacherSpinnerInteractor.getSelectedItem();
         if (spinnerTeacher == null) {
+            hasError = true;
             new AlertDialog.Builder(this)
                     .setTitle("A Teacher Is Required")
                     .setMessage("Error, A Teacher Is Required")
@@ -126,18 +136,30 @@ public class AdminAddStudentActivity extends AppCompatActivity {
                         }
                     })
                     .show();
-            return;
         }
 
-        student.setTeacherId(spinnerTeacher.getId());
+        if (spinnerTeacher != null)
+            student.setTeacherId(spinnerTeacher.getId());
+
         if (image != null)
             student.setImage(image);
+
+        // Stop If We Have An Error
+        if (hasError)
+            return;
 
         persistence.addStudent(student);
         finish();//Ends activity
     }
 
-    public void onCamera(View v) {
+    /**
+     * Bring Up A Media Picker To Choose A Picture
+     * If Not Already Granted, Requests WRITE_EXTERNAL_STORAGE Permission
+     * Reenters onActivityResult With Result RESULT_LOAD_IMAGE
+     * @param v
+     * Current View, May Be Null
+     */
+    public void onSelectImage(View v) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST);
             return;
@@ -146,10 +168,15 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         startActivityForResult(mediaIntent, RESULT_LOAD_IMAGE);
     }
 
+    /**
+     * Reentrant Point For onSelectImage
+     * Enters With RESULT_LOAD_IMAGE
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // Pull In Selected File
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImage = data.getData();
             String filePathColumn[] = { MediaStore.Images.Media.DATA };
@@ -175,12 +202,16 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reentrant Point If Permission Must Be Requested
+     * Enters With EXTERNAL_STORAGE_REQUEST
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case EXTERNAL_STORAGE_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    onCamera(null);
+                    onSelectImage(null);
                 }
                 break;
         }

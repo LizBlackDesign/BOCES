@@ -20,12 +20,8 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class PersistenceInteractor extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -87,6 +83,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     STUDENT.IMAGE + " BLOB DEFAULT NULL, " +
                     "FOREIGN KEY(" + STUDENT.TEACHER_ID +") " +
                         "REFERENCES " + TEACHER.TABLE + "(" + TEACHER.ID + ")" +
+                        " ON DELETE SET NULL " +
                     ")";
 
     private static final String TASK_DDL =
@@ -104,9 +101,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TASK_PUNCH.TIME_START + " DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
                     TASK_PUNCH.TIME_STOP + " DATETIME DEFAULT NULL, " +
                     "FOREIGN KEY(" + TASK_PUNCH.STUDENT_ID + ") " +
-                        "REFERENCES " + STUDENT.TABLE + "(" + STUDENT.ID + "), " +
+                        "REFERENCES " + STUDENT.TABLE + "(" + STUDENT.ID + ")" +
+                            "ON DELETE CASCADE ," +
                     "FOREIGN KEY(" + TASK_PUNCH.TASK_ID + ") " +
                         "REFERENCES " + TASK.TABLE + "(" + TASK.ID + ") " +
+                            "ON DELETE CASCADE " +
                     ")";
 
     private static final String TEACHER_DDL =
@@ -143,6 +142,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         emptyAndRecreate();
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly())
+            db.execSQL("PRAGMA foreign_keys = 1;");
     }
 
     public void emptyAndRecreate() {
@@ -183,6 +189,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         }
     }
 
+    private final String STUDENT_QUERY = "SELECT " +
+            STUDENT.ID + " , " +
+            STUDENT.FIRST_NAME + " , " +
+            STUDENT.LAST_NAME + " , " +
+            STUDENT.AGE + " , " +
+            STUDENT.YEAR + " , " +
+            STUDENT.TEACHER_ID + ", " +
+            STUDENT.IMAGE +
+            " FROM " + STUDENT.TABLE;
+
     private Student studentFromRow(Cursor cursor) {
         Student student = new Student();
         student.setId(cursor.getInt(0));
@@ -190,7 +206,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         student.setLastName(cursor.getString(2));
         student.setAge(cursor.getInt(3));
         student.setYear(cursor.getInt(4));
-        student.setTeacherId(cursor.getInt(5));
+
+        // Use -1 For No Teacher
+        if (cursor.isNull(5))
+            student.setTeacherId(-1);
+        else
+            student.setTeacherId(cursor.getInt(5));
+
         if (!cursor.isNull(6)) {
             ByteArrayInputStream istream = new ByteArrayInputStream(cursor.getBlob(6));
             Bitmap teacherImage = BitmapFactory.decodeStream(istream);
@@ -202,17 +224,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
     public Student getStudent(int id) {
         Student student = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        STUDENT.ID + " , " +
-                        STUDENT.FIRST_NAME + " , " +
-                        STUDENT.LAST_NAME + " , " +
-                        STUDENT.AGE + " , " +
-                        STUDENT.YEAR + " , " +
-                        STUDENT.TEACHER_ID + ", " +
-                        STUDENT.IMAGE +
-                        " FROM " + STUDENT.TABLE +
-                        " WHERE " + STUDENT.ID + "=" +id, null);
+        Cursor cursor = db.rawQuery( STUDENT_QUERY +" WHERE " + STUDENT.ID + "=" +id, null);
 
         if (cursor.moveToFirst()) {
             student = studentFromRow(cursor);
@@ -223,16 +235,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
     public ArrayList<Student> getAllStudents() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        STUDENT.ID + " , " +
-                        STUDENT.FIRST_NAME + " , " +
-                        STUDENT.LAST_NAME + " , " +
-                        STUDENT.AGE + " , " +
-                        STUDENT.YEAR + " , " +
-                        STUDENT.TEACHER_ID + ", " +
-                        STUDENT.IMAGE +
-                        " FROM " + STUDENT.TABLE, null);
+        Cursor cursor = db.rawQuery(STUDENT_QUERY, null);
 
         ArrayList<Student> students = new ArrayList<>();
 
@@ -248,17 +251,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
     public ArrayList<Student> getStudentsForTeacher(int teacherID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        STUDENT.ID + " , " +
-                        STUDENT.FIRST_NAME + " , " +
-                        STUDENT.LAST_NAME + " , " +
-                        STUDENT.AGE + " , " +
-                        STUDENT.YEAR + " , " +
-                        STUDENT.TEACHER_ID + ", " +
-                        STUDENT.IMAGE +
-                        " FROM " + STUDENT.TABLE +
-                        " WHERE " + STUDENT.TEACHER_ID + "=" + teacherID, null);
+        Cursor cursor = db.rawQuery(STUDENT_QUERY + " WHERE " + STUDENT.TEACHER_ID + "=" + teacherID, null);
 
         ArrayList<Student> students = new ArrayList<>();
 
@@ -280,7 +273,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(STUDENT.LAST_NAME, student.getLastName());
         values.put(STUDENT.AGE, student.getAge());
         values.put(STUDENT.YEAR, student.getYear());
-        values.put(STUDENT.TEACHER_ID, student.getTeacherId());
+
+        if (student.getTeacherId() == -1)
+            values.putNull(STUDENT.TEACHER_ID);
+        else
+            values.put(STUDENT.TEACHER_ID, student.getTeacherId());
 
         if (student.getImage() != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

@@ -53,7 +53,13 @@ public class ReportGenerator {
                 } else // Do Not Repeat Student Names If We Don't Need To
                     buffer[0] = "";
 
-                buffer[1] = taskMap.get(taskPunch.getTaskId()).getName();
+                // Make Sure Task Wasn't Deleted
+                Task task = taskMap.get(taskPunch.getTaskId());
+                if (task == null)
+                    buffer[1] = "Unknown/Deleted";
+                else
+                    buffer[1] = taskMap.get(taskPunch.getTaskId()).getName();
+
                 buffer[2] = dateFormat.format(taskPunch.getTimeStart());
 
                 // Both Start Date & Time Come From timeStart
@@ -81,7 +87,7 @@ public class ReportGenerator {
                     stringBuilder.append(String.format(Locale.US, "%02d", extraSeconds));
 
                     buffer[5] = stringBuilder.toString();
-                } else
+                } else // Show Open Punch
                     buffer[5] = "--Clocked In--";
 
 
@@ -93,7 +99,7 @@ public class ReportGenerator {
             }
         }
 
+        // Make Sure Contents Are Completely Written Before Returning
         writer.flush();
-
     }
 }

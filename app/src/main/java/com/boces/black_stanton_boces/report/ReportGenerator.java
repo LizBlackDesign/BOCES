@@ -59,25 +59,31 @@ public class ReportGenerator {
                 // Both Start Date & Time Come From timeStart
                 buffer[3] = timeFormat.format(taskPunch.getTimeStart());
 
+                // If Task Is Still Open, Sow That It Is Clocked In
                 if (taskPunch.getTimeEnd() != null)
                     buffer[4] = timeFormat.format(taskPunch.getTimeEnd());
                 else
                     buffer[4] = "--Clocked In--";
 
-                final long deltaTime = taskPunch.getTimeEnd().getTime() - taskPunch.getTimeStart().getTime();
-                final long deltaHours = TimeUnit.MILLISECONDS.toHours(deltaTime);
-                final long extraMinutes = TimeUnit.MILLISECONDS.toMinutes(deltaTime) % 60;
-                final long extraSeconds = TimeUnit.MILLISECONDS.toSeconds(deltaTime) % 60;
+                // If Task Is Still Open, Do Not Show Duration
+                if (taskPunch.getTimeEnd() != null) {
+                    final long deltaTime = taskPunch.getTimeEnd().getTime() - taskPunch.getTimeStart().getTime();
+                    final long deltaHours = TimeUnit.MILLISECONDS.toHours(deltaTime);
+                    final long extraMinutes = TimeUnit.MILLISECONDS.toMinutes(deltaTime) % 60;
+                    final long extraSeconds = TimeUnit.MILLISECONDS.toSeconds(deltaTime) % 60;
 
-                // Only Add Hours If Needed
-                if (deltaHours > 0)
-                    stringBuilder.append(Long.toString(deltaHours)).append(":");
+                    // Only Add Hours If Needed
+                    if (deltaHours > 0)
+                        stringBuilder.append(Long.toString(deltaHours)).append(":");
 
-                // Always Add Minutes/Seconds
-                stringBuilder.append(String.format(Locale.US, "%02d", extraMinutes)).append(":");
-                stringBuilder.append(String.format(Locale.US, "%02d", extraSeconds));
+                    // Always Add Minutes/Seconds
+                    stringBuilder.append(String.format(Locale.US, "%02d", extraMinutes)).append(":");
+                    stringBuilder.append(String.format(Locale.US, "%02d", extraSeconds));
 
-                buffer[5] = stringBuilder.toString();
+                    buffer[5] = stringBuilder.toString();
+                } else
+                    buffer[5] = "--Clocked In--";
+
 
                 // Empty String Builder
                 stringBuilder.setLength(0);

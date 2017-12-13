@@ -58,6 +58,15 @@
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
     <Button
+        android:id="@+id/btnAboutUs"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:onClick="onClickAboutUs"
+        android:text="@string/btn_about_us" />
+    <Button
         android:id="@+id/btnDevOptions"
         android:text="Developer Options"
         android:onClick="onClickDeveloperOptions"

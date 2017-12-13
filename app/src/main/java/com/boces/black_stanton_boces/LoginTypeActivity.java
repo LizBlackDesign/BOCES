@@ -50,5 +50,9 @@ public class LoginTypeActivity extends AppCompatActivity {
         startActivity(new Intent(this, DeveloperOptionsActivity.class));
     }
 
+    public void onClickAboutUs(View v) {
+        startActivity(new Intent(this, AboutUsActivity.class));
+    }
+
 
 }

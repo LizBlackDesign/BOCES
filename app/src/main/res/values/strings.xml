@@ -142,4 +142,8 @@
 
     <!--activity_manage_admin_accounts-->
     <string name="title_manage_admin_accounts">Manage Accounts</string>
+
+    <!--Dialogue Progress -->
+    <string name="title_dialogue_progress">Generating</string>
+    <string name="dialogue_message">Generating Report</string>
 </resources>

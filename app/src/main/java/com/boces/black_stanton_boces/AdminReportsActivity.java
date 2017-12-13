@@ -19,6 +19,7 @@ import com.boces.black_stanton_boces.persistence.model.Task;
 import com.boces.black_stanton_boces.report.ReportRunner;
 import com.boces.black_stanton_boces.report.StudentPunches;
 import com.boces.black_stanton_boces.util.DatePickerDialogueFactory;
+import com.boces.black_stanton_boces.util.ProgressBarDialogueFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,12 +31,45 @@ import java.util.Locale;
  */
 public class AdminReportsActivity extends AppCompatActivity {
 
+    /**
+     * Button To Start Report Generation
+     */
     private Button btnSaveTime;
+
+    /**
+     * Text View For The Start Date Selected From Dialogue
+     */
     private EditText txtStartDate;
+
+    /**
+     * Text View For The End Date Selected From Dialogue
+     */
     private EditText txtEndDate;
+
+    /**
+     * Save Dates Selected By Dialogues
+     */
     private DateCache dateCache = new DateCache();
+
+    /**
+     * Name of The File To Create
+     */
+    private EditText txtFileName;
+
+    /**
+     * Formats Dates From Dialogues
+     */
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
+    /**
+     * Thread Report Is Generated On
+     */
     private Thread reportGenerator;
+
+    /**
+     * Dialogue Shown While A Report Is Generating
+     */
+    private Dialog progressDialogue;
 
     /**
      * Retrieves Information
@@ -50,6 +84,7 @@ public class AdminReportsActivity extends AppCompatActivity {
         btnSaveTime = findViewById(R.id.btnSaveTime);
         txtStartDate = findViewById(R.id.txtStart);
         txtEndDate = findViewById(R.id.txtEnd);
+        txtFileName = findViewById(R.id.txtFileName);
 
         final Context context = this;
 
@@ -93,15 +128,52 @@ public class AdminReportsActivity extends AppCompatActivity {
     /**
      * Checks If Required Field Is Empty Before For Saving
      * @param v
-     * Current View
+     * Current View. Unused
      */
     public void onSave(View v) {
+
+        // Clear Old Errors
+        txtStartDate.setError(null);
+        txtEndDate.setError(null);
+
+        boolean hasError = false;
+
+        if (txtStartDate.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            txtStartDate.setError("Start Date Is Required");
+        }
+
+        if (txtEndDate.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            txtEndDate.setError("End Date Is Required");
+        }
+
+        // Make Sure We Have A Filename Before Continuing
+        if (txtFileName.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            txtFileName.setError("Filename Is Required");
+        }
+
+        if (dateCache.start != null && dateCache.end != null && !txtStartDate.getText().toString().trim().isEmpty()) {
+            if (dateCache.end.before(dateCache.start)) {
+                hasError = true;
+                txtStartDate.setError("Start Date Must Be Before End Date");
+            }
+        }
+
+        // Stop Bad Input
+        if (hasError)
+            return;
+
         btnSaveTime.setEnabled(false);
+        btnSaveTime.setVisibility(View.GONE);
         PersistenceInteractor persistence = new PersistenceInteractor(this);
         ArrayList<StudentPunches> punches = persistence.getStudentPunches(dateCache.start, dateCache.end);
         ArrayList<Task> tasks = persistence.getAllTasks();
-        String filename = "Test";
+        String filename = txtFileName.getText().toString().trim();
         final Context context = this;
+        progressDialogue = ProgressBarDialogueFactory.make(context);
+        progressDialogue.show();
 
         if (reportGenerator == null || reportGenerator.getState() == Thread.State.TERMINATED) {
             ReportRunner runner = new ReportRunner(filename, punches, tasks, new ReportRunner.Callback() {
@@ -131,6 +203,11 @@ public class AdminReportsActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             btnSaveTime.setEnabled(true);
+                            btnSaveTime.setVisibility(View.VISIBLE);
+
+                            // Make Sure Dialogue Isn't Null
+                            if (progressDialogue != null)
+                                progressDialogue.dismiss();
                         }
                     });
                 }

@@ -23,23 +23,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Student Name"
-            android:textSize="18sp"/>
+            android:padding="6dp"
+            android:textSize="24sp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="6dp">
                 <TextView
                     android:id="@+id/studentListAge"
                     android:layout_weight="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12"/>
+                    android:textSize="16sp"
+                    android:text="14"/>
 
                 <TextView
                     android:id="@+id/studentListYear"
                     android:layout_weight="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16sp"
                     android:text="5"/>
 
 
@@ -48,6 +52,7 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="16sp"
                     android:text="No Teacher" />
         </LinearLayout>
     </LinearLayout>

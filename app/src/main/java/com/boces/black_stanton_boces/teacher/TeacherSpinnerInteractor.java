@@ -23,6 +23,13 @@ public class TeacherSpinnerInteractor {
         this.context = context;
         ArrayList<TeacherSpinnerItem> adapterItems = new ArrayList<>(items.size());
 
+        // Add A Pseudo-Element For No Teacher
+        Teacher noTeacher = new Teacher();
+        noTeacher.setFirstName("No Teacher");
+        noTeacher.setLastName("");
+        noTeacher.setId(-1);
+        adapterItems.add(new TeacherSpinnerItem(noTeacher));
+
         // Convert To Spinner Items
         for (Teacher teacher : items) {
             adapterItems.add(new TeacherSpinnerItem(teacher));

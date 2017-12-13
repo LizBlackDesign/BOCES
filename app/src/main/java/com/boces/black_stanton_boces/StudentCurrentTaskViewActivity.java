@@ -115,7 +115,7 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
                     stringBuilder.append(' ');
                 }
                 stringBuilder.append("Seconds: ");
-                stringBuilder.append(seconds);
+                stringBuilder.append(seconds % 60);
 
                 final String timeString = stringBuilder.toString();
                 runOnUiThread(new Runnable() {

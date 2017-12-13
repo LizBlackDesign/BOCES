@@ -31,10 +31,10 @@ import com.boces.black_stanton_boces.persistence.model.Teacher;
  */
 public class AdminAddTeacherActivity extends AppCompatActivity {
 
-    private EditText inputTeacherFirstName;
-    private EditText inputTeacherLastName;
-    private EditText inputTeacherEmail;
-    private EditText inputTeacherPhone;
+    private EditText firstName;
+    private EditText lastName;
+    private EditText email;
+    private EditText phone;
     private ImageView imageView;
     private Bitmap image;
     private PersistenceInteractor persistence;
@@ -53,11 +53,11 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_teacher);
 
         // Get Input References
-        inputTeacherFirstName = (EditText) findViewById(R.id.inputTeacherFirstName);
-        inputTeacherLastName = (EditText) findViewById(R.id.inputTeacherLastName);
-        inputTeacherEmail = (EditText) findViewById(R.id.inputTeacherEmail);
-        inputTeacherPhone = (EditText) findViewById(R.id.inputTeacherPhone);
-        imageView = (ImageView) findViewById(R.id.imgTeacher);
+        firstName = findViewById(R.id.inputTeacherFirstName);
+        lastName = findViewById(R.id.inputTeacherLastName);
+        email = findViewById(R.id.inputTeacherEmail);
+        phone = findViewById(R.id.inputTeacherPhone);
+        imageView = findViewById(R.id.imgTeacher);
 
         persistence = new PersistenceInteractor(this);
     }
@@ -67,21 +67,37 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
      * @param v
      * Current View
      */
-    public void onClickAdminTeacherAddSave(View v) {
+    public void onSave(View v) {
         Teacher teacher = new Teacher();
-        teacher.setFirstName(inputTeacherFirstName.getText().toString());
-        teacher.setLastName(inputTeacherLastName.getText().toString());
-        teacher.setEmail(inputTeacherEmail.getText().toString());
-        teacher.setPhoneNumber(inputTeacherPhone.getText().toString());
+        boolean hasError = false;
+
+        if (firstName.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            firstName.setError("First Name Is Required");
+        } else
+            teacher.setFirstName(firstName.getText().toString());
+
+        if (lastName.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            lastName.setError("Last Name Is Required");
+        } else
+            teacher.setLastName(lastName.getText().toString());
+
+
+        teacher.setEmail(email.getText().toString());
+        teacher.setPhoneNumber(phone.getText().toString());
 
         if (image != null)
             teacher.setImage(image);
+
+        if (hasError)
+            return;
 
         persistence.addTeacher(teacher);
         finish();//Ends activity
     }
 
-    public void onCamera(View v) {
+    public void onSelectImage(View v) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST);
             return;
@@ -124,7 +140,7 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         switch (requestCode) {
             case EXTERNAL_STORAGE_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    onCamera(null);
+                    onSelectImage(null);
                 }
                 break;
         }

@@ -76,11 +76,11 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
             throw new IllegalStateException("Teacher With ID " + id + " Not Found"); //ID doesn't match teacher
 
         // Get Input References
-        firstName = (EditText) findViewById(R.id.inputTeacherFirstName);
-        lastName = (EditText) findViewById(R.id.inputTeacherLastName);
-        email = (EditText) findViewById(R.id.inputTeacherEmail);
-        phone = (EditText) findViewById(R.id.inputTeacherPhone);
-        imageView = (ImageView) findViewById(R.id.imgEditTeacher);
+        firstName = findViewById(R.id.inputTeacherFirstName);
+        lastName = findViewById(R.id.inputTeacherLastName);
+        email = findViewById(R.id.inputTeacherEmail);
+        phone = findViewById(R.id.inputTeacherPhone);
+        imageView = findViewById(R.id.imgEditTeacher);
 
         // Set Current Values
         firstName.setText(teacher.getFirstName());
@@ -103,20 +103,34 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
             Toast.makeText(this, "Error Teacher With ID " + id + " Not Found", Toast.LENGTH_LONG).show();
             return;
         }
+        boolean hasError = false;
 
-        teacher.setFirstName(firstName.getText().toString());
-        teacher.setLastName(lastName.getText().toString());
+        if (firstName.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            firstName.setError("First Name Is Required");
+        } else
+            teacher.setFirstName(firstName.getText().toString());
+
+        if (lastName.getText().toString().trim().isEmpty()) {
+            hasError = true;
+            lastName.setError("Last Name Is Required");
+        } else
+            teacher.setLastName(lastName.getText().toString());
+
         teacher.setEmail(email.getText().toString());
         teacher.setPhoneNumber(phone.getText().toString());
 
         if (image != null)
             teacher.setImage(image);
 
+        if (hasError)
+            return;
+
         persistence.update(teacher);
         finish();
     }
 
-    public void onCamera(View v) {
+    public void onSelectImage(View v) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST);
             return;
@@ -159,7 +173,7 @@ public class AdminEditTeacherActivity extends AppCompatActivity {
         switch (requestCode) {
             case EXTERNAL_STORAGE_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    onCamera(null);
+                    onSelectImage(null);
                 }
                 break;
         }

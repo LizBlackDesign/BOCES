@@ -159,4 +159,7 @@
     <!--Dialogue Progress -->
     <string name="title_dialogue_progress">Generating</string>
     <string name="dialogue_message">Generating Report</string>
+
+    <string name="clocked_in">Clocked In</string>
+    <string name="no_teacher">No Teacher</string>
 </resources>

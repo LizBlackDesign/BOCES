@@ -17,13 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHolder> implements Filterable {
-    private List<Teacher> teachers;
     private List<Teacher> displayTeachers;
     private TeacherAdapterOnclick onclickHandler;
     private TeacherFilter filter;
 
     public TeacherAdapter(List<Teacher> teachers, TeacherAdapterOnclick onclickHandler) {
-        this.teachers = teachers;
         this.displayTeachers = teachers;
         this.onclickHandler = onclickHandler;
     }
@@ -42,7 +40,10 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
         Teacher teacher = displayTeachers.get(position);
 
         holder.teacherId = teacher.getId();
-        holder.teacherName.setText(teacher.getFirstName() + " " + teacher.getLastName());
+
+        String teacherName = teacher.getFirstName() + " " + teacher.getLastName();
+        holder.teacherName.setText(teacherName);
+
         holder.teacherEmail.setText(teacher.getEmail());
         holder.teacherPhone.setText(teacher.getPhoneNumber());
         if (teacher.getImage() != null)
@@ -55,21 +56,18 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
     }
 
     public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
-
-        // If We Have A Filter, Update It As Well
-        if (filter != null) {
-            filter.updateTeachers(this.teachers);
-        }
+        // If We Have A Filter, Then It Controls The Content
+        if (filter != null)
+            filter.updateTeachers(teachers);
+        else
+            this.displayTeachers = teachers;
     }
 
     @Override
     public Filter getFilter() {
         // If The Filter Has Not Been Constructed Yet, Do So
-        if (filter == null) {
-            filter = new TeacherFilter(teachers);
-        }
-
+        if (filter == null)
+            filter = new TeacherFilter(displayTeachers);
         return filter;
     }
 

@@ -144,6 +144,10 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         emptyAndRecreate();
     }
 
+    /**
+     * Enables Foreign Keys Along With Default Behavior
+     * @param db The Database
+     */
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
@@ -207,9 +211,8 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         student.setAge(cursor.getInt(3));
         student.setYear(cursor.getInt(4));
 
-        // Use -1 For No Teacher
         if (cursor.isNull(5))
-            student.setTeacherId(-1);
+            student.setTeacherId(null);
         else
             student.setTeacherId(cursor.getInt(5));
 
@@ -274,7 +277,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(STUDENT.AGE, student.getAge());
         values.put(STUDENT.YEAR, student.getYear());
 
-        if (student.getTeacherId() == -1)
+        if (student.getTeacherId() == null)
             values.putNull(STUDENT.TEACHER_ID);
         else
             values.put(STUDENT.TEACHER_ID, student.getTeacherId());
@@ -313,7 +316,11 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(STUDENT.LAST_NAME, student.getLastName());
         values.put(STUDENT.AGE, student.getAge());
         values.put(STUDENT.YEAR, student.getYear());
-        values.put(STUDENT.TEACHER_ID, student.getTeacherId());
+
+        if (student.getTeacherId() == null)
+            values.putNull(STUDENT.TEACHER_ID);
+        else
+            values.put(STUDENT.TEACHER_ID, student.getTeacherId());
 
         if (student.getImage() != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

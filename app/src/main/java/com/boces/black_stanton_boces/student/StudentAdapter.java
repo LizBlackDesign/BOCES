@@ -19,14 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> implements Filterable {
-    private List<Student> students;
     private List<Student> displayStudents;
     private PersistenceInteractor persistence;
     private StudentAdapterOnclick onclickHandler;
     private StudentFilter studentFilter;
 
     public StudentAdapter(List<Student> students, PersistenceInteractor persistence, StudentAdapterOnclick onclickHandler) {
-        this.students = students;
         this.displayStudents = students;
         this.persistence = persistence;
         this.onclickHandler = onclickHandler;
@@ -48,10 +46,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         String studentName = student.getFirstName() + " " + student.getLastName();
         holder.studentName.setText(studentName);
 
-        Teacher teacher = persistence.getTeacher(student.getTeacherId());
-        if (teacher != null) {
-            String teacherName = teacher.getFirstName() + " " + teacher.getLastName();
-            holder.teacherName.setText(teacherName);
+        // Handle If No Teacher Is Set
+        if (student.getTeacherId() == null) {
+            holder.teacherName.setText(R.string.no_teacher);
+        } else {
+            Teacher teacher = persistence.getTeacher(student.getTeacherId());
+            // Make Sure Teacher Was Found
+            if (teacher != null) {
+                String teacherName = teacher.getFirstName() + " " + teacher.getLastName();
+                holder.teacherName.setText(teacherName);
+            }
         }
 
         if (student.getImage() != null)
@@ -64,18 +68,17 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     }
 
     public void setStudents(List<Student> students) {
-        this.students = students;
-
-        // If We Have A Filter, Update It As Well
         if (studentFilter != null)
-            studentFilter.updateStudents(this.students);
+            studentFilter.updateStudents(students);
+        else
+            this.displayStudents = students;
     }
 
     @Override
     public Filter getFilter() {
         // If The Filter Has Not Been Constructed Yet, Do So
         if (studentFilter == null) {
-            studentFilter = new StudentFilter(this.students);
+            studentFilter = new StudentFilter(this.displayStudents);
         }
 
         return studentFilter;

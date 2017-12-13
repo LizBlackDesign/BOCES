@@ -17,13 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements Filterable {
-    private List<Task> tasks;
     private List<Task> displayTasks;
     private TaskAdapterOnclick onclickHandler;
     private TaskFilter filter;
 
     public TaskAdapter(List<Task> tasks, TaskAdapterOnclick onclickHandler) {
-        this.tasks = tasks;
         this.displayTasks = tasks;
         this.onclickHandler = onclickHandler;
     }
@@ -52,19 +50,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     }
 
     public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-
         // If We Have A Filter, Update It As Well
         if (filter != null) {
-            filter.updateTasks(this.tasks);
-        }
+            filter.updateTasks(tasks);
+        } else
+            this.displayTasks = tasks;
     }
 
     @Override
     public Filter getFilter() {
         // If The Filter Has Not Been Constructed Yet, Do So
         if (filter == null) {
-            filter = new TaskFilter(tasks);
+            filter = new TaskFilter(this.displayTasks);
         }
 
         return filter;

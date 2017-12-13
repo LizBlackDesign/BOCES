@@ -95,7 +95,8 @@ public class AdminEditStudentActivity extends AppCompatActivity {
         // Get Spinner For Input/Setup
         Spinner teacherSpinner = (Spinner) findViewById(R.id.spinnerTeacher);
         teacherSpinnerInteractor = new TeacherSpinnerInteractor(teacherSpinner, persistence.getAllTeachers(), this);
-        teacherSpinnerInteractor.setSelectedItem(currentStudent.getTeacherId());
+        if (currentStudent.getTeacherId() != null)
+            teacherSpinnerInteractor.setSelectedItem(currentStudent.getTeacherId());
 
         firstName.setText(currentStudent.getFirstName());
         lastName.setText(currentStudent.getLastName());

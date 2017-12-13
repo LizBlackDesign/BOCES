@@ -8,7 +8,7 @@ public class Student {
     private String lastName;
     private int age;
     private int year;
-    private int teacherId;
+    private Integer teacherId;
     private Bitmap image;
 
     public Integer getId() {
@@ -51,11 +51,11 @@ public class Student {
         this.year = year;
     }
 
-    public int getTeacherId() {
+    public Integer getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(int teacherId) {
+    public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
     }
 

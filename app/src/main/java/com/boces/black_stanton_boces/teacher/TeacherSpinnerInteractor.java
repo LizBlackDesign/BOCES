@@ -27,7 +27,7 @@ public class TeacherSpinnerInteractor {
         Teacher noTeacher = new Teacher();
         noTeacher.setFirstName("No Teacher");
         noTeacher.setLastName("");
-        noTeacher.setId(-1);
+        noTeacher.setId(null);
         adapterItems.add(new TeacherSpinnerItem(noTeacher));
 
         // Convert To Spinner Items
@@ -42,13 +42,9 @@ public class TeacherSpinnerInteractor {
 
     public Teacher getSelectedItem() {
         TeacherSpinnerItem item = (TeacherSpinnerItem) spinner.getSelectedItem();
-        if (item == null)
+        if (item == null || item.getTeacher().getId() == null)
             return null;
         return item.getTeacher();
-    }
-
-    public int setSelectedItem(Teacher teacher) {
-        return setSelectedItem(teacher.getId());
     }
 
     public int setSelectedItem(int teacherId) {
@@ -56,7 +52,7 @@ public class TeacherSpinnerInteractor {
         int index = 0;
         for (int i = 0; i < spinner.getCount(); i++) {
             TeacherSpinnerItem teacher = (TeacherSpinnerItem) spinner.getItemAtPosition(i);
-            if (teacher.getTeacher().getId() == teacherId) {
+            if (teacher.getTeacher().getId() != null && teacher.getTeacher().getId() == teacherId) {
                 index = i;
                 break;
             }

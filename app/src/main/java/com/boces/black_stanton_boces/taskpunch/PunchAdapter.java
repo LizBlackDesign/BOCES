@@ -23,6 +23,7 @@ public class PunchAdapter extends RecyclerView.Adapter<PunchAdapter.ViewHolder> 
     private Map<Integer, Student> students;
     private Map<Integer, Task> tasks;
     private PunchAdapterOnclick onclick;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
     public PunchAdapter(List<TaskPunch> punches, Map<Integer, Student> students, Map<Integer, Task> tasks,  PunchAdapterOnclick onclick) {
         this.punches = punches;
@@ -53,14 +54,15 @@ public class PunchAdapter extends RecyclerView.Adapter<PunchAdapter.ViewHolder> 
 
         holder.punchId = punch.getId();
         holder.studentListName.setText(studentName);
-        holder.timeListDate.setText(new SimpleDateFormat("HH:mm:ss", Locale.US).format(punch.getTimeStart()));
+        holder.timeListDate.setText(dateFormat.format(punch.getTimeStart()));
         if (punch.getTimeEnd() != null) {
             final long diff = punch.getTimeEnd().getTime() - punch.getTimeStart().getTime();
             final long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
             final long seconds = TimeUnit.MILLISECONDS.toSeconds(diff) % 60L;
             String duration = Long.toString(minutes) + ":" + Long.toString(seconds);
             holder.timeListDuration.setText(duration);
-        }
+        } else
+            holder.timeListDuration.setText(R.string.clocked_in);
         holder.timeListTask.setText(taskName);
     }
 

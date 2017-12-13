@@ -25,36 +25,14 @@
             android:text="Student Name"
             android:padding="6dp"
             android:textSize="24sp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="6dp">
-                <TextView
-                    android:id="@+id/studentListAge"
-                    android:layout_weight="4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="14"/>
-
-                <TextView
-                    android:id="@+id/studentListYear"
-                    android:layout_weight="4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="5"/>
-
-
-                <TextView
-                    android:id="@+id/studentListTeacherName"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="No Teacher" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/studentListTeacherName"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:textSize="16sp"
+            android:text="No Teacher" />
     </LinearLayout>
 
 

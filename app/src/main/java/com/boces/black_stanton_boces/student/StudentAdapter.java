@@ -48,8 +48,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         String studentName = student.getFirstName() + " " + student.getLastName();
         holder.studentName.setText(studentName);
 
-        holder.studentAge.setText(Integer.toString(student.getAge()));
-
         Teacher teacher = persistence.getTeacher(student.getTeacherId());
         if (teacher != null) {
             String teacherName = teacher.getFirstName() + " " + teacher.getLastName();
@@ -86,7 +84,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     @SuppressWarnings("WeakerAccess")
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView studentName;
-        public TextView studentAge;
         public TextView teacherName;
         public ImageView studentImage;
         /**
@@ -103,7 +100,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         public ViewHolder(View v, final StudentAdapterOnclick onclick) {
             super(v);
             studentName = v.findViewById(R.id.studentListName);
-            studentAge = v.findViewById(R.id.studentListAge);
             teacherName = v.findViewById(R.id.studentListTeacherName);
             studentImage = v.findViewById(R.id.studentListImage);
 

@@ -21,11 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Teacher name"
-            android:textSize="18sp" />
+            android:padding="6dp"
+            android:textSize="24sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="6dp">
 
 
             <TextView
@@ -33,7 +35,8 @@
                 android:layout_weight="4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LongEmail@Email.com"/>
+                android:text="LongEmail@Email.com"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/teacherPhone"
@@ -41,7 +44,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1800SafeAuto"/>
+                android:text="1800SafeAuto"
+                android:textSize="14sp"/>
         </LinearLayout>
 
     </LinearLayout>

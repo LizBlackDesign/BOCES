@@ -12,31 +12,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Student Name"
-        android:textSize="18sp"/>
+        android:padding="6dp"
+        android:textSize="24sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="6dp">
         <TextView
             android:id="@+id/timeListTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Task Name" />
+            android:text="Task Name"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/timeListDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="2/29/1728"/>
+            android:text="2/29/1728"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/timeListDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="1hour"/>
+            android:text="1hour"
+            android:textSize="14sp" />
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"

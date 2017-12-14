@@ -39,6 +39,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:hint="@string/hint_password"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:textSize="24sp" />
     <Space

@@ -57,9 +57,15 @@ public class PunchAdapter extends RecyclerView.Adapter<PunchAdapter.ViewHolder> 
         holder.timeListDate.setText(dateFormat.format(punch.getTimeStart()));
         if (punch.getTimeEnd() != null) {
             final long diff = punch.getTimeEnd().getTime() - punch.getTimeStart().getTime();
-            final long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+            final long hours = TimeUnit.MILLISECONDS.toHours(diff);
+            final long minutes = TimeUnit.MILLISECONDS.toMinutes(diff) % 60L;
             final long seconds = TimeUnit.MILLISECONDS.toSeconds(diff) % 60L;
-            String duration = Long.toString(minutes) + ":" + Long.toString(seconds);
+
+            String duration;
+            if (hours > 0) // Only Show Hours If We Need To
+                duration = Long.toString(hours) + ":" + String.format(Locale.US, "%02d", minutes) + ":" + String.format(Locale.US, "%02d", seconds);
+            else
+                duration = Long.toString(minutes) + ":" + String.format(Locale.US, "%02d", seconds);
             holder.timeListDuration.setText(duration);
         } else
             holder.timeListDuration.setText(R.string.clocked_in);

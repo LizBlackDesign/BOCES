@@ -93,6 +93,7 @@ public class AdminPunchAddActivity extends AppCompatActivity {
 
         spinnerStudent = findViewById(R.id.spinnerStudent);
         studentSpinnerInteractor = new StudentSpinnerInteractor(spinnerStudent, this, persistence.getAllStudents());
+        studentSpinnerInteractor.setSelectedItem(studentId);
 
         spinnerTask = findViewById(R.id.spinnerTask);
         taskSpinnerInteractor = new TaskSpinnerInteractor(spinnerTask, this, persistence.getAllTasks());

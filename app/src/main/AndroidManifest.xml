@@ -11,39 +11,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".LoginTypeActivity">
+        <activity android:name=".activity.LoginTypeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StudentLoginSelectTeacherActivity" />
-        <activity android:name=".StudentLoginSelectStudentActivity" />
-        <activity android:name=".StudentLoginSelectTaskActivity" />
-        <activity android:name=".StudentCurrentTaskViewActivity" />
-        <activity android:name=".AdminLoginActivity" />
-        <activity android:name=".AdminMenuActivity" />
-        <activity android:name=".AdminStudentsActivity" />
-        <activity android:name=".AdminTeachersActivity" />
-        <activity android:name=".AdminTasksActivity" />
-        <activity android:name=".AdminAddStudentActivity" />
-        <activity android:name=".AdminEditStudentActivity" />
-        <activity android:name=".AdminAddTeacherActivity" />
-        <activity android:name=".AdminEditTeacherActivity" />
-        <activity android:name=".AdminAddTaskActivity" />
-        <activity android:name=".AdminEditTaskActivity" />
-        <activity android:name=".StudentTaskStart" />
-        <activity android:name=".DeveloperOptionsActivity" />
-        <activity android:name=".AdminReportsActivity" />
-        <activity android:name=".AdminStudentPunchesActivity" />
-        <activity android:name=".AdminPunchAddActivity" />
-        <activity android:name=".AdminPunchEditActivity" />
-        <activity android:name=".AdminManageAccounts" />
-        <activity android:name=".AdminAddAccountActivity" />
-        <activity android:name=".AdminEditAccountActivity" />
-        <activity android:name=".AdminPunchSelectStudentActivity" />
-        <activity android:name=".AboutUsActivity"/>
+        <activity android:name=".activity.login.StudentLoginSelectTeacherActivity" />
+        <activity android:name=".activity.login.StudentLoginSelectStudentActivity" />
+        <activity android:name=".activity.login.StudentLoginSelectTaskActivity" />
+        <activity android:name=".activity.login.StudentCurrentTaskViewActivity" />
+        <activity android:name=".activity.AdminLoginActivity" />
+        <activity android:name=".activity.AdminMenuActivity" />
+        <activity android:name=".activity.student.AdminStudentsActivity" />
+        <activity android:name=".activity.AdminTeachersActivity" />
+        <activity android:name=".activity.task.AdminTasksActivity" />
+        <activity android:name=".activity.student.AdminAddStudentActivity" />
+        <activity android:name=".activity.student.AdminEditStudentActivity" />
+        <activity android:name=".activity.teacher.AdminAddTeacherActivity" />
+        <activity android:name=".activity.teacher.AdminEditTeacherActivity" />
+        <activity android:name=".activity.task.AdminAddTaskActivity" />
+        <activity android:name=".activity.task.AdminEditTaskActivity" />
+        <activity android:name=".activity.login.StudentTaskStart" />
+        <activity android:name=".activity.DeveloperOptionsActivity" />
+        <activity android:name=".activity.AdminReportsActivity" />
+        <activity android:name=".activity.punch.AdminStudentPunchesActivity" />
+        <activity android:name=".activity.punch.AdminPunchAddActivity" />
+        <activity android:name=".activity.punch.AdminPunchEditActivity" />
+        <activity android:name=".activity.account.AdminManageAccounts" />
+        <activity android:name=".activity.account.AdminAddAccountActivity" />
+        <activity android:name=".activity.account.AdminEditAccountActivity" />
+        <activity android:name=".activity.punch.AdminPunchSelectStudentActivity" />
+        <activity android:name=".activity.AboutUsActivity"/>
     </application>
 
 </manifest>

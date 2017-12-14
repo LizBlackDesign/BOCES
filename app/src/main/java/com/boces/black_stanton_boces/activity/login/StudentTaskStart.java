@@ -3,7 +3,7 @@
  *
  * Authors: Evan Black, Elizabeth Stanton
  */
-package com.boces.black_stanton_boces;
+package com.boces.black_stanton_boces.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.boces.black_stanton_boces.R;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;

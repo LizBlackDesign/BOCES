@@ -53,8 +53,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         // If We Have A Filter, Update It As Well
         if (filter != null) {
             filter.updateTasks(tasks);
-        } else
-            this.displayTasks = tasks;
+        }
+        this.displayTasks = tasks;
     }
 
     @Override

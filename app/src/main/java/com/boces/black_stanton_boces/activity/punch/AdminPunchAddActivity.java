@@ -3,7 +3,7 @@
  *
  * Authors: Evan Black, Elizabeth Stanton
  */
-package com.boces.black_stanton_boces;
+package com.boces.black_stanton_boces.activity.punch;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.boces.black_stanton_boces.R;
 import com.boces.black_stanton_boces.persistence.PersistenceInteractor;
 import com.boces.black_stanton_boces.persistence.model.Student;
 import com.boces.black_stanton_boces.persistence.model.Task;
@@ -265,6 +266,7 @@ public class AdminPunchAddActivity extends AppCompatActivity {
             return;
 
         persistence.addTaskPunch(punch);
+        finish();
     }
 
     /**

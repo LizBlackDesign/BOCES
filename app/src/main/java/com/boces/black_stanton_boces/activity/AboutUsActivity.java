@@ -1,7 +1,9 @@
-package com.boces.black_stanton_boces;
+package com.boces.black_stanton_boces.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.boces.black_stanton_boces.R;
 
 /**
  * Basic Activity With Information On The Project

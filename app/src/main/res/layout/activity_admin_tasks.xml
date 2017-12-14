@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#E1F4FA"
     android:orientation="vertical"
-    tools:context="com.boces.black_stanton_boces.AdminTasksActivity"
+    tools:context="com.boces.black_stanton_boces.activity.task.AdminTasksActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 

@@ -59,8 +59,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
         // If We Have A Filter, Then It Controls The Content
         if (filter != null)
             filter.updateTeachers(teachers);
-        else
-            this.displayTeachers = teachers;
+       this.displayTeachers = teachers;
     }
 
     @Override

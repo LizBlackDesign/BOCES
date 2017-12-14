@@ -70,8 +70,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     public void setStudents(List<Student> students) {
         if (studentFilter != null)
             studentFilter.updateStudents(students);
-        else
-            this.displayStudents = students;
+        this.displayStudents = students;
     }
 
     @Override

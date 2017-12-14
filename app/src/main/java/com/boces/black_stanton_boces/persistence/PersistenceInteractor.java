@@ -558,7 +558,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
      */
     public ArrayList<Task> getAllTasks() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(TASK_QUERY + " FROM " + TASK.TABLE ,null);
+        Cursor cursor = db.rawQuery(TASK_QUERY,null);
 
         ArrayList<Task> tasks = new ArrayList<>();
 

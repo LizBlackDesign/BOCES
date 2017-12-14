@@ -24,6 +24,9 @@ import java.util.Date;
  */
 public class StudentTaskStart extends AppCompatActivity {
 
+    /**
+     * Id Of The Task The Student Is About To Start
+     */
     private int taskId;
     private int studentId;
     private PersistenceInteractor persistence;

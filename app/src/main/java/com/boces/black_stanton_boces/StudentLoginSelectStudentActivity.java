@@ -23,10 +23,12 @@ import com.boces.black_stanton_boces.student.StudentAdapterOnclick;
  */
 public class StudentLoginSelectStudentActivity extends AppCompatActivity {
 
+    /**
+     * Id Of The Teacher Students Belong To
+     */
     private int teacherId;
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
-    private SearchView searchView;
 
     /**
      * Recognised Values That May Be Passed Through Bundles
@@ -82,10 +84,10 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
         };
         final StudentAdapter adapter = new StudentAdapter(persistence.getStudentsForTeacher(teacherId), persistence, onclick);
 
-        studentList = (RecyclerView) findViewById(R.id.recyclerSelectStudent);
+        studentList = findViewById(R.id.recyclerSelectStudent);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
-        searchView = (SearchView) findViewById(R.id.login_select_student_search);
+        SearchView searchView = findViewById(R.id.login_select_student_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -100,6 +102,7 @@ public class StudentLoginSelectStudentActivity extends AppCompatActivity {
             }
         });
     }
+
     /**
      * Updates Changed Information
      */

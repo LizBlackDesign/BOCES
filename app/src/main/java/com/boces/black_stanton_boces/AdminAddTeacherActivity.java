@@ -97,6 +97,13 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         finish();//Ends activity
     }
 
+    /**
+     * Bring Up A Media Picker To Choose A Picture
+     * If Not Already Granted, Requests WRITE_EXTERNAL_STORAGE Permission
+     * Reenters onActivityResult With Result RESULT_LOAD_IMAGE
+     * @param v
+     * Current View, May Be Null
+     */
     public void onSelectImage(View v) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST);
@@ -106,6 +113,10 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         startActivityForResult(mediaIntent, RESULT_LOAD_IMAGE);
     }
 
+    /**
+     * Reentrant Point For onSelectImage
+     * Enters With RESULT_LOAD_IMAGE
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -135,6 +146,10 @@ public class AdminAddTeacherActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reentrant Point If Permission Must Be Requested
+     * Enters With EXTERNAL_STORAGE_REQUEST
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {

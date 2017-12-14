@@ -24,7 +24,6 @@ public class AdminStudentsActivity extends AppCompatActivity {
 
     private PersistenceInteractor persistence;
     private RecyclerView studentList;
-    private SearchView searchAdminStudent;
 
     /**
      * Retrieve Existing Information
@@ -47,10 +46,10 @@ public class AdminStudentsActivity extends AppCompatActivity {
         persistence = new PersistenceInteractor(this);
         final StudentAdapter adapter = new StudentAdapter(persistence.getAllStudents(), persistence, onclick);
 
-        studentList = (RecyclerView) findViewById(R.id.recyclerSelectStudent);
+        studentList = findViewById(R.id.recyclerSelectStudent);
         studentList.setAdapter(adapter);
         studentList.setLayoutManager(new LinearLayoutManager(this));
-        searchAdminStudent = (SearchView) findViewById(R.id.login_select_student_search);
+        SearchView searchAdminStudent = findViewById(R.id.login_select_student_search);
         searchAdminStudent.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

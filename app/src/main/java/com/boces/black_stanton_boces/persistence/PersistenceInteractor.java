@@ -24,11 +24,30 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PersistenceInteractor extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "boces";
-    private static final String TAG = "bocesDbHelper";
 
+    /**
+     * Semantic Version of The Database
+     * Increments When The Schema Changes
+     */
+    private static final int DATABASE_VERSION = 1;
+
+    /**
+     * Schema Name
+     */
+    private static final String DATABASE_NAME = "boces";
+
+    /**
+     * Debug Tag
+     */
+    private static final String TAG = "bocesPersistance";
+
+    /**
+     * All Fields/Table Associated With Teachers
+     */
     private static class TEACHER {
+        /**
+         * Table Teachers Are Stored In
+         */
         private static final String TABLE = "Teacher";
         private static final String ID = "TeacherId";
         private static final String FIRST_NAME = "FirstName";
@@ -38,14 +57,26 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String IMAGE = "TeacherImage";
     }
 
+    /**
+     * All Fields/Table Associated With Tasks
+     */
     private static class TASK {
+        /**
+         * Table Tasks Are Stored In
+         */
         private static final String TABLE = "Task";
         private static final String ID = "TaskId";
         private static final String NAME = "TaskName";
         private static final String IMAGE = "TaskImage";
     }
 
+    /**
+     * All Fields/Table Associated With Punches
+     */
     private static class TASK_PUNCH {
+        /**
+         * Table Punches Are Stored In
+         */
         private static final String TABLE = "TaskPunch";
         private static final String ID = "TaskPunchID";
         private static final String STUDENT_ID = "StudentID";
@@ -54,7 +85,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String TIME_STOP = "TimeStop";
     }
 
+    /**
+     * All Fields/Table Associated With Students
+     */
     private static class STUDENT {
+        /**
+         * Table Students Are Stored In
+         */
         private static final String TABLE = "Student";
         private static final String ID = "StudentId";
         private static final String FIRST_NAME = "FirstName";
@@ -65,13 +102,22 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         private static final String IMAGE = "StudentImage";
     }
 
+    /**
+     * All Fields/Table Associated With Admin Accounts
+     */
     private static class ADMIN_ACCOUNT {
+        /**
+         * Table Accounts Are Stored In
+         */
         private static final String TABLE = "adminAccount";
         private static final String ID = "accountId";
         private static final String USERNAME = "username";
         private static final String PASSWORD = "password";
     }
 
+    /**
+     * DDL of The Student Table
+     */
     private static final String STUDENT_DDL =
             "CREATE TABLE " + STUDENT.TABLE + "( " +
                     STUDENT.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -86,6 +132,9 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                         " ON DELETE SET NULL " +
                     ")";
 
+    /**
+     * DDL of The Task Table
+     */
     private static final String TASK_DDL =
             "CREATE TABLE " + TASK.TABLE + "( " +
                     TASK.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -93,6 +142,9 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TASK.IMAGE + " BLOB DEFAULT NULL " +
                     ")";
 
+    /**
+     * DDL of The Punch Table
+     */
     private static final String TASK_PUNCH_DDL =
             "CREATE TABLE " + TASK_PUNCH.TABLE + "( " +
                     TASK_PUNCH.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -108,6 +160,9 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                             "ON DELETE CASCADE " +
                     ")";
 
+    /**
+     * DDL of The Teacher Table
+     */
     private static final String TEACHER_DDL =
             "CREATE TABLE " + TEACHER.TABLE + "( " +
                     TEACHER.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -118,6 +173,9 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     TEACHER.IMAGE + " BLOB DEFAULT NULL " +
                     ")";
 
+    /**
+     * DDL of The Account Table
+     */
     private static final String ADMIN_ACCOUNT_DDL =
             "CREATE TABLE " + ADMIN_ACCOUNT.TABLE + "( " +
                     ADMIN_ACCOUNT.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -125,10 +183,21 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
                     ADMIN_ACCOUNT.PASSWORD + " TEXT NOT NULL " +
                     ")";
 
+    /**
+     * Default Constructor
+     * @param context
+     * Application/Current Context
+     */
     public PersistenceInteractor(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Called When A Database Is Needed, And Has Not Yet Been Created
+     * Creates Tables & Does Initial Inserts
+     * @param sqLiteDatabase
+     * A Writable Database
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(TEACHER_DDL);
@@ -146,15 +215,20 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
     /**
      * Enables Foreign Keys Along With Default Behavior
-     * @param db The Database
+     * @param db
+     * The Database
      */
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
+        // Make Sure The Reference Is Not Readonly
         if (!db.isReadOnly())
             db.execSQL("PRAGMA foreign_keys = 1;");
     }
 
+    /**
+     * Drop All Tables & Recreate Them With Initial Data
+     */
     public void emptyAndRecreate() {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -167,10 +241,23 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
+    /**
+     * Completely Drops The Database
+     * May Require An App Restart To Take Effect
+     *
+     * @param context
+     * Application/Current Context
+     */
     public void dropDatabase(Context context) {
         context.deleteDatabase(DATABASE_NAME);
     }
 
+    /**
+     * Inserts The Initial Setup Data
+     * May Be Called After Tables Are Created
+     * @param writable
+     * A Writable Database Reference
+     */
     private void createInitialData(SQLiteDatabase writable) {
         writable.beginTransaction();
 
@@ -193,6 +280,9 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Base Query To Select Students
+     */
     private final String STUDENT_QUERY = "SELECT " +
             STUDENT.ID + " , " +
             STUDENT.FIRST_NAME + " , " +
@@ -203,6 +293,15 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             STUDENT.IMAGE +
             " FROM " + STUDENT.TABLE;
 
+    /**
+     * Converts A Result Row To A Student Model
+     *
+     * @param cursor
+     * A Cursor On A Student Row Having Results In Order the Base Query
+     *
+     * @return
+     * A Model With All Previously Saved Info Populated
+     */
     private Student studentFromRow(Cursor cursor) {
         Student student = new Student();
         student.setId(cursor.getInt(0));
@@ -211,11 +310,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         student.setAge(cursor.getInt(3));
         student.setYear(cursor.getInt(4));
 
+        // Handle Optional Fields
         if (cursor.isNull(5))
             student.setTeacherId(null);
         else
             student.setTeacherId(cursor.getInt(5));
 
+        // Convert Image
         if (!cursor.isNull(6)) {
             ByteArrayInputStream istream = new ByteArrayInputStream(cursor.getBlob(6));
             Bitmap teacherImage = BitmapFactory.decodeStream(istream);
@@ -224,6 +325,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return student;
     }
 
+    /**
+     * Retrieves A Student By ID
+     *
+     * @param id
+     * The ID of The Student To Retrieve
+     *
+     * @return
+     * A Filled In Model Object, or
+     * Null if The Student Was Not Found
+     */
     public Student getStudent(int id) {
         Student student = null;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -236,6 +347,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return student;
     }
 
+    /**
+     * Retrieves All Saved Students
+     *
+     * @return
+     * An ArrayList of All Students
+     * An Empty List If There Are None
+     */
     public ArrayList<Student> getAllStudents() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(STUDENT_QUERY, null);
@@ -252,6 +370,17 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return students;
     }
 
+    /**
+     * Retrieves All Students Associated With A Teacher
+     *
+     * @param teacherID
+     * The ID of The Teacher
+     *
+     * @return
+     * An ArrayList of That Teachers Students
+     * An Empty List If The Teacher Does Not Exist or
+     * No Students Were Found
+     */
     public ArrayList<Student> getStudentsForTeacher(int teacherID) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(STUDENT_QUERY + " WHERE " + STUDENT.TEACHER_ID + "=" + teacherID, null);
@@ -268,6 +397,17 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return students;
     }
 
+    /**
+     * Adds A New Student
+     *
+     * @param student
+     * A Filled In Student Model
+     * Image & TeacherId May Be Null
+     *
+     * @return
+     * The ID of The New Student
+     * -1 If The Insert Failed
+     */
     public int addStudent(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -282,6 +422,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         else
             values.put(STUDENT.TEACHER_ID, student.getTeacherId());
 
+        // Encode Image
         if (student.getImage() != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             student.getImage().compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -308,6 +449,14 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return studentId;
     }
 
+    /**
+     * Updates A Student's Fields
+     * All Fields Except For ID May Be Updated
+     *
+     * @param student
+     * A Student Model With Updated Fields
+     * Image & TeacherId May Be Null
+     */
     public void update(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -317,6 +466,7 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         values.put(STUDENT.AGE, student.getAge());
         values.put(STUDENT.YEAR, student.getYear());
 
+        // Handle Optional ID
         if (student.getTeacherId() == null)
             values.putNull(STUDENT.TEACHER_ID);
         else
@@ -336,11 +486,35 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             Log.w(TAG, "Update Affected No Rows");
     }
 
+    /**
+     * Removes A Student
+     *
+     * @param studentId
+     * The ID of The Student
+     */
     public void deleteStudent(int studentId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(STUDENT.TABLE, STUDENT.ID + " = ?", new String[]{Integer.toString(studentId)});
     }
 
+    /**
+     * Base Query For Selecting A Task
+     */
+    private static final String TASK_QUERY = "SELECT " +
+            TASK.ID + ", " +
+            TASK.NAME + ", " +
+            TASK.IMAGE +
+            " FROM " + TASK.TABLE;
+
+    /**
+     * Converts A Result Row To A Task Model
+     *
+     * @param cursor
+     * A Cursor On A Task Row Having Results In Order the Base Query
+     *
+     * @return
+     * A Model With All Previously Saved Info Populated
+     */
     private Task taskFromRow(Cursor cursor) {
         Task task = new Task();
         task.setId(cursor.getInt(0));
@@ -353,16 +527,20 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return task;
     }
 
+    /**
+     * Retrieves A Task By ID
+     *
+     * @param id
+     * The ID of The Task To Retrieve
+     *
+     * @return
+     * A Filled In Model Object, or
+     * Null if The Task Was Not Found
+     */
     public Task getTask(int id) {
         Task task = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        TASK.ID + ", " +
-                        TASK.NAME + ", " +
-                        TASK.IMAGE +
-                        " FROM " + TASK.TABLE +
-                        " WHERE " + TASK.ID + "=" +id, null);
+        Cursor cursor = db.rawQuery( TASK_QUERY + " WHERE " + TASK.ID + "=" +id, null);
 
         if (cursor.moveToFirst()) {
             task = taskFromRow(cursor);
@@ -371,15 +549,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return task;
     }
 
+    /**
+     * Retrieves All Saved Tasks
+     *
+     * @return
+     * An ArrayList of All Tasks
+     * An Empty List If There Are None
+     */
     public ArrayList<Task> getAllTasks() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        TASK.ID + ", " +
-                        TASK.NAME + ", " +
-                        TASK.IMAGE +
-                        " FROM " + TASK.TABLE
-                        , null);
+        Cursor cursor = db.rawQuery(TASK_QUERY + " FROM " + TASK.TABLE ,null);
 
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -424,6 +603,14 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskId;
     }
 
+    /**
+     * Updates A Task's Fields
+     * All Fields Except For ID May Be Updated
+     *
+     * @param task
+     * A Task Model With Updated Fields
+     * Image May Be Null
+     */
     public void update(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -443,11 +630,20 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             Log.w(TAG, "Update Affected No Rows");
     }
 
+    /**
+     * Removes A Task
+     *
+     * @param taskId
+     * The ID of The Task
+     */
     public void deleteTask(int taskId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TASK.TABLE, TASK.ID + " = ?", new String[]{Integer.toString(taskId)});
     }
 
+    /**
+     * Base Query For Selecting A Punch
+     */
     private static final String TASK_PUNCH_QUERY =
             "SELECT " +
             TASK_PUNCH.ID + ", " +
@@ -457,6 +653,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             TASK_PUNCH.TIME_STOP +
             " FROM " + TASK_PUNCH.TABLE;
 
+    /**
+     * Converts A Result Row To A TaskPunch Model
+     *
+     * @param cursor
+     * A Cursor On A TaskPunch Row Having Results In Order the Base Query
+     *
+     * @return
+     * A Model With All Previously Saved Info Populated
+     * TimeEnd May Be null
+     */
     private TaskPunch taskPunchFromRow(Cursor cursor) {
         TaskPunch taskPunch = new TaskPunch();
         taskPunch.setId(cursor.getInt(0));
@@ -468,6 +674,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskPunch;
     }
 
+    /**
+     * Retrieves A Punch By ID
+     *
+     * @param id
+     * The ID of The Punch To Retrieve
+     *
+     * @return
+     * A Filled In Model Object, or
+     * Null if The Punch Was Not Found
+     */
     public TaskPunch getTaskPunch(int id) {
         TaskPunch taskPunch = null;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -481,6 +697,17 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskPunch;
     }
 
+    /**
+     * Adds A New Punch
+     *
+     * @param taskPunch
+     * A Filled In TaskPunch Model
+     * timeEnd May Be Null
+     *
+     * @return
+     * The ID of The New Punch
+     * -1 If The Insert Failed
+     */
     public int addTaskPunch(TaskPunch taskPunch) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -510,6 +737,14 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return punchId;
     }
 
+    /**
+     * Updates A Punch Fields
+     * All Fields Except For ID May Be Updated
+     *
+     * @param taskPunch
+     * A Punch Model With Updated Fields
+     * timeEnd May Be Null
+     */
     public void update(TaskPunch taskPunch) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -527,11 +762,24 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             Log.w(TAG, "Update Affected No Rows");
     }
 
+    /**
+     * Removes A Punch
+     *
+     * @param taskPunchId
+     * The ID of The Punch
+     */
     public void deleteTaskPunch(int taskPunchId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TASK_PUNCH.TABLE, TASK_PUNCH.ID + " = ?", new String[]{Integer.toString(taskPunchId)});
     }
 
+    /**
+     * Retrieves All Saved Punches
+     *
+     * @return
+     * An ArrayList of All Punches
+     * An Empty List If There Are None
+     */
     public ArrayList<TaskPunch> getAllTaskPunches() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(TASK_PUNCH_QUERY, null);
@@ -549,6 +797,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskPunches;
     }
 
+    /**
+     * Retrieves All Saved Punches Associated With A Student
+     *
+     * @param studentId
+     * The Id Of The Student To Search Punches For
+     *
+     * @return
+     * An ArrayList of The Student's Punches
+     * An Empty List If There Are None
+     */
     public ArrayList<TaskPunch> getTaskPunchesForStudent(int studentId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
@@ -588,6 +846,21 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return taskPunch;
     }
 
+    /**
+     * Retrieves All Saved Punches Within A Given Range
+     *
+     * @param startDate
+     * Date To Start Searching From, Exclusive.
+     * May Not Be null
+     *
+     * @param endDate
+     * Date To Stop The Search On, Exclusive.
+     * May Not Be Null
+     *
+     * @return
+     * An ArrayList of All Punches
+     * An Empty List If There Are None
+     */
     public ArrayList<StudentPunches> getStudentPunches(Date startDate, Date endDate) {
         long startSeconds = startDate.getTime()/1000L;
         long endSeconds = endDate.getTime()/1000L;
@@ -622,6 +895,15 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return studentPunches;
     }
 
+    /**
+     * Converts A Result Row To A Teacher Model
+     *
+     * @param cursor
+     * A Cursor On A Teacher Row Having Results In Order the Base Query
+     *
+     * @return
+     * A Model With All Previously Saved Info Populated
+     */
     private Teacher teacherFromRow(Cursor cursor) {
         Teacher teacher = new Teacher();
 
@@ -639,18 +921,31 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return teacher;
     }
 
+    /**
+     * Base Query For Selecting A Teacher
+     */
+    private static final String TEACHER_QUERY = "SELECT " +
+            TEACHER.ID + " , " +
+            TEACHER.FIRST_NAME + " , " +
+            TEACHER.LAST_NAME + " , " +
+            TEACHER.EMAIL + " , " +
+            TEACHER.PHONE_NUMBER + " , " +
+            TEACHER.IMAGE +
+            " FROM " + TEACHER.TABLE;
+
+    /**
+     * Retrieves A Teacher By ID
+     *
+     * @param id
+     * The ID of The Teacher To Retrieve
+     *
+     * @return
+     * A Filled In Model Object, or
+     * Null if The Teacher Was Not Found
+     */
     public Teacher getTeacher(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        TEACHER.ID + " , " +
-                        TEACHER.FIRST_NAME + " , " +
-                        TEACHER.LAST_NAME + " , " +
-                        TEACHER.EMAIL + " , " +
-                        TEACHER.PHONE_NUMBER + " , " +
-                        TEACHER.IMAGE +
-                        " FROM " + TEACHER.TABLE +
-                        " WHERE " + TEACHER.ID + "=" + id
+        Cursor cursor = db.rawQuery(TEACHER_QUERY + " WHERE " + TEACHER.ID + "=" + id
                 , null);
 
 
@@ -663,18 +958,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return teacher;
     }
 
+    /**
+     * Retrieves All Saved Teachers
+     *
+     * @return
+     * An ArrayList of All Teachers
+     * An Empty List If There Are None
+     */
     public ArrayList<Teacher> getAllTeachers() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT " +
-                        TEACHER.ID + " , " +
-                        TEACHER.FIRST_NAME + " , " +
-                        TEACHER.LAST_NAME + " , " +
-                        TEACHER.EMAIL + " , " +
-                        TEACHER.PHONE_NUMBER + " , " +
-                        TEACHER.IMAGE +
-                        " FROM " + TEACHER.TABLE
-                , null);
+        Cursor cursor = db.rawQuery(TEACHER_QUERY, null);
 
         ArrayList<Teacher> teachers = new ArrayList<>();
         if (cursor.moveToFirst()) {
@@ -687,6 +980,17 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return teachers;
     }
 
+    /**
+     * Adds A New Teacher
+     *
+     * @param teacher
+     * A Filled In Teacher Model
+     * image May Be Null
+     *
+     * @return
+     * The ID of The New Teacher
+     * -1 If The Insert Failed
+     */
     public int addTeacher(Teacher teacher) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -723,6 +1027,14 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return id;
     }
 
+    /**
+     * Updates A Teacher's Fields
+     * All Fields Except For ID May Be Updated
+     *
+     * @param teacher
+     * A Teacher Model With Updated Fields
+     * Image May Be Null
+     */
     public void update(Teacher teacher) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -744,11 +1056,36 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             Log.w(TAG, "Update Affected No Rows");
     }
 
+    /**
+     * Removes A Teacher
+     *
+     * @param teacherId
+     * The ID of The Teacher To Remove
+     */
     public void deleteTeacher(int teacherId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TEACHER.TABLE, TEACHER.ID + " = ?", new String[]{Integer.toString(teacherId)});
     }
 
+    /**
+     * Base Query For Selecting An Admin Account
+     */
+    private static final String ADMIN_ACCOUNT_QUERY = "SELECT " +
+            ADMIN_ACCOUNT.ID + " , " +
+            ADMIN_ACCOUNT.USERNAME + " , " +
+            ADMIN_ACCOUNT.PASSWORD + " " +
+            " FROM " + ADMIN_ACCOUNT.TABLE + " ";
+
+
+    /**
+     * Converts A Result Row To A Admin Account Model
+     *
+     * @param cursor
+     * A Cursor On An Account Row Having Results In Order the Base Query
+     *
+     * @return
+     * A Model With All Previously Saved Info Populated
+     */
     private AdminAccount adminAccountFromRow(Cursor cursor) {
         AdminAccount adminAccount = new AdminAccount();
 
@@ -759,12 +1096,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return adminAccount;
     }
 
-    private static final String ADMIN_ACCOUNT_QUERY = "SELECT " +
-            ADMIN_ACCOUNT.ID + " , " +
-            ADMIN_ACCOUNT.USERNAME + " , " +
-            ADMIN_ACCOUNT.PASSWORD + " " +
-            " FROM " + ADMIN_ACCOUNT.TABLE + " ";
-
+    /**
+     * Retrieves An Account By ID
+     *
+     * @param id
+     * The ID of The Account To Retrieve
+     *
+     * @return
+     * A Filled In Model Object, or
+     * Null if The Account Was Not Found
+     */
     public AdminAccount getAdminAccount(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
@@ -779,6 +1120,16 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return adminAccount;
     }
 
+    /**
+     * Retrieves An Account By Username
+     *
+     * @param username
+     * The Username of The Account To Retrieve
+     *
+     * @return
+     * A Filled In Model Object, or
+     * Null if The Account Was Not Found
+     */
     public AdminAccount getAdminAccount(String username) {
         if (username == null)
             throw new IllegalArgumentException("Username May Not Be null");
@@ -798,6 +1149,13 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return adminAccount;
     }
 
+    /**
+     * Retrieves All Saved Accounts
+     *
+     * @return
+     * An ArrayList of All Accounts
+     * An Empty List If There Are None
+     */
     public ArrayList<AdminAccount> getAllAdminAccounts() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(ADMIN_ACCOUNT_QUERY, null);
@@ -813,6 +1171,19 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return adminAccounts;
     }
 
+    /**
+     * Creates A New Account
+     *
+     * @param username
+     * The Username of The New Account
+     *
+     * @param plaintextPassword
+     * The Password of The New Account In PlainText
+     *
+     * @return
+     * The ID of The New Account
+     * -1 If The Insert Failed
+     */
     public int createAdminAccount(String username, String plaintextPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -841,6 +1212,12 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
         return id;
     }
 
+    /**
+     * Updates ONLY The Username of An Existing Account
+     *
+     * @param adminAccount
+     * A Model With An ID And A Username
+     */
     public void updateUsername(AdminAccount adminAccount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -860,6 +1237,15 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Updates ONLY The Password Of An Account
+     *
+     * @param id
+     * The ID of The Account To Update
+     *
+     * @param newPlaintextPassword
+     * The New Password of The Account In PlainText
+     */
     public void updateAdminPassword(int id, String newPlaintextPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -874,10 +1260,29 @@ public class PersistenceInteractor extends SQLiteOpenHelper {
             Log.w(TAG, "Update Affected No Rows");
     }
 
+    /**
+     * Verifies If A PlainText Password Matches Its Hashed Counterpart
+     *
+     * @param plaintext
+     * The PlainText Version of The Password
+     *
+     * @param hashed
+     * The Hashed Password From The Database
+     *
+     * @return
+     * True If The Password Matches,
+     * False Otherwise
+     */
     public boolean checkPassword(String plaintext, String hashed) {
         return BCrypt.checkpw(plaintext, hashed);
     }
 
+    /**
+     * Remove An Account
+     *
+     * @param id
+     * The Id of The Account To Remove
+     */
     public void deleteAdminAccount(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(ADMIN_ACCOUNT.TABLE, ADMIN_ACCOUNT.ID + " = ?", new String[]{Integer.toString(id)});

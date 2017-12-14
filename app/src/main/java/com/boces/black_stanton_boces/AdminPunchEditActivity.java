@@ -276,6 +276,18 @@ public class AdminPunchEditActivity extends AppCompatActivity {
     }
 
     /**
+     * Deletes The Associated Punch
+     *
+     * @param v
+     * Current View
+     * Unused, May Be null
+     */
+    public void onDelete(View v) {
+        persistence.deleteTaskPunch(punchId);
+        finish();
+    }
+
+    /**
      * Calculates Duration
      * @param start
      * Start Time

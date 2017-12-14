@@ -3,11 +3,37 @@ package com.boces.black_stanton_boces.persistence.model;
 import android.graphics.Bitmap;
 
 public class Teacher {
+
+    /**
+     * Id of The Task Punch In The Database
+     * May Be Null if A Create Model
+     */
     private Integer id;
+
+    /**
+     * First Name of The Teacher
+     */
     private String firstName;
+
+    /**
+     * Last Name of The Teacher
+     */
     private String lastName;
+
+    /**
+     * Email of The Teacher
+     */
     private String email;
+
+    /**
+     * Phone Number of The Teacher
+     */
     private String phoneNumber;
+
+    /**
+     * Image Associated With The Teacher
+     * May Be null
+     */
     private Bitmap image;
 
     public Integer getId() {

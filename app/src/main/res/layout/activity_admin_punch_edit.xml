@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#E1F4FA"
     android:layout_width="match_parent"
@@ -222,14 +221,14 @@
         android:layout_height="0dp"
         android:layout_width="match_parent"/>
 
-    <!--TODO onClick Delete for edit punch-->
     <Button
-        android:id="@+id/btnDeleteTeacher"
+        android:id="@+id/btnDeletePunch"
         android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
+        android:onClick="onDelete"
         android:text="@string/btn_Delete" />
 
 

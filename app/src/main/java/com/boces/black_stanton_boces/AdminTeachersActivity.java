@@ -45,7 +45,7 @@ public class AdminTeachersActivity extends AppCompatActivity {
             }
         });
 
-        teacherList = (RecyclerView) findViewById(R.id.teacherList);
+        teacherList = findViewById(R.id.teacherList);
         teacherList.setAdapter(adapter);
         teacherList.setLayoutManager(new LinearLayoutManager(this));
 

@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Class Of Options For Easily Testing The App
+ * Not Intended For Production Use
+ */
 public class DeveloperOptionsActivity extends AppCompatActivity {
     private static final int EXTERNAL_STORAGE_REQUEST = 0;
 

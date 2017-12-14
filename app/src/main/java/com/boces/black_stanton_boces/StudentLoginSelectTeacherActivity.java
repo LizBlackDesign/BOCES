@@ -22,7 +22,6 @@ import com.boces.black_stanton_boces.teacher.TeacherAdapterOnclick;
 
 public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
 
-    private SearchView searchView;
     private RecyclerView teacherList;
     private PersistenceInteractor persistence;
 
@@ -48,11 +47,11 @@ public class StudentLoginSelectTeacherActivity extends AppCompatActivity {
             }
         });
 
-        teacherList = (RecyclerView) findViewById(R.id.recyclerSelectTeacher);
+        teacherList = findViewById(R.id.recyclerSelectTeacher);
         teacherList.setAdapter(adapter);
         teacherList.setLayoutManager(new LinearLayoutManager(this));
 
-        searchView = (SearchView) findViewById(R.id.login_select_teacher_search);
+        SearchView searchView = findViewById(R.id.login_select_teacher_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

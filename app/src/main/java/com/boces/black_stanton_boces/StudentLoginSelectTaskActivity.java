@@ -21,6 +21,9 @@ import com.boces.black_stanton_boces.task.TaskAdapterOnclick;
  */
 public class StudentLoginSelectTaskActivity extends AppCompatActivity {
 
+    /**
+     * Id of The Student Starting The Task
+     */
     private int studentId;
     private PersistenceInteractor persistence;
     private RecyclerView taskList;

@@ -27,15 +27,20 @@ import java.util.TimerTask;
  */
 public class StudentCurrentTaskViewActivity extends AppCompatActivity {
 
-    private int taskId;
-    private int studentId;
+    /**
+     * Id of The Current Open Punch
+     */
     private int punchId;
-    private TextView lblCurrentTaskStudentName;
-    private TextView lblCurrentTaskTaskName;
+
+    /**
+     * Label Showing The Progress Of Teh Current Activity
+     */
     private TextView lblTaskTime;
-    private ImageView imageCurrentTask;
+
+    /**
+     * Timer Driving Task Time
+     */
     private Timer timer;
-    private TimerTask timerTask;
 
     /**
      * Recognised Values That May Be Passed Through Bundles
@@ -61,10 +66,10 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         // Painfully Validate That We Got Something
         if (extras == null)
             throw new IllegalArgumentException("No Data Passed");
-        taskId = extras.getInt(BUNDLE_KEY.TASK_ID.name());
+        int taskId = extras.getInt(BUNDLE_KEY.TASK_ID.name());
         if (taskId == 0)
             throw new IllegalArgumentException("Task ID Not Passed");
-        studentId = extras.getInt(BUNDLE_KEY.STUDENT_ID.name());
+        int studentId = extras.getInt(BUNDLE_KEY.STUDENT_ID.name());
         if (studentId == 0)
             throw new IllegalArgumentException("Student ID Not Passed");
         punchId = extras.getInt(BUNDLE_KEY.PUNCH_ID.name());
@@ -85,21 +90,22 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
         if (taskPunch == null)
             throw new IllegalStateException("Punch With ID "+ punchId + " Not Found");
 
-        lblCurrentTaskStudentName = (TextView) findViewById(R.id.lblCurrentTaskStudentName);
+        TextView lblCurrentTaskStudentName = (TextView) findViewById(R.id.lblCurrentTaskStudentName);
         String studentName = student.getFirstName() + " " + student.getLastName();
         lblCurrentTaskStudentName.setText(studentName);
 
-        lblCurrentTaskTaskName = (TextView) findViewById(R.id.lblCurrentTaskTaskName);
+        TextView lblCurrentTaskTaskName = (TextView) findViewById(R.id.lblCurrentTaskTaskName);
         lblCurrentTaskTaskName.setText(task.getName());
         lblTaskTime = (TextView) findViewById(R.id.timeCurrent);
-        imageCurrentTask = (ImageView) findViewById(R.id.imageCurrentTask);
+        ImageView imageCurrentTask = (ImageView) findViewById(R.id.imageCurrentTask);
         if (task.getImage() != null) {
             imageCurrentTask.setImageBitmap(task.getImage());
         }
 
         timer = new Timer();
-        timerTask = new TimerTask() {
-            long seconds = new Date().getTime()/1000L - taskPunch.getTimeStart().getTime()/1000L;
+        TimerTask timerTask = new TimerTask() {
+            long seconds = new Date().getTime() / 1000L - taskPunch.getTimeStart().getTime() / 1000L;
+
             @Override
             public void run() {
                 seconds++;

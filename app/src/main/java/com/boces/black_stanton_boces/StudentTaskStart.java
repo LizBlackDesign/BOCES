@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,8 +74,6 @@ public class StudentTaskStart extends AppCompatActivity {
         TextView lblStudentName = findViewById(R.id.lblStudentName);
         TextView lblTaskName = findViewById(R.id.lblTaskName);
         ImageView imgCurrentTask = findViewById(R.id.imgCurrentTask);
-        Button btnLoginDifferentStudent = findViewById(R.id.btnLoginDifferentStudent);
-        Button btnReady = findViewById(R.id.btnReady);
 
         String studentName = student.getFirstName() + " " + student.getLastName();
         lblStudentName.setText(studentName);
@@ -85,29 +82,30 @@ public class StudentTaskStart extends AppCompatActivity {
 
         if (task.getImage() != null)
             imgCurrentTask.setImageBitmap(task.getImage());
+    }
 
-        btnLoginDifferentStudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: 12/11/17 Implement
-            }
-        });
+    /**
+     * Brings Us Back To The Select Teacher Activity When The Back Button Is Pressed
+     * Prevents Multiple Clock Ins From The Same Student
+     *
+     * @param v
+     * Unused. May Be null
+     */
+    public void onLoginAsDifferentStudent(View v) {
+        startActivity(new Intent(this, StudentLoginSelectTeacherActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+    }
 
-        btnReady.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TaskPunch taskPunch = new TaskPunch();
-                taskPunch.setStudentId(studentId);
-                taskPunch.setTaskId(taskId);
-                taskPunch.setTimeStart(new Date());
-                int punchId = persistence.addTaskPunch(taskPunch);
+    public void onReady(View v) {
+        TaskPunch taskPunch = new TaskPunch();
+        taskPunch.setStudentId(studentId);
+        taskPunch.setTaskId(taskId);
+        taskPunch.setTimeStart(new Date());
+        int punchId = persistence.addTaskPunch(taskPunch);
 
-                Intent startTask = new Intent(getApplicationContext(), StudentCurrentTaskViewActivity.class);
-                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.TASK_ID.name(), taskId);
-                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
-                startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.PUNCH_ID.name(), punchId);
-                startActivity(startTask);
-            }
-        });
+        Intent startTask = new Intent(getApplicationContext(), StudentCurrentTaskViewActivity.class);
+        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.TASK_ID.name(), taskId);
+        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.STUDENT_ID.name(), studentId);
+        startTask.putExtra(StudentCurrentTaskViewActivity.BUNDLE_KEY.PUNCH_ID.name(), punchId);
+        startActivity(startTask);
     }
 }

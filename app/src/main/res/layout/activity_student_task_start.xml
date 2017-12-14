@@ -67,6 +67,7 @@
         android:id="@+id/btnLoginDifferentStudent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onLoginAsDifferentStudent"
         android:text="@string/btn_login"/>
 
     <Button
@@ -76,6 +77,7 @@
         android:layout_gravity="bottom"
         android:background="@color/colorPrimary"
         android:padding="15dp"
+        android:onClick="onReady"
         android:text="@string/title_start_prompt"
         android:textColor="@android:color/white"
         android:textSize="24sp" />

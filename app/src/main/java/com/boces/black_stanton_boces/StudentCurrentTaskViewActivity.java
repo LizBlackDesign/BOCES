@@ -128,7 +128,27 @@ public class StudentCurrentTaskViewActivity extends AppCompatActivity {
             }
 
         };
-        timer.schedule(timerTask, 1000L, 1000L);
+        timer.schedule(timerTask, 0L, 1000L);
+    }
+
+    /**
+     * Brings Us Back To The Select Teacher Activity When The Back Button Is Pressed
+     * Prevents Multiple Clock Ins From The Same Student
+     *
+     * @param v
+     * Unused. May Be null
+     */
+    public void onLoginAsDifferentStudent(View v) {
+        startActivity(new Intent(this, StudentLoginSelectTeacherActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+    }
+
+    /**
+     * Brings Us Back To The Select Teacher Activity When The Back Button Is Pressed
+     * Prevents Multiple Clock Ins From The Same Student
+     */
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, StudentLoginSelectTeacherActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
     /**

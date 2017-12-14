@@ -42,6 +42,7 @@
             android:textSize="24sp" />
         <Spinner
             android:id="@+id/spinnerStudent"
+            android:spinnerMode="dialog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -70,6 +71,7 @@
             android:textSize="24sp" />
         <Spinner
             android:id="@+id/spinnerTask"
+            android:spinnerMode="dialog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
